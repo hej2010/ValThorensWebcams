@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Val Thorens Webcams</string>
+
+    <string name="main_title">Webcams in Val Thorens</string>
+    <string name="main_desc">Click on an image to view the webcam at that location</string>
+    <string name="main_desc_icon">Webcam location</string>
+    <string name="main_about">About</string>
+
+    <string name="camera_1_funitel_3_vallees">Funitel 3 Vallées</string>
+    <string name="camera_2_de_la_maison">De La Maison</string>
+    <string name="camera_3_les_2_lacs">Les 2 Lacs</string>
+    <string name="camera_4_funitel_de_thorens">Funitel De Thorens</string>
+    <string name="camera_5_la_tyrolienne">La Tyrolienne</string>
+    <string name="camera_6_plan_bouchet">Plan Bouchet</string>
+    <string name="camera_7_livecam_360">Livecam 360&#176;</string>
+    <string name="camera_8_plein_sud">Plein Sud</string>
+
+    <string name="map_title">Click on a circle to choose that webcamera</string>
+    <string name="map_desc">Map over Val Thorens</string>
+
+    <string name="webcam_title">Camera name goes here</string>
+    <string name="webcam_desc">Webcam image from Val Thorens</string>
+
+    <string name="about_image">Image from Val Thorens 2016, &#169; Rikard Teodorsson</string>
+    <string name="about_source">Webcams from valthorens.com</string>
+    <string name="about_author">App made by Rikard Teodorsson</string>
+    <string name="about_questions">Questions or suggestion for improvements? Contact \"rikardt.play@gmail.com\"</string>
+    <string name="about_version">Version 0.0.2</string>
+    <string name="about_return">Return</string>
+
+</resources>
