@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class ChooseFromMap extends AppCompatActivity {
     private ImageView imgMap;
     private TextView txtCoordinates;
+    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +29,21 @@ public class ChooseFromMap extends AppCompatActivity {
 
         imgMap = (ImageView) findViewById(R.id.imgMap);
         txtCoordinates = (TextView) findViewById(R.id.txtCoordinates);
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        btn3 = (Button) findViewById(R.id.btn3);
+        btn4 = (Button) findViewById(R.id.btn4);
+        btn5 = (Button) findViewById(R.id.btn5);
+        btn6 = (Button) findViewById(R.id.btn6);
+        btn7 = (Button) findViewById(R.id.btn7);
+        btn8 = (Button) findViewById(R.id.btn8);
 
         Picasso.with(ChooseFromMap.this)
-                .load(R.drawable.map)
-                .resize(1067,489) // half size
+                .load(R.drawable.map3)
+                .resize(1067, 489) // half size
                 .into(imgMap);
+
+        setButtonCoordinates();
 
         imgMap.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -42,7 +54,7 @@ public class ChooseFromMap extends AppCompatActivity {
                     txtCoordinates.setText("Touch coordinates : " + String.valueOf(event.getX()) + "x" + String.valueOf(event.getY()));
                     double maxWidth = imgMap.getWidth();
                     double touchedXPercentage = posX / maxWidth;
-                    if (checkConnection()) {
+                    /*if (checkConnection()) {
                         if (touchedXPercentage < 0.15) { //Punkt 1
                             MainActivity.clickedImageNumber = 1;
                             startActivity(new Intent(ChooseFromMap.this, Webcam.class));
@@ -62,11 +74,37 @@ public class ChooseFromMap extends AppCompatActivity {
                         }
                     } else {
                         showConnectionError();
-                    }
+                    }*/
                 }
                 return true;
             }
         });
+    }
+
+    private void setButtonCoordinates() {
+        btn1.setX(55);
+        btn1.setY(615);
+
+        btn2.setX(295);
+        btn2.setY(615);
+
+        btn3.setX(499);
+        btn3.setY(727);
+
+        btn4.setX(655);
+        btn4.setY(720);
+
+        btn5.setX(920);
+        btn5.setY(727);
+
+        btn6.setX(1430);
+        btn6.setY(320);
+
+        btn7.setX(1720);
+        btn7.setY(160);
+
+        btn8.setX(2120);
+        btn8.setY(710);
     }
 
     private void showConnectionError() {
@@ -109,9 +147,5 @@ MAX X: 2390
 
 PUNKT 1 X: 142
     MITTEN = 590+142 / 2 ==== 366 == 0.15%
-PUNKT 2 X: 590
-    MITTEN = 590 + 1000 ==== 795 == 0.33%
-PUNKT 3 X: 1000
-    MITTEN = 1000 + 1510 ==== 1255 == 0.52%
-PUNKT 4 X: 1510
+
  */
