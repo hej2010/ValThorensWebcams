@@ -25,7 +25,7 @@
     <string name="about_source">Webcams from valthorens.com</string>
     <string name="about_author">App made by Rikard Teodorsson</string>
     <string name="about_questions">Questions or suggestion for improvements? Contact \"rikardt.play@gmail.com\"</string>
-    <string name="about_version">Version 1.0.3</string>
+    <string name="about_version">Version 1.0.4</string>
     <string name="about_return">Return</string>
 
 </resources>

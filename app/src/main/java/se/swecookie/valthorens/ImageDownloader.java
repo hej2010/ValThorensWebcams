@@ -107,7 +107,7 @@ class ImageDownloader {
                 }
                 if(id != 7) {
                     Elements date = doc.select("p");
-                    String script = "";
+                    String script;
                     for (Element d : date) {
                         if (d.toString().contains("Last update : ")) {
                             script = d.text();
@@ -129,7 +129,7 @@ class ImageDownloader {
                         }
                     }
                 } else {
-                    imageDate = "Updated every 10 minutes";
+                    imageDate = "Updated every 10 minutes during daylight";
                 }
             }
             try {

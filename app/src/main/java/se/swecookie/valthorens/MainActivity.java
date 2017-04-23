@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     //Finns 2 till (typ statiska), La Tyrolienne & Plan Bouchet
 
     public static int clickedImageNumber = 0;
-    private static boolean connected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        connected = checkConnection();
+        boolean connected = checkConnection();
         switch (view.getId()) {
             case R.id.choose_from_map:
                 startActivity(new Intent(MainActivity.this, ChooseFromMap.class));
@@ -124,10 +123,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkConnection() {
-        boolean connected;
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+        boolean connected = false;
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) { // connected to the internet
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                connected = true;
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to the mobile provider's data plan
+                connected = true;
+            }
+        } else {
+            // not connected to the internet
+            connected = false;
+        }
         return connected;
     }
 
