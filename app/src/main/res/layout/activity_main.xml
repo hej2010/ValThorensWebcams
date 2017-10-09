@@ -132,7 +132,6 @@
             app:srcCompat="@drawable/la_tyrolienne" />
 
         <View
-            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorAccent" />
@@ -149,7 +148,6 @@
             app:srcCompat="@drawable/plan_bouchet" />
 
         <View
-            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorAccent" />
@@ -166,13 +164,6 @@
             app:srcCompat="@drawable/livecam_360" />
 
         <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <View
-            android:id="@+id/view4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/colorAccent" />
@@ -187,6 +178,38 @@
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/plein_sud" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/tsd_moutiere"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:onClick="onClick"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/tsd_moutiere" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
+
+        <ImageView
+            android:id="@+id/cime_caron"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:onClick="onClick"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/cime_caron" />
 
         <LinearLayout
             android:layout_width="wrap_content"

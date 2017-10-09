@@ -21,14 +21,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChooseFromMap"
+            android:name=".ChooseFromMapActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".Webcam"
+            android:name=".WebcamActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape" />
-        <activity android:name=".About"/>
+        <activity android:name=".AboutActivity"/>
     </application>
 
 </manifest>

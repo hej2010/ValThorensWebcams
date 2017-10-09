@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorDarkBlue"
     android:orientation="vertical"
-    tools:context="se.swecookie.valthorens.About">
+    tools:context="se.swecookie.valthorens.AboutActivity">
 
 
     <LinearLayout

@@ -1,10 +1,13 @@
 package se.swecookie.valthorens;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,23 +53,21 @@ class ImageDownloader {
             Document dateDoc = null;
             String tempUrl = null;
 
-            Log.e("id", "id " + id);
-
             switch (id) {
                 case 5:
-                    tempUrl = "https://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html";
+                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html"; // INTE HTTPS!!!
                     break;
                 case 6:
-                    tempUrl = "https://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html";
+                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html"; // INTE HTTPS!!!
                     break;
                 case 8:
-                    tempUrl = "https://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html";
+                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html"; // INTE HTTPS!!!
                     break;
                 case 9:
-                    tempUrl = "https://www.valthorens.com/en/live/livecams--webcams/webcam-tsd-moutiere.414.html";
+                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-tsd-moutiere.414.html"; // INTE HTTPS!!!
                     break;
                 case 10:
-                    tempUrl = "https://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html";
+                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html"; // INTE HTTPS!!!
                     break;
             }
 
@@ -113,7 +114,6 @@ class ImageDownloader {
                         break;
                     } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
                         currentURL = "https:" + s.split("\"")[1];
-                        Log.e("current", "url: " + currentURL);
                         imageDate = currentURL.split("static/funitelthorens-360/")[1]
                                 .replace(".jpg", "")
                                 .replace("/", " ")
@@ -127,17 +127,17 @@ class ImageDownloader {
                         break;
                     }
                 }
-            } else if (id == 5 || id == 6 || id == 7 || id == 8) {
+            } else {
                 switch (id) {
                     case 5:
                         currentWebcamWidth = 11066;
                         currentWebcamHeight = 2326;
-                        currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
+                        currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg"; // INTE HTTPS!!!
                         break;
                     case 6:
                         currentWebcamWidth = 7078;
                         currentWebcamHeight = 1460;
-                        currentURL = "https://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
+                        currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
                     case 7:
                         currentWebcamWidth = 6243;
@@ -147,19 +147,20 @@ class ImageDownloader {
                     case 8:
                         currentWebcamWidth = 10000;
                         currentWebcamHeight = 1986;
-                        currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
+                        currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                         break;
                     case 9:
                         currentWebcamWidth = 10000;
                         currentWebcamHeight = 2042;
-                        currentURL = "https://www.trinum.com/ibox/ftpcam/mega_cime_caron.jpg";
+                        currentURL = "http://www.trinum.com/ibox/ftpcam/mega_cime_caron.jpg";
                         break;
                     case 10:
                         currentWebcamWidth = 8346;
                         currentWebcamHeight = 1543;
-                        currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg"; // TODO lägg till kamera 9 och 10 !
+                        currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg"; // INTE HTTPS!!!
                         break;
                 }
+
                 if (id != 7 && dateDoc != null) {
                     Elements date = dateDoc.select("p");
                     String script;
@@ -193,8 +194,6 @@ class ImageDownloader {
                 float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, r.getDisplayMetrics()) * 4;
                 double scaleWith = (height - px) / currentWebcamHeight;
 
-                Log.e("info ", "date: " + imageDate + "\nUrl: " + currentURL);
-
                 return Picasso.with(context)
                         .load(currentURL)
                         .resize((int) (currentWebcamWidth * scaleWith), (int) (currentWebcamHeight * scaleWith))
@@ -210,20 +209,44 @@ class ImageDownloader {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            relativeLayout.setVisibility(View.GONE);
-            image.setImageBitmap(bitmap);
-            image.setVisibility(View.VISIBLE);
-            textView.setText(imageDate);
-            textView.setVisibility(View.VISIBLE);
+            if (bitmap == null) {
+                showErrorDialog();
+            } else {
+                relativeLayout.setVisibility(View.GONE);
+                image.setImageBitmap(bitmap);
+                image.setVisibility(View.VISIBLE);
+                textView.setText(imageDate);
+                textView.setVisibility(View.VISIBLE);
+            }
         }
+    }
+
+    private void showErrorDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
+        }
+        builder.setTitle("Error")
+                .setMessage("There seems to be trouble downloading the image, please try again later.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (context instanceof AppCompatActivity) {
+                            ((AppCompatActivity) context).finish();
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private int getHeight() {
         int height = 480;
-        if (context instanceof Webcam) {
-            height = ((Webcam) context).getHeight();
-        } else if (context instanceof ChooseFromMap) {
-            height = ((ChooseFromMap) context).getHeight();
+        if (context instanceof WebcamActivity) {
+            height = ((WebcamActivity) context).getHeight();
+        } else if (context instanceof ChooseFromMapActivity) {
+            height = ((ChooseFromMapActivity) context).getHeight();
         }
         return height;
     }
