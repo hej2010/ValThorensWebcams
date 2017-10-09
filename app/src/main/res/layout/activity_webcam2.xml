@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDarkBlue"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtWebCamTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:fontFamily="serif-monospace"
+        android:text="@string/webcam_title"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextLight"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/txtDate"
+        android:layout_below="@+id/txtWebCamTitle"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/txtDate"
+        android:layout_below="@+id/txtWebCamTitle">
+
+        <ImageView
+            android:id="@+id/imgWebcam"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/webcam_desc"
+            android:fitsSystemWindows="true"
+            android:scaleType="fitXY"
+            android:visibility="visible" />
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="serif-monospace"
+        android:text="@string/webcam_date"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextLight"
+        android:textSize="18sp"
+        android:textStyle="normal|bold" />
+
+</RelativeLayout>

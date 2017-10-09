@@ -12,17 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-
-    //Från vänster till höger
-    //public static String funitel_3_vallees = "http://www.valthorens.com/en/live/livecams--webcams/Webcam-funitel-3-vallees.792.html";
-    //public static String folie_douce_plein_sud = "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html"; //STATISK LÄNK
-    //public static String de_la_maison = "http://www.valthorens.com/en/live/livecams--webcams/Webcam-de-la-maison.794.html";
-    //public static String livecam_360 = "http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html"; //Svår URL
-    //public static String les_2_lacs = "http://www.valthorens.com/en/live/livecams--webcams/Webcam-les-2-lacs.726.html";
-    //public static String funitel_de_thorens = "http://www.valthorens.com/en/live/livecams--webcams/Webcam-funitel-de-thorens.784.html";
-    //public static String cime_caron = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg"; //Funkar typ inte, massa rutor
-    //Finns 2 till (typ statiska), La Tyrolienne & Plan Bouchet
-
     public static int clickedImageNumber = 0;
 
     @Override

@@ -40,7 +40,8 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textAlignment="center"
-            android:textColor="@color/colorTextLight" />
+            android:textColor="@color/colorTextLight"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
