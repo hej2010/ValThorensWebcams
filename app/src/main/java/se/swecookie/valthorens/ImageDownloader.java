@@ -33,13 +33,14 @@ class ImageDownloader {
     private int id;
     private int currentWebcamWidth;
     private int currentWebcamHeight;
+    private AsyncTask<Void, Void, Bitmap> downloadTask;
 
     void startDownload(ImageView imageView, TextView txtView, int id, String url, Context cont, RelativeLayout loader) {
         image = imageView;
         textView = txtView;
         textView.setVisibility(View.INVISIBLE);
         currentURL = url;
-        new downloadPhoto().execute();
+        downloadTask = new downloadPhoto().execute();
         context = cont;
         this.relativeLayout = loader;
         this.id = id;
@@ -209,14 +210,16 @@ class ImageDownloader {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            if (bitmap == null) {
-                showErrorDialog();
-            } else {
-                relativeLayout.setVisibility(View.GONE);
-                image.setImageBitmap(bitmap);
-                image.setVisibility(View.VISIBLE);
-                textView.setText(imageDate);
-                textView.setVisibility(View.VISIBLE);
+            if (!isCancelled()) {
+                if (bitmap == null) {
+                    showErrorDialog();
+                } else {
+                    relativeLayout.setVisibility(View.GONE);
+                    image.setImageBitmap(bitmap);
+                    image.setVisibility(View.VISIBLE);
+                    textView.setText(imageDate);
+                    textView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }
@@ -249,6 +252,12 @@ class ImageDownloader {
             height = ((ChooseFromMapActivity) context).getHeight();
         }
         return height;
+    }
+
+    void cancel() {
+        if (downloadTask != null) {
+            downloadTask.cancel(true);
+        }
     }
 
 }

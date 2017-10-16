@@ -11,6 +11,7 @@ public class WebcamActivity extends AppCompatActivity {
     private TextView txtWebCamTitle, txtDate;
     private ImageView imgWebcam;
     private RelativeLayout loadingPanel;
+    private ImageDownloader imageDownloader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +72,11 @@ public class WebcamActivity extends AppCompatActivity {
     }
 
     private void getImage(int id, String url) {
-        ImageDownloader imageDownloader = new ImageDownloader();
+        if (imageDownloader == null) {
+            imageDownloader = new ImageDownloader();
+        } else {
+            imageDownloader.cancel();
+        }
         imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel);
     }
 
@@ -79,5 +84,11 @@ public class WebcamActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.heightPixels;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        imageDownloader.cancel();
     }
 }
