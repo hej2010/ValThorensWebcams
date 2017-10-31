@@ -22,9 +22,11 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="137dp"
-            app:srcCompat="@drawable/egen"
+            android:clickable="true"
             android:contentDescription="@string/about_image"
-            android:onClick="onImageClicked"/>
+            android:focusable="true"
+            android:onClick="onImageClicked"
+            app:srcCompat="@drawable/egen" />
 
         <TextView
             android:id="@+id/textView5"
@@ -88,6 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
             android:onClick="onReturnClicked"
             android:text="@string/about_return" />
     </LinearLayout>

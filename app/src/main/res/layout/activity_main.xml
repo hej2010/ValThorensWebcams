@@ -5,27 +5,27 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="se.swecookie.valthorens.MainActivity"
-    android:fillViewport="false"
+    android:layout_gravity="center"
     android:background="@color/colorDarkRed"
-    android:layout_gravity="center">
+    android:fillViewport="false"
+    tools:context="se.swecookie.valthorens.MainActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
-            android:text="@string/main_title"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:fontFamily="monospace"
+            android:text="@string/main_title"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
             android:textSize="24sp"
-            android:textStyle="normal|bold"
-            android:fontFamily="monospace" />
+            android:textStyle="normal|bold" />
 
         <TextView
             android:id="@+id/txtHelpMain"
@@ -37,96 +37,108 @@
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/choose_from_map"
-            android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="fitXY"
             android:id="@+id/choose_from_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
-            android:contentDescription="@string/main_desc_icon" />
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/choose_from_map" />
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/funitel_3_vallees"
-            android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="fitXY"
             android:id="@+id/funitel_3_vallees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
-            android:contentDescription="@string/main_desc_icon"/>
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/funitel_3_vallees" />
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/de_la_maison"
-            android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="fitXY"
             android:id="@+id/de_la_maison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
-            android:contentDescription="@string/main_desc_icon"/>
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/de_la_maison" />
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/les_2_lacs"
-            android:layout_width="match_parent"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="fitXY"
             android:id="@+id/les_2_lacs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
-            android:contentDescription="@string/main_desc_icon"/>
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/les_2_lacs" />
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
             android:id="@+id/funitel_de_thorens"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/funitel_de_thorens" />
 
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="1dp" />
+            android:layout_height="1dp"
+            android:background="@color/colorAccent" />
 
         <ImageView
             android:id="@+id/la_tyrolienne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/la_tyrolienne" />
@@ -141,8 +153,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/plan_bouchet" />
@@ -157,8 +171,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/livecam_360" />
@@ -173,8 +189,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/plein_sud" />
@@ -189,8 +207,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/tsd_moutiere" />
@@ -205,8 +225,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:contentDescription="@string/main_desc_icon"
             android:cropToPadding="false"
+            android:focusable="true"
             android:onClick="onClick"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/cime_caron" />
@@ -214,8 +236,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnAbout"
@@ -224,9 +246,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@android:color/holo_blue_dark"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onAboutClicked"
                 android:text="@string/main_about"
-                android:textColor="@color/colorTextLight"
-                android:onClick="onAboutClicked"/>
+                android:textColor="@color/colorTextLight" />
         </LinearLayout>
 
     </LinearLayout>
