@@ -23,6 +23,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.net.SocketTimeoutException;
 
 class ImageDownloader {
     private ImageView image;
@@ -59,7 +60,7 @@ class ImageDownloader {
         protected Bitmap doInBackground(Void... voids) {
             ImageDownloader imageDownloader = weakReference.get();
             imageDownloader.imageDate = "";
-            Document doc;
+            Document doc = null;
             Document dateDoc = null;
             String tempUrl = null;
 
@@ -83,13 +84,14 @@ class ImageDownloader {
 
             try {
                 if (tempUrl != null) {
-                    dateDoc = Jsoup.connect(tempUrl).get();
+                    dateDoc = Jsoup.connect(tempUrl).ignoreContentType(true).get();
                 }
-                doc = Jsoup.connect(imageDownloader.currentURL).get();
-            } catch (IOException e) {
-                e.printStackTrace();
+                doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
+            } catch (SocketTimeoutException e) {
                 errorMessage = e.getMessage();
                 return null;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
             if (doc == null) {
