@@ -64,7 +64,7 @@ class ImageDownloader {
             Document dateDoc = null;
             String tempUrl = null;
 
-            switch (imageDownloader.id) {
+            switch (imageDownloader.id) { // SÄTT INTE HTTPS PÅ NÅN OM DEN INTE REDIRECTAR EN DIT UTAN HTTPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 case 5:
                     tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html"; // INTE HTTPS!!!
                     break;
@@ -158,7 +158,7 @@ class ImageDownloader {
                     }
                 }
             } else {
-                switch (imageDownloader.id) {
+                switch (imageDownloader.id) { // SÄTT INTE HTTPS PÅ NÅN OM DEN INTE REDIRECTAR EN DIT UTAN HTTPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     case 5:
                         imageDownloader.currentWebcamWidth = 11066;
                         imageDownloader.currentWebcamHeight = 2326;
