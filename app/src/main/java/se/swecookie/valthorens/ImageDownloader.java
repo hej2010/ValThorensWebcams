@@ -35,6 +35,7 @@ class ImageDownloader {
     private int currentWebcamWidth;
     private int currentWebcamHeight;
     private AsyncTask<Void, Void, Bitmap> downloadTask;
+    private static String errorMessage;
 
     void startDownload(ImageView imageView, TextView txtView, int id, String url, Context cont, RelativeLayout loader) {
         image = imageView;
@@ -51,13 +52,14 @@ class ImageDownloader {
         private final WeakReference<ImageDownloader> weakReference;
 
         DownloadPhoto(ImageDownloader imageDownloader) {
-            weakReference = new WeakReference<ImageDownloader>(imageDownloader);
+            weakReference = new WeakReference<>(imageDownloader);
         }
 
         @Override
         protected Bitmap doInBackground(Void... voids) {
             ImageDownloader imageDownloader = weakReference.get();
-            Document doc = null;
+            imageDownloader.imageDate = "";
+            Document doc;
             Document dateDoc = null;
             String tempUrl = null;
 
@@ -81,14 +83,19 @@ class ImageDownloader {
 
             try {
                 if (tempUrl != null) {
-                    dateDoc = Jsoup.connect(tempUrl).timeout(20000).get();
+                    dateDoc = Jsoup.connect(tempUrl).get();
                 }
-                doc = Jsoup.connect(imageDownloader.currentURL).timeout(30000).get();
+                doc = Jsoup.connect(imageDownloader.currentURL).get();
             } catch (IOException e) {
                 e.printStackTrace();
+                errorMessage = e.getMessage();
+                return null;
             }
 
-            assert doc != null;
+            if (doc == null) {
+                errorMessage = "Empty server response";
+                return null;
+            }
             if (imageDownloader.id < 5) {
                 imageDownloader.currentWebcamWidth = 12755;
                 imageDownloader.currentWebcamHeight = 2160;
@@ -246,23 +253,34 @@ class ImageDownloader {
     }
 
     private void showErrorDialog() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }
-        builder.setTitle("Error")
-                .setMessage("There seems to be trouble downloading the image, please try again later.")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (context instanceof AppCompatActivity) {
-                            ((AppCompatActivity) context).finish();
-                        }
+        if (context instanceof AppCompatActivity) {
+            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog.Builder builder;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+                    } else {
+                        builder = new AlertDialog.Builder(context);
                     }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                    String message = "There seems to be trouble downloading the image, please try again later.\n\n";
+                    if (errorMessage != null) {
+                        message = message + "Error: " + errorMessage;
+                    }
+                    builder.setTitle("Error")
+                            .setMessage(message)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (context instanceof AppCompatActivity) {
+                                        ((AppCompatActivity) context).finish();
+                                    }
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                }
+            });
+        }
     }
 
     private int getHeight() {
