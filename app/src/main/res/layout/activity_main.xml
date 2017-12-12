@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -10,248 +10,254 @@
     android:fillViewport="false"
     tools:context="se.swecookie.valthorens.MainActivity">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="@string/main_title"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextLight"
-            android:textSize="24sp"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/txtHelpMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/main_desc"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextLight" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/choose_from_map"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/choose_from_map" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/funitel_3_vallees"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/funitel_3_vallees" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/de_la_maison"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/de_la_maison" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/les_2_lacs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/les_2_lacs" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/funitel_de_thorens"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/funitel_de_thorens" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/la_tyrolienne"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/la_tyrolienne" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/plan_bouchet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/plan_bouchet" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/livecam_360"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/livecam_360" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/plein_sud"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/plein_sud" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/tsd_moutiere"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/tsd_moutiere" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/cime_caron"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/cime_caron" />
+    <ScrollView
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="380dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnAbout"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="onAboutClicked"
-                android:text="@string/main_about"
+                android:fontFamily="monospace"
+                android:text="@string/main_title"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextLight"
+                android:textSize="24sp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:id="@+id/txtHelpMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/main_desc"
+                android:textAlignment="center"
                 android:textColor="@color/colorTextLight" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <ImageView
+                android:id="@+id/choose_from_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/choose_from_map" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+
+            <ImageView
+                android:id="@+id/funitel_3_vallees"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/de_la_maison"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/les_2_lacs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/funitel_de_thorens"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/la_tyrolienne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/plan_bouchet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/livecam_360"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/plein_sud"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/tsd_moutiere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:id="@+id/cime_caron"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:clickable="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:focusable="true"
+                android:onClick="onClick"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAbout"
+                    style="@style/Widget.AppCompat.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/holo_blue_dark"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onAboutClicked"
+                    android:text="@string/main_about"
+                    android:textColor="@color/colorTextLight" />
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/5224354917"/>
+
+</RelativeLayout>
