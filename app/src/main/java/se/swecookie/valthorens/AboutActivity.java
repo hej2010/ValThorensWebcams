@@ -1,5 +1,6 @@
 package se.swecookie.valthorens;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +15,14 @@ public class AboutActivity extends AppCompatActivity {
     }
 
     public void onReturnClicked(View view) {
-        finish();
+        switch (view.getId()) {
+            case R.id.button:
+                finish();
+                break;
+            case R.id.btnPP:
+                startActivity(new Intent(AboutActivity.this, PrivacyPolicyActivity.class));
+                break;
+        }
     }
 
     public void onImageClicked(View view) {

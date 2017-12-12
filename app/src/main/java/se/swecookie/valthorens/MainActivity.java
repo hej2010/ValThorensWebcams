@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.ProgressBar;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -23,9 +26,11 @@ import se.swecookie.valthorens.helper.Links;
 
 public class MainActivity extends AppCompatActivity {
     public static Webcam clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     private ImageView funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, plan_bouchet, livecam_360, plein_sud, tsd_moutiere, cime_caron;
     private ProgressBar progressBar;
+    private AlertDialog ppAlert;
 
     private int loadedCount;
     private static final int TOTAL_COUNT = 10;
@@ -37,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         init();
 
+        if (!checkIfAcceptedPP()) {
+            displayPrivacyPolicyNotification();
+        }
+
         getImages();
     }
 
@@ -44,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     // TODO Ad-unit-id: ca-app-pub-2831297200743176/9525504068
 
     private void init() {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
@@ -63,6 +74,51 @@ public class MainActivity extends AppCompatActivity {
         cime_caron = findViewById(R.id.cime_caron);
         progressBar = findViewById(R.id.progressBar);
         loadedCount = 0;
+    }
+
+    private boolean checkIfAcceptedPP() {
+        SharedPreferences prefs = getSharedPreferences("accepted", MODE_PRIVATE);
+        return prefs.getBoolean("acceptedPP", false);
+    }
+
+    private void displayPrivacyPolicyNotification() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Privacy Policy");
+        builder.setMessage(getString(R.string.privacy_policy_message));
+        builder.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                setAcceptedPP(true);
+            }
+        });
+        builder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                setAcceptedPP(false);
+                finish();
+            }
+        });
+        builder.setNeutralButton("Read it", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MainActivity.this, PrivacyPolicyActivity.class));
+            }
+        });
+        builder.setCancelable(false);
+        ppAlert = builder.create();
+        ppAlert.show();
+    }
+
+    private void setAcceptedPP(boolean accepted) {
+        SharedPreferences.Editor editor = getSharedPreferences("accepted", MODE_PRIVATE).edit();
+        editor.putBoolean("acceptedPP", accepted);
+        editor.apply();
+    }
+
+    private void sendToFirebase(String btnPressed) {
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, btnPressed);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
     public void onClick(View view) {
@@ -321,4 +377,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, AboutActivity.class));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ppAlert != null && !ppAlert.isShowing() && !checkIfAcceptedPP()) {
+            displayPrivacyPolicyNotification();
+        }
+    }
 }
