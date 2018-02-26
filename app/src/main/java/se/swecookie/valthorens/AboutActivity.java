@@ -19,9 +19,6 @@ public class AboutActivity extends AppCompatActivity {
             case R.id.button:
                 finish();
                 break;
-            case R.id.btnPP:
-                startActivity(new Intent(AboutActivity.this, PrivacyPolicyActivity.class));
-                break;
         }
     }
 

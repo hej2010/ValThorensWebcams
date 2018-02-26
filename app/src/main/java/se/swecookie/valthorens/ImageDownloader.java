@@ -30,8 +30,8 @@ class ImageDownloader {
     private String currentURL;
     private Context context;
     private String imageDate;
-    private TextView textView;
-    private RelativeLayout relativeLayout;
+    private TextView txtDate;
+    private RelativeLayout rLLoading;
     private int id;
     private int currentWebcamWidth;
     private int currentWebcamHeight;
@@ -40,12 +40,12 @@ class ImageDownloader {
 
     void startDownload(ImageView imageView, TextView txtView, int id, String url, Context cont, RelativeLayout loader) {
         image = imageView;
-        textView = txtView;
-        textView.setVisibility(View.INVISIBLE);
+        txtDate = txtView;
+        txtDate.setVisibility(View.INVISIBLE);
         currentURL = url;
         downloadTask = new DownloadPhoto(ImageDownloader.this).execute();
         context = cont;
-        this.relativeLayout = loader;
+        this.rLLoading = loader;
         this.id = id;
     }
 
@@ -244,11 +244,11 @@ class ImageDownloader {
                 if (bitmap == null) {
                     imageDownloader.showErrorDialog();
                 } else {
-                    imageDownloader.relativeLayout.setVisibility(View.GONE);
+                    imageDownloader.rLLoading.setVisibility(View.GONE);
                     imageDownloader.image.setImageBitmap(bitmap);
                     imageDownloader.image.setVisibility(View.VISIBLE);
-                    imageDownloader.textView.setText(imageDownloader.imageDate);
-                    imageDownloader.textView.setVisibility(View.VISIBLE);
+                    imageDownloader.txtDate.setText(imageDownloader.imageDate);
+                    imageDownloader.txtDate.setVisibility(View.VISIBLE);
                 }
             }
         }

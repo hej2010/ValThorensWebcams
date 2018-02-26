@@ -29,7 +29,6 @@
             android:configChanges="orientation|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity android:name=".AboutActivity" />
-        <activity android:name=".PrivacyPolicyActivity"></activity>
     </application>
 
 </manifest>
