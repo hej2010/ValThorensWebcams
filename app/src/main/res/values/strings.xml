@@ -20,15 +20,13 @@
     <string name="map_title">Click on a circle to choose that webcamera</string>
     <string name="map_desc">Map over Val Thorens</string>
 
-    <string name="webcam_title">Camera name goes here</string>
-    <string name="webcam_date">Camera date goes here</string>
     <string name="webcam_desc">Webcam image from Val Thorens</string>
 
     <string name="about_image">Image from Val Thorens 2016, &#169; Rikard Teodorsson</string>
     <string name="about_source">Webcams from valthorens.com</string>
     <string name="about_author">App made by Rikard Teodorsson</string>
-    <string name="about_questions">Questions or suggestion for improvements? Contact \"rikardt.play@gmail.com\"</string>
-    <string name="about_version">Version 1.0.8</string>
+    <string name="about_questions">Questions or suggestion for improvements? Send an email to \"contact@swecookie.se\"</string>
+    <string name="about_version">Version 1.3</string>
     <string name="about_return">Return</string>
 
 </resources>

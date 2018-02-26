@@ -11,7 +11,7 @@
     tools:context="se.swecookie.valthorens.MainActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
@@ -58,6 +58,12 @@
             android:layout_height="1dp"
             android:background="@color/colorAccent" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
         <ImageView
             android:id="@+id/funitel_3_vallees"
             android:layout_width="match_parent"
@@ -68,13 +74,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/funitel_3_vallees" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/de_la_maison"
@@ -86,13 +90,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/de_la_maison" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/les_2_lacs"
@@ -104,17 +106,15 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/les_2_lacs" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/funitel_de_thorens"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:clickable="true"
@@ -122,13 +122,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/funitel_de_thorens" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/la_tyrolienne"
@@ -140,13 +138,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/la_tyrolienne" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/plan_bouchet"
@@ -158,13 +154,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/plan_bouchet" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/livecam_360"
@@ -176,13 +170,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/livecam_360" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/plein_sud"
@@ -194,13 +186,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/plein_sud" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/tsd_moutiere"
@@ -212,13 +202,11 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/tsd_moutiere" />
+            android:scaleType="fitXY" />
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
+            android:layout_height="1dp" />
 
         <ImageView
             android:id="@+id/cime_caron"
@@ -230,8 +218,7 @@
             android:cropToPadding="false"
             android:focusable="true"
             android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/cime_caron" />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -254,4 +241,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </ScrollView>
