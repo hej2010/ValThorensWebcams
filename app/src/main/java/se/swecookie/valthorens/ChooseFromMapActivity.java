@@ -25,10 +25,10 @@ public class ChooseFromMapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_from_map);
 
         imgMap = findViewById(R.id.imgMap);
-        //TextView txtCoordinates = findViewById(R.id.txtCoordinates);
+        //final TextView txtCoordinates = findViewById(R.id.txtCoordinates);
 
         Picasso.with(ChooseFromMapActivity.this)
-                .load(R.drawable.map4)
+                .load(R.drawable.map5)
                 .resize(1067, 489) // half size
                 .into(imgMap);
 
@@ -49,13 +49,15 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                         } else if (touchedXPercentage < 0.2) { //Plein sud
                             MainActivity.clickedImageNumber = Webcam.PLEIN_SUD;
                         } else if (touchedXPercentage < 0.276) { //De la maison
-                            MainActivity.clickedImageNumber = Webcam.DE_LA_MAISON;
+                            if (touchedYPercentage > 0.5) {
+                                MainActivity.clickedImageNumber = Webcam.DE_LA_MAISON;
+                            } else {
+                                MainActivity.clickedImageNumber = Webcam.STADE;
+                            }
                         } else if (touchedXPercentage < 0.3625) { //Livecam 360
                             MainActivity.clickedImageNumber = Webcam.LIVECAM_360;
                         } else if (touchedXPercentage < 0.46) { //Les 2 lacs
                             MainActivity.clickedImageNumber = Webcam.LES_2_LACS;
-                        } else if (touchedXPercentage < 0.57) { // TSD Moutiere
-                            MainActivity.clickedImageNumber = Webcam.TSD_MOUTIERE;
                         } else if (touchedXPercentage < 0.693) { //Funitel de thorens
                             MainActivity.clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
                         } else if (touchedXPercentage < 0.83 && touchedYPercentage < 0.36) { //La tryolienne

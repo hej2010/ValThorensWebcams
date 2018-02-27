@@ -10,10 +10,11 @@
     <string name="camera_2_de_la_maison">De La Maison</string>
     <string name="camera_3_les_2_lacs">Les 2 Lacs</string>
     <string name="camera_4_funitel_de_thorens">Funitel De Thorens</string>
-    <string name="camera_5_la_tyrolienne">La Tyrolienne</string>
-    <string name="camera_6_plan_bouchet">Plan Bouchet</string>
-    <string name="camera_7_livecam_360">Livecam 360&#176;</string>
-    <string name="camera_8_plein_sud">Plein Sud</string>
+    <string name="camera_6_la_tyrolienne">La Tyrolienne</string>
+    <string name="camera_5_stade">Stade</string>
+    <string name="camera_7_plan_bouchet">Plan Bouchet</string>
+    <string name="camera_8_livecam_360">Livecam 360&#176;</string>
+    <string name="camera_9_plein_sud">Plein Sud</string>
     <string name="camera_9_tsd_moutière">TSD Moutière</string>
     <string name="camera_10_cime_caron">Cime Caron</string>
 

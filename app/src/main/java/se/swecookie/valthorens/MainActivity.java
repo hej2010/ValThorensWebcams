@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
     public static Webcam clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
 
-    private ImageView funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, plan_bouchet, livecam_360, plein_sud, tsd_moutiere, cime_caron;
+    private ImageView funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, stade, plan_bouchet, livecam_360, plein_sud, cime_caron;
     private ProgressBar progressBar;
 
     private int loadedCount;
@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
         les_2_lacs = findViewById(R.id.les_2_lacs);
         funitel_de_thorens = findViewById(R.id.funitel_de_thorens);
         la_tyrolienne = findViewById(R.id.la_tyrolienne);
+        stade = findViewById(R.id.stade);
         plan_bouchet = findViewById(R.id.plan_bouchet);
         livecam_360 = findViewById(R.id.livecam_360);
         plein_sud = findViewById(R.id.plein_sud);
-        tsd_moutiere = findViewById(R.id.tsd_moutiere);
         cime_caron = findViewById(R.id.cime_caron);
         progressBar = findViewById(R.id.progressBar);
         loadedCount = 0;
@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.la_tyrolienne:
                     clickedImageNumber = Webcam.LA_TYROLIENNE;
                     break;
+                case R.id.stade:
+                    clickedImageNumber = Webcam.STADE;
+                    break;
                 case R.id.plan_bouchet:
                     clickedImageNumber = Webcam.PLAN_BOUCHET;
                     break;
@@ -84,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.plein_sud:
                     clickedImageNumber = Webcam.PLEIN_SUD;
-                    break;
-                case R.id.tsd_moutiere:
-                    clickedImageNumber = Webcam.TSD_MOUTIERE;
                     break;
                 case R.id.cime_caron:
                     clickedImageNumber = Webcam.CIME_CARON;
@@ -201,6 +201,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         Picasso.with(this)
+                .load(R.drawable.stade)
+                .into(stade, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        loadedCount++;
+                        if (loadedCount >= TOTAL_COUNT) {
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e("error", "la_tyrolienne");
+                    }
+                });
+        Picasso.with(this)
                 .load(R.drawable.plan_bouchet)
                 .into(plan_bouchet, new Callback() {
                     @Override
@@ -246,22 +262,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onError() {
                         Log.e("error", "plein_sud");
-                    }
-                });
-        Picasso.with(this)
-                .load(R.drawable.tsd_moutiere)
-                .into(tsd_moutiere, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.e("error", "tsd_moutiere");
                     }
                 });
         Picasso.with(this)

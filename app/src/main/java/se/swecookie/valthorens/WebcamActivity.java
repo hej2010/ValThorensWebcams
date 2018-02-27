@@ -26,47 +26,47 @@ public class WebcamActivity extends AppCompatActivity {
         setTitleToCameraName();
     }
 
-    private void setTitleToCameraName() { // SÄTT INTE HTTPS PÅ NÅN OM DEN INTE REDIRECTAR EN DIT UTAN HTTPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    private void setTitleToCameraName() {
         switch (MainActivity.clickedImageNumber) {
             case FUNITEL_3_VALLEES:
                 txtWebCamTitle.setText(getString(R.string.camera_1_funitel_3_vallees));
-                getImage(1, "http://skaping.com/valthorens/3vallees"); // INTE HTTPS!!!
+                getImage(1, "http://skaping.com/valthorens/3vallees");
                 break;
             case DE_LA_MAISON:
                 txtWebCamTitle.setText(getString(R.string.camera_2_de_la_maison));
-                getImage(2, "http://skaping.com/valthorens/lamaison"); // INTE HTTPS!!!
+                getImage(2, "http://skaping.com/valthorens/lamaison");
                 break;
             case LES_2_LACS:
                 txtWebCamTitle.setText(getString(R.string.camera_3_les_2_lacs));
-                getImage(3, "http://skaping.com/valthorens/2lacs"); // INTE HTTPS!!!
+                getImage(3, "http://skaping.com/valthorens/2lacs");
                 break;
             case FUNITEL_DE_THORENS:
                 txtWebCamTitle.setText(getString(R.string.camera_4_funitel_de_thorens));
-                getImage(4, "http://skaping.com/valthorens/funitelthorens"); // INTE HTTPS!!!
+                getImage(4, "http://skaping.com/valthorens/funitelthorens");
+                break;
+            case STADE:
+                txtWebCamTitle.setText(getString(R.string.camera_5_stade));
+                getImage(5, "http://www.skaping.com/valthorens/stade");
                 break;
             case LA_TYROLIENNE:
-                txtWebCamTitle.setText(getString(R.string.camera_5_la_tyrolienne));
-                getImage(5, "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html"); // INTE HTTPS!!!
+                txtWebCamTitle.setText(getString(R.string.camera_6_la_tyrolienne));
+                getImage(6, "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html");
                 break;
             case PLAN_BOUCHET:
-                txtWebCamTitle.setText(getString(R.string.camera_6_plan_bouchet));
-                getImage(6, "http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html"); // INTE HTTPS!!!
+                txtWebCamTitle.setText(getString(R.string.camera_7_plan_bouchet));
+                getImage(7, "http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html");
                 break;
             case LIVECAM_360:
-                txtWebCamTitle.setText(getString(R.string.camera_7_livecam_360));
-                getImage(7, "http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html"); // INTE HTTPS!!!
+                txtWebCamTitle.setText(getString(R.string.camera_8_livecam_360));
+                getImage(8, "http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html");
                 break;
             case PLEIN_SUD:
-                txtWebCamTitle.setText(getString(R.string.camera_8_plein_sud));
-                getImage(8, "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html"); // INTE HTTPS!!!
-                break;
-            case TSD_MOUTIERE:
-                txtWebCamTitle.setText(getString(R.string.camera_9_tsd_moutière));
-                getImage(9, "http://www.trinum.com/ibox/ftpcam/mega_cime_caron.jpg"); // INTE HTTPS!!!
+                txtWebCamTitle.setText(getString(R.string.camera_9_plein_sud));
+                getImage(9, "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html");
                 break;
             case CIME_CARON:
                 txtWebCamTitle.setText(getString(R.string.camera_10_cime_caron));
-                getImage(10, "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg"); // INTE HTTPS!!!
+                getImage(10, "http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html");
                 break;
         }
     }

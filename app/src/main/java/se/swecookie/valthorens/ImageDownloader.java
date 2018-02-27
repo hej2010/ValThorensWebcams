@@ -64,29 +64,16 @@ class ImageDownloader {
             Document dateDoc = null;
             String tempUrl = null;
 
-            switch (imageDownloader.id) { // SÄTT INTE HTTPS PÅ NÅN OM DEN INTE REDIRECTAR EN DIT UTAN HTTPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                case 5:
-                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html"; // INTE HTTPS!!!
-                    break;
-                case 6:
-                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html"; // INTE HTTPS!!!
-                    break;
-                case 8:
-                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html"; // INTE HTTPS!!!
-                    break;
-                case 9:
-                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-tsd-moutiere.414.html"; // INTE HTTPS!!!
-                    break;
-                case 10:
-                    tempUrl = "http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html"; // INTE HTTPS!!!
-                    break;
+            if (imageDownloader.id > 5) {
+                tempUrl = imageDownloader.currentURL;
             }
 
             try {
                 if (tempUrl != null) {
                     dateDoc = Jsoup.connect(tempUrl).ignoreContentType(true).get();
+                } else {
+                    doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
                 }
-                doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
             } catch (SocketTimeoutException e) {
                 errorMessage = e.getMessage();
                 return null;
@@ -94,14 +81,16 @@ class ImageDownloader {
                 e.printStackTrace();
             }
 
-            if (doc == null) {
+            if (doc == null && dateDoc == null) {
                 errorMessage = "Empty server response";
+                cancel(true);
                 return null;
             }
-            if (imageDownloader.id < 5) {
+            if (imageDownloader.id < 6) {
                 imageDownloader.currentWebcamWidth = 12755;
                 imageDownloader.currentWebcamHeight = 2160;
-                Elements scripts = doc.select("script");
+                assert doc != null;
+                Elements scripts = doc.getElementsByTag("script");
                 String script = "";
                 for (Element d : scripts) {
                     if (d.toString().contains("new ImageMedia(")) {
@@ -125,6 +114,7 @@ class ImageDownloader {
                                 .replace("https://data.skaping.com/funitelthorens-360/", "")
                                 .replace("https://data.skaping.com/ValThorensLaMaison/", "")
                                 .replace("https://data.skaping.com/vt2lacs-360/", "")
+                                .replace("https://data.skaping.com/setam/stade-val-thorens/", "")
                                 .replace(".jpg", "")
                                 .replace("/", " ")
                                 .replace("-", ":");
@@ -137,61 +127,47 @@ class ImageDownloader {
                         break;
                     } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
                         imageDownloader.currentURL = "https:" + s.split("\"")[1];
-                        final String[] arr = imageDownloader.currentURL.split("static/vt2lacs-360/");
-                        if (arr.length > 1) {
-                            imageDownloader.imageDate = arr[1]
-                                    .replace(".jpg", "")
-                                    .replace("/", " ")
-                                    .replace("-", ":");
+                        final String[] arr = imageDownloader.currentURL.split("/");
+                        if (arr.length > 4) {
+                            imageDownloader.imageDate = "Taken at " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
+                                    + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
                         } else {
                             imageDownloader.imageDate = "";
                             break;
-                        }
-
-                        String[] temp = imageDownloader.imageDate.split(" ");
-                        if (temp.length >= 4) {
-                            imageDownloader.imageDate = "Taken at " + temp[0] + "-" + temp[1] + "-" + temp[2] + " " + temp[3] + ", CET";
-                        } else {
-                            imageDownloader.imageDate = "";
                         }
                         break;
                     }
                 }
             } else {
-                switch (imageDownloader.id) { // SÄTT INTE HTTPS PÅ NÅN OM DEN INTE REDIRECTAR EN DIT UTAN HTTPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    case 5:
+                switch (imageDownloader.id) {
+                    case 6:
                         imageDownloader.currentWebcamWidth = 11066;
                         imageDownloader.currentWebcamHeight = 2326;
-                        imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg"; // INTE HTTPS!!!
+                        imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                         break;
-                    case 6:
+                    case 7:
                         imageDownloader.currentWebcamWidth = 7078;
                         imageDownloader.currentWebcamHeight = 1460;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
-                    case 7:
+                    case 8:
                         imageDownloader.currentWebcamWidth = 6243;
                         imageDownloader.currentWebcamHeight = 814;
                         imageDownloader.currentURL = "https://backend.roundshot.com/cams/232/default";
                         break;
-                    case 8:
+                    case 9:
                         imageDownloader.currentWebcamWidth = 10000;
                         imageDownloader.currentWebcamHeight = 1986;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                         break;
-                    case 9:
-                        imageDownloader.currentWebcamWidth = 10000;
-                        imageDownloader.currentWebcamHeight = 2042;
-                        imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_cime_caron.jpg";
-                        break;
                     case 10:
                         imageDownloader.currentWebcamWidth = 8346;
                         imageDownloader.currentWebcamHeight = 1543;
-                        imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg"; // INTE HTTPS!!!
+                        imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                         break;
                 }
 
-                if (imageDownloader.id != 7 && dateDoc != null) {
+                if (imageDownloader.id != 8 && dateDoc != null) {
                     Elements date = dateDoc.select("p");
                     String script;
                     for (Element d : date) {

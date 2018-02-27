@@ -31,7 +31,7 @@
         android:contentDescription="@string/map_desc"
         android:cropToPadding="false"
         android:focusable="true"
-        app:srcCompat="@drawable/map4" />
+        app:srcCompat="@drawable/map5" />
 
     <TextView
         android:id="@+id/txtCoordinates"

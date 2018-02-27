@@ -6,9 +6,9 @@ enum Webcam {
     LES_2_LACS,
     FUNITEL_DE_THORENS,
     LA_TYROLIENNE,
+    STADE,
     PLAN_BOUCHET,
     LIVECAM_360,
     PLEIN_SUD,
-    TSD_MOUTIERE,
     CIME_CARON
 }
