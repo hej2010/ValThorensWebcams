@@ -11,16 +11,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:paddingEnd="25dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingStart="25dp">
+        android:paddingEnd="@dimen/about_padding"
+        android:paddingLeft="@dimen/about_padding"
+        android:paddingRight="@dimen/about_padding"
+        android:paddingStart="@dimen/about_padding">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="137dp"
+            android:layout_height="@dimen/about_image_height"
             android:clickable="true"
             android:contentDescription="@string/about_image"
             android:focusable="true"
@@ -28,7 +31,6 @@
             app:srcCompat="@drawable/egen" />
 
         <TextView
-            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/main_about"
@@ -38,9 +40,9 @@
             android:textStyle="bold" />
 
         <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/about_view"
             android:layout_height="1dp"
+            android:layout_gravity="center"
             android:background="@color/colorAccent" />
 
         <TextView
@@ -48,9 +50,19 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:textStyle="bold"
-            android:textSize="16sp"
             android:text="@string/about_source"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextLight"
+            android:textIsSelectable="true"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/about_legal_notice"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
 
@@ -70,7 +82,8 @@
             android:paddingTop="10dp"
             android:text="@string/about_questions"
             android:textAlignment="center"
-            android:textColor="@color/colorTextLight" />
+            android:textColor="@color/colorTextLight"
+            android:textIsSelectable="true" />
 
         <TextView
             android:layout_width="match_parent"
@@ -90,6 +103,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="onReturnClicked"
-            android:text="@string/about_return" />
+            android:text="@string/about_return"
+            android:textColor="@color/colorTextLight" />
     </LinearLayout>
 </ScrollView>
