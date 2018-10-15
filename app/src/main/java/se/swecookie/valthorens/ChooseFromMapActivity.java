@@ -1,5 +1,6 @@
 package se.swecookie.valthorens;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,8 +8,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class ChooseFromMapActivity extends AppCompatActivity {
     private ImageView imgMap;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class ChooseFromMapActivity extends AppCompatActivity {
         imgMap = findViewById(R.id.imgMap);
         //final TextView txtCoordinates = findViewById(R.id.txtCoordinates);
 
-        Picasso.with(ChooseFromMapActivity.this)
+        Picasso.get()
                 .load(R.drawable.map5)
                 .resize(1067, 489) // half size
                 .into(imgMap);
@@ -115,9 +117,6 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                 // connected to the mobile provider's data plan
                 connected = true;
             }
-        } else {
-            // not connected to the internet
-            connected = false;
         }
         return connected;
     }

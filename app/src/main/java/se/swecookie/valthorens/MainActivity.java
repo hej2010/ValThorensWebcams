@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getImages() {
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.funitel_3_vallees)
                 .into(funitel_3_vallees, new Callback() {
                     @Override
@@ -132,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "funitel_3_vallees");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.de_la_maison)
                 .into(de_la_maison, new Callback() {
                     @Override
@@ -148,11 +148,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "de_la_maison");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.les_2_lacs)
                 .into(les_2_lacs, new Callback() {
                     @Override
@@ -164,11 +164,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "les_2_lacs");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.funitel_de_thorens)
                 .into(funitel_de_thorens, new Callback() {
                     @Override
@@ -180,11 +180,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "funitel_de_thorens");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.la_tyrolienne)
                 .into(la_tyrolienne, new Callback() {
                     @Override
@@ -196,11 +196,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "la_tyrolienne");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.stade)
                 .into(stade, new Callback() {
                     @Override
@@ -212,11 +212,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "la_tyrolienne");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.plan_bouchet)
                 .into(plan_bouchet, new Callback() {
                     @Override
@@ -228,11 +228,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "plan_bouchet");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.livecam_360)
                 .into(livecam_360, new Callback() {
                     @Override
@@ -244,11 +244,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "livecam_360");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.plein_sud)
                 .into(plein_sud, new Callback() {
                     @Override
@@ -260,11 +260,11 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "plein_sud");
                     }
                 });
-        Picasso.with(this)
+        Picasso.get()
                 .load(R.drawable.cime_caron)
                 .into(cime_caron, new Callback() {
                     @Override
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         Log.e("error", "cime_caron");
                     }
                 });
@@ -297,9 +297,6 @@ public class MainActivity extends AppCompatActivity {
                 // connected to the mobile provider's data plan
                 connected = true;
             }
-        } else {
-            // not connected to the internet
-            connected = false;
         }
         return connected;
     }

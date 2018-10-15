@@ -15,10 +15,10 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:paddingEnd="@dimen/about_padding"
+        android:paddingStart="@dimen/about_padding"
         android:paddingLeft="@dimen/about_padding"
-        android:paddingRight="@dimen/about_padding"
-        android:paddingStart="@dimen/about_padding">
+        android:paddingEnd="@dimen/about_padding"
+        android:paddingRight="@dimen/about_padding">
 
         <ImageView
             android:id="@+id/imageView"
@@ -48,20 +48,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/about_source"
+            android:autoLink="web"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
-            android:textIsSelectable="true"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/about_legal_notice"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
@@ -69,8 +69,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/about_author"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
@@ -78,8 +78,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/about_questions"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
@@ -88,8 +88,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/about_version"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />

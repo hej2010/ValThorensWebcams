@@ -87,8 +87,8 @@ class ImageDownloader {
                 return null;
             }
             if (imageDownloader.id < 6) {
-                imageDownloader.currentWebcamWidth = 12755;
-                imageDownloader.currentWebcamHeight = 2160;
+                imageDownloader.currentWebcamWidth = 6565; // 12755
+                imageDownloader.currentWebcamHeight = 1080; // 2160
                 assert doc != null;
                 Elements scripts = doc.getElementsByTag("script");
                 String script = "";
@@ -141,28 +141,28 @@ class ImageDownloader {
             } else {
                 switch (imageDownloader.id) {
                     case 6:
-                        imageDownloader.currentWebcamWidth = 11066;
-                        imageDownloader.currentWebcamHeight = 2326;
+                        imageDownloader.currentWebcamWidth = 6775;
+                        imageDownloader.currentWebcamHeight = 1110;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                         break;
                     case 7:
-                        imageDownloader.currentWebcamWidth = 7078;
-                        imageDownloader.currentWebcamHeight = 1460;
+                        imageDownloader.currentWebcamWidth = 7057;
+                        imageDownloader.currentWebcamHeight = 1520;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
                     case 8:
-                        imageDownloader.currentWebcamWidth = 6243;
-                        imageDownloader.currentWebcamHeight = 814;
+                        imageDownloader.currentWebcamWidth = 6136;
+                        imageDownloader.currentWebcamHeight = 800;
                         imageDownloader.currentURL = "https://backend.roundshot.com/cams/232/default";
                         break;
                     case 9:
-                        imageDownloader.currentWebcamWidth = 10000;
+                        imageDownloader.currentWebcamWidth = 9999;
                         imageDownloader.currentWebcamHeight = 1986;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                         break;
                     case 10:
-                        imageDownloader.currentWebcamWidth = 8346;
-                        imageDownloader.currentWebcamHeight = 1543;
+                        imageDownloader.currentWebcamWidth = 7140;
+                        imageDownloader.currentWebcamHeight = 1586;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                         break;
                 }
@@ -200,7 +200,7 @@ class ImageDownloader {
                 float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, r.getDisplayMetrics()) * 4;
                 double scaleWith = (height - px) / imageDownloader.currentWebcamHeight;
 
-                return Picasso.with(imageDownloader.context)
+                return Picasso.get()
                         .load(imageDownloader.currentURL)
                         .resize((int) (imageDownloader.currentWebcamWidth * scaleWith), (int) (imageDownloader.currentWebcamHeight * scaleWith))
                         .centerInside()
