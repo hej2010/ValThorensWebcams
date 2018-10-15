@@ -2,11 +2,8 @@ package se.swecookie.valthorens;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +42,7 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                     double touchedXPercentage = posX / maxWidth;
                     double touchedYPercentage = posY / maxHeight;
                     //txtCoordinates.setText("Touch coordinates : " + posX + "x" + event.getY() + ", perc: " + (int) (touchedXPercentage * 1000) + ", " + (int) (touchedYPercentage * 1000));
-                    if (checkConnection()) {
+                    if (MainActivity.checkConnection(ChooseFromMapActivity.this)) {
                         if (touchedXPercentage < 0.1102) { //Funitel 3 vallees
                             MainActivity.clickedImageNumber = Webcam.FUNITEL_3_VALLEES;
                         } else if (touchedXPercentage < 0.2) { //Plein sud
@@ -100,25 +97,6 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-    }
-
-    private boolean checkConnection() {
-        boolean connected = false;
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = null;
-        if (cm != null) {
-            activeNetwork = cm.getActiveNetworkInfo();
-        }
-        if (activeNetwork != null) { // connected to the internet
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                // connected to wifi
-                connected = true;
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                // connected to the mobile provider's data plan
-                connected = true;
-            }
-        }
-        return connected;
     }
 
     int getHeight() {

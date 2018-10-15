@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        boolean connected = checkConnection();
+        boolean connected = checkConnection(MainActivity.this);
         if (!connected && view.getId() != R.id.choose_from_map) {
             showConnectionError();
         } else {
@@ -281,19 +281,14 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private boolean checkConnection() {
+    static boolean checkConnection(AppCompatActivity context) {
         boolean connected = false;
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = null;
-        if (cm != null) {
-            activeNetwork = cm.getActiveNetworkInfo();
-        }
-        if (activeNetwork != null) { // connected to the internet
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) {
             if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                // connected to wifi
                 connected = true;
             } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                // connected to the mobile provider's data plan
                 connected = true;
             }
         }
