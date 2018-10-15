@@ -1,8 +1,9 @@
 package se.swecookie.valthorens;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ public class WebcamActivity extends AppCompatActivity {
     private ImageView imgWebcam;
     private RelativeLayout loadingPanel;
     private ImageDownloader imageDownloader;
+
+    private boolean focused;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,32 @@ public class WebcamActivity extends AppCompatActivity {
         loadingPanel = findViewById(R.id.loadingPanel);
 
         setTitleToCameraName();
+
+        focused = false;
+
+        imgWebcam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!focused) {
+                    txtDate.setVisibility(View.GONE);
+                    txtWebCamTitle.setVisibility(View.GONE);
+                } else {
+                    txtDate.setVisibility(View.VISIBLE);
+                    txtWebCamTitle.setVisibility(View.VISIBLE);
+                }
+                focused = !focused;
+                toggleFullscreen(WebcamActivity.this);
+            }
+        });
+    }
+
+    private void toggleFullscreen(AppCompatActivity activity) {
+        int newUiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
+        newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
+        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
+        activity.getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
 
     private void setTitleToCameraName() {

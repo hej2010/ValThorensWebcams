@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-
         funitel_3_vallees = findViewById(R.id.funitel_3_vallees);
         de_la_maison = findViewById(R.id.de_la_maison);
         les_2_lacs = findViewById(R.id.les_2_lacs);

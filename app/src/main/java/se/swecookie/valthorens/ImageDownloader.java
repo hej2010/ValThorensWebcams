@@ -87,8 +87,8 @@ class ImageDownloader {
                 return null;
             }
             if (imageDownloader.id < 6) {
-                imageDownloader.currentWebcamWidth = 6565; // 12755
-                imageDownloader.currentWebcamHeight = 1080; // 2160
+                imageDownloader.currentWebcamWidth = 12755; // 12755
+                imageDownloader.currentWebcamHeight = 2160; // 2160
                 assert doc != null;
                 Elements scripts = doc.getElementsByTag("script");
                 String script = "";
