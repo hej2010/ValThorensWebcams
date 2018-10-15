@@ -48,10 +48,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autoLink="web"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_source"
-            android:autoLink="web"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
             android:textSize="16sp"
@@ -81,6 +81,16 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_questions"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextLight"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/about_fullscreen"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
             android:textIsSelectable="true" />

@@ -22,12 +22,15 @@
     <string name="map_desc">Map over Val Thorens</string>
 
     <string name="webcam_desc">Webcam image from Val Thorens</string>
+    <string name="webcam_fullscreen_hint">Tap the image to view it in fullscreen!</string>
+    <string name="dismiss">Dismiss</string>
 
     <string name="about_image">Photo from Val Thorens 2016, &#169; Rikard Teodorsson</string>
     <string name="about_source">Webcams from valthorens.com</string>
     <string name="about_legal_notice">Published with permission from Office de tourisme de Val Thorens</string>
     <string name="about_author">App made by Rikard Teodorsson</string>
     <string name="about_questions">Questions or suggestion for improvements? Send an email to \"contact@arctosoft.com\"</string>
+    <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
     <string name="about_version">Version 1.5</string>
     <string name="about_return">Return</string>
 

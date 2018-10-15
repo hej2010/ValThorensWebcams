@@ -1,6 +1,10 @@
 package se.swecookie.valthorens;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -15,6 +19,9 @@ public class WebcamActivity extends AppCompatActivity {
     private ImageDownloader imageDownloader;
 
     private boolean focused;
+    private Snackbar snackbar = null;
+
+    private static final String prefsFirstLaunch = "firstLaunch";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +35,31 @@ public class WebcamActivity extends AppCompatActivity {
 
         setTitleToCameraName();
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
+        boolean isFirstLaunch = prefs.getBoolean(prefsFirstLaunch, true);
+
+        if (isFirstLaunch) {
+            snackbar = Snackbar.make(imgWebcam, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.dismiss), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+                        }
+                    }).setActionTextColor(getResources().getColor(R.color.colorTextLight));
+            View sbView = snackbar.getView();
+            sbView.setBackgroundColor(ContextCompat.getColor(WebcamActivity.this, R.color.colorAccent));
+            snackbar.show();
+        }
+
         focused = false;
 
         imgWebcam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (snackbar != null && snackbar.isShown()) {
+                    snackbar.dismiss();
+                    prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+                }
                 if (!focused) {
                     txtDate.setVisibility(View.GONE);
                     txtWebCamTitle.setVisibility(View.GONE);

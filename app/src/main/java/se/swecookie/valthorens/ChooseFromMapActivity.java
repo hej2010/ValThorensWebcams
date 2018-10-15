@@ -82,7 +82,7 @@ public class ChooseFromMapActivity extends AppCompatActivity {
     private void showConnectionError() {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
         } else {
             builder = new AlertDialog.Builder(this);
         }
