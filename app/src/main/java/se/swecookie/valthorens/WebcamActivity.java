@@ -104,25 +104,29 @@ public class WebcamActivity extends AppCompatActivity {
                 txtWebCamTitle.setText(getString(R.string.camera_5_stade));
                 getImage(5, "http://www.skaping.com/valthorens/stade");
                 break;
+            case BOISMINT:
+                txtWebCamTitle.setText(getString(R.string.camera_11_boismint));
+                getImage(6, "http://www.skaping.com/valthorens/boismint");
+                break;
             case LA_TYROLIENNE:
                 txtWebCamTitle.setText(getString(R.string.camera_6_la_tyrolienne));
-                getImage(6, "http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html");
+                getImage(7, "http://www.valthorens.com/en/webcam/livecam-tyrolienne"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html
                 break;
             case PLAN_BOUCHET:
                 txtWebCamTitle.setText(getString(R.string.camera_7_plan_bouchet));
-                getImage(7, "http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html");
+                getImage(8, "http://www.valthorens.com/en/webcam/livecam-plan-bouchet"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html
                 break;
             case LIVECAM_360:
                 txtWebCamTitle.setText(getString(R.string.camera_8_livecam_360));
-                getImage(8, "http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html");
+                getImage(9, "http://www.valthorens.com/en/webcam/livecam-station"); // http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html
                 break;
             case PLEIN_SUD:
                 txtWebCamTitle.setText(getString(R.string.camera_9_plein_sud));
-                getImage(9, "http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html");
+                getImage(10, "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html
                 break;
             case CIME_CARON:
                 txtWebCamTitle.setText(getString(R.string.camera_10_cime_caron));
-                getImage(10, "http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html");
+                getImage(11, "http://www.valthorens.com/en/webcam/livecam-cime-caron"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html
                 break;
         }
     }
@@ -145,6 +149,8 @@ public class WebcamActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        imageDownloader.cancel();
+        if (imageDownloader != null) {
+            imageDownloader.cancel();
+        }
     }
 }

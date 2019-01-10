@@ -71,15 +71,6 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/about_author"
-            android:textAlignment="center"
-            android:textColor="@color/colorTextLight" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:text="@string/about_questions"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
@@ -92,8 +83,7 @@
             android:paddingBottom="10dp"
             android:text="@string/about_fullscreen"
             android:textAlignment="center"
-            android:textColor="@color/colorTextLight"
-            android:textIsSelectable="true" />
+            android:textColor="@color/colorTextLight" />
 
         <TextView
             android:layout_width="match_parent"

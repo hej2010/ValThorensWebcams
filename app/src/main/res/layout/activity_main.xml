@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -17,7 +16,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
@@ -28,7 +26,6 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/txtHelpMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/main_desc"
@@ -145,6 +142,22 @@
             android:layout_height="1dp" />
 
         <ImageView
+            android:id="@+id/boismint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:focusable="true"
+            android:onClick="onClick"
+            android:scaleType="fitXY" />
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <ImageView
             android:id="@+id/la_tyrolienne"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -227,7 +240,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnAbout"
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

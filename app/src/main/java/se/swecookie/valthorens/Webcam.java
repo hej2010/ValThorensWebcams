@@ -10,5 +10,6 @@ enum Webcam {
     PLAN_BOUCHET,
     LIVECAM_360,
     PLEIN_SUD,
-    CIME_CARON
+    CIME_CARON,
+    BOISMINT
 }

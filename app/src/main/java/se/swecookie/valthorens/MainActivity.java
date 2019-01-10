@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -19,12 +18,13 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
     public static Webcam clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
-
-    private ImageView funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, stade, plan_bouchet, livecam_360, plein_sud, cime_caron;
     private ProgressBar progressBar;
 
     private int loadedCount;
-    private static final int TOTAL_COUNT = 10;
+    private static final int TOTAL_COUNT = 11;
+    private static final int[] WEBCAM_DRAWABLE_ID = {R.drawable.funitel_3_vallees, R.drawable.de_la_maison, R.drawable.les_2_lacs, R.drawable.funitel_de_thorens, R.drawable.la_tyrolienne,
+            R.drawable.stade, R.drawable.plan_bouchet, R.drawable.boismint, R.drawable.livecam_360, R.drawable.plein_sud, R.drawable.cime_caron};
+    private ImageView[] WEBCAM_IMAGEVIEW;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +37,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        funitel_3_vallees = findViewById(R.id.funitel_3_vallees);
-        de_la_maison = findViewById(R.id.de_la_maison);
-        les_2_lacs = findViewById(R.id.les_2_lacs);
-        funitel_de_thorens = findViewById(R.id.funitel_de_thorens);
-        la_tyrolienne = findViewById(R.id.la_tyrolienne);
-        stade = findViewById(R.id.stade);
-        plan_bouchet = findViewById(R.id.plan_bouchet);
-        livecam_360 = findViewById(R.id.livecam_360);
-        plein_sud = findViewById(R.id.plein_sud);
-        cime_caron = findViewById(R.id.cime_caron);
+        ImageView funitel_3_vallees = findViewById(R.id.funitel_3_vallees);
+        ImageView de_la_maison = findViewById(R.id.de_la_maison);
+        ImageView les_2_lacs = findViewById(R.id.les_2_lacs);
+        ImageView funitel_de_thorens = findViewById(R.id.funitel_de_thorens);
+        ImageView la_tyrolienne = findViewById(R.id.la_tyrolienne);
+        ImageView stade = findViewById(R.id.stade);
+        ImageView boismint = findViewById(R.id.boismint);
+        ImageView plan_bouchet = findViewById(R.id.plan_bouchet);
+        ImageView livecam_360 = findViewById(R.id.livecam_360);
+        ImageView plein_sud = findViewById(R.id.plein_sud);
+        ImageView cime_caron = findViewById(R.id.cime_caron);
         progressBar = findViewById(R.id.progressBar);
         loadedCount = 0;
+
+        WEBCAM_IMAGEVIEW = new ImageView[]{funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, stade, plan_bouchet, boismint, livecam_360, plein_sud, cime_caron};
     }
 
     public void onClick(View view) {
         boolean connected = checkConnection(MainActivity.this);
         if (!connected && view.getId() != R.id.choose_from_map) {
-            showConnectionError();
+            showConnectionError(this);
         } else {
             switch (view.getId()) {
                 case R.id.choose_from_map:
@@ -78,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.stade:
                     clickedImageNumber = Webcam.STADE;
                     break;
+                case R.id.boismint:
+                    clickedImageNumber = Webcam.BOISMINT;
+                    break;
                 case R.id.plan_bouchet:
                     clickedImageNumber = Webcam.PLAN_BOUCHET;
                     break;
@@ -95,21 +101,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showConnectionError() {
+    static void showConnectionError(final AppCompatActivity context) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(this);
+            builder = new AlertDialog.Builder(context);
         }
-        builder.setTitle("Connection error")
-                .setMessage("You need an active internet connection to view a webcam!")
-                .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
+        builder.setTitle(context.getString(R.string.connection_title))
+                .setMessage(context.getString(R.string.connection_message))
+                .setPositiveButton(context.getString(R.string.open_settings), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                        context.startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
                     }
                 })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                .setNegativeButton(context.getString(R.string.dismiss), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -119,166 +125,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getImages() {
-        Picasso.get()
-                .load(R.drawable.funitel_3_vallees)
-                .into(funitel_3_vallees, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
+        for (int i = 0; i < TOTAL_COUNT; i++) {
+            Picasso.get()
+                    .load(WEBCAM_DRAWABLE_ID[i])
+                    .into(WEBCAM_IMAGEVIEW[i], new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            loadedCount++;
+                            if (loadedCount >= TOTAL_COUNT) {
+                                progressBar.setVisibility(View.GONE);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "funitel_3_vallees");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.de_la_maison)
-                .into(de_la_maison, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
                         }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "de_la_maison");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.les_2_lacs)
-                .into(les_2_lacs, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "les_2_lacs");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.funitel_de_thorens)
-                .into(funitel_de_thorens, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "funitel_de_thorens");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.la_tyrolienne)
-                .into(la_tyrolienne, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "la_tyrolienne");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.stade)
-                .into(stade, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "la_tyrolienne");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.plan_bouchet)
-                .into(plan_bouchet, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "plan_bouchet");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.livecam_360)
-                .into(livecam_360, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "livecam_360");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.plein_sud)
-                .into(plein_sud, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "plein_sud");
-                    }
-                });
-        Picasso.get()
-                .load(R.drawable.cime_caron)
-                .into(cime_caron, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        loadedCount++;
-                        if (loadedCount >= TOTAL_COUNT) {
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("error", "cime_caron");
-                    }
-                });
+                    });
+        }
     }
 
     static boolean checkConnection(AppCompatActivity context) {

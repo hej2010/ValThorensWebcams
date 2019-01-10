@@ -15,8 +15,8 @@
     <string name="camera_7_plan_bouchet">Plan Bouchet</string>
     <string name="camera_8_livecam_360">Livecam 360&#176;</string>
     <string name="camera_9_plein_sud">Plein Sud</string>
-    <string name="camera_9_tsd_moutière">TSD Moutière</string>
     <string name="camera_10_cime_caron">Cime Caron</string>
+    <string name="camera_11_boismint">Boismint</string>
 
     <string name="map_title">Click on a circle to choose that webcamera</string>
     <string name="map_desc">Map over Val Thorens</string>
@@ -25,13 +25,16 @@
     <string name="webcam_fullscreen_hint">Tap the image to view it in fullscreen!</string>
     <string name="dismiss">Dismiss</string>
 
-    <string name="about_image">Photo from Val Thorens 2016, &#169; Rikard Teodorsson</string>
+    <string name="connection_title">Connection error</string>
+    <string name="connection_message">You need an active internet connection to view a webcam!</string>
+    <string name="open_settings">Open settings</string>
+
+    <string name="about_image">Photo from Val Thorens 2016</string>
     <string name="about_source">Webcams from valthorens.com</string>
     <string name="about_legal_notice">Published with permission from Office de tourisme de Val Thorens</string>
-    <string name="about_author">App made by Rikard Teodorsson</string>
     <string name="about_questions">Questions or suggestion for improvements? Send an email to \"contact@arctosoft.com\"</string>
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
-    <string name="about_version">Version 1.5</string>
+    <string name="about_version">Version 1.6</string>
     <string name="about_return">Return</string>
 
 </resources>

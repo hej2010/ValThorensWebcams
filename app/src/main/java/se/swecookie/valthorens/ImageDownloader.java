@@ -61,19 +61,9 @@ class ImageDownloader {
             ImageDownloader imageDownloader = weakReference.get();
             imageDownloader.imageDate = "";
             Document doc = null;
-            Document dateDoc = null;
-            String tempUrl = null;
-
-            if (imageDownloader.id > 5) {
-                tempUrl = imageDownloader.currentURL;
-            }
 
             try {
-                if (tempUrl != null) {
-                    dateDoc = Jsoup.connect(tempUrl).ignoreContentType(true).get();
-                } else {
-                    doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
-                }
+                doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
             } catch (SocketTimeoutException e) {
                 errorMessage = e.getMessage();
                 return null;
@@ -81,15 +71,14 @@ class ImageDownloader {
                 e.printStackTrace();
             }
 
-            if (doc == null && dateDoc == null) {
+            if (doc == null /*&& dateDoc == null*/) {
                 errorMessage = "Empty server response";
                 cancel(true);
                 return null;
             }
-            if (imageDownloader.id < 6) {
+            if (imageDownloader.id < 7) {
                 imageDownloader.currentWebcamWidth = 12755; // 12755
                 imageDownloader.currentWebcamHeight = 2160; // 2160
-                assert doc != null;
                 Elements scripts = doc.getElementsByTag("script");
                 String script = "";
                 for (Element d : scripts) {
@@ -115,6 +104,7 @@ class ImageDownloader {
                                 .replace("https://data.skaping.com/ValThorensLaMaison/", "")
                                 .replace("https://data.skaping.com/vt2lacs-360/", "")
                                 .replace("https://data.skaping.com/setam/stade-val-thorens/", "")
+                                .replace("https://data.skaping.com/val-thorens/boismint/", "")
                                 .replace(".jpg", "")
                                 .replace("/", " ")
                                 .replace("-", ":");
@@ -140,35 +130,35 @@ class ImageDownloader {
                 }
             } else {
                 switch (imageDownloader.id) {
-                    case 6:
+                    case 7:
                         imageDownloader.currentWebcamWidth = 6775;
                         imageDownloader.currentWebcamHeight = 1110;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                         break;
-                    case 7:
+                    case 8:
                         imageDownloader.currentWebcamWidth = 7057;
                         imageDownloader.currentWebcamHeight = 1520;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
-                    case 8:
+                    case 9:
                         imageDownloader.currentWebcamWidth = 6136;
                         imageDownloader.currentWebcamHeight = 800;
                         imageDownloader.currentURL = "https://backend.roundshot.com/cams/232/default";
                         break;
-                    case 9:
+                    case 10:
                         imageDownloader.currentWebcamWidth = 9999;
                         imageDownloader.currentWebcamHeight = 1986;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                         break;
-                    case 10:
+                    case 11:
                         imageDownloader.currentWebcamWidth = 7140;
                         imageDownloader.currentWebcamHeight = 1586;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                         break;
                 }
 
-                if (imageDownloader.id != 8 && dateDoc != null) {
-                    Elements date = dateDoc.select("p");
+                if (imageDownloader.id != 9) {
+                    Elements date = doc.select("p");
                     String script;
                     for (Element d : date) {
                         if (d.toString().contains("Last update : ")) {

@@ -1,10 +1,7 @@
 package se.swecookie.valthorens;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -25,9 +22,10 @@ public class ChooseFromMapActivity extends AppCompatActivity {
 
         imgMap = findViewById(R.id.imgMap);
         //final TextView txtCoordinates = findViewById(R.id.txtCoordinates);
+        //txtCoordinates.setVisibility(View.VISIBLE);
 
         Picasso.get()
-                .load(R.drawable.map5)
+                .load(R.drawable.map6)
                 .resize(1067, 489) // half size
                 .into(imgMap);
 
@@ -57,6 +55,8 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                             MainActivity.clickedImageNumber = Webcam.LIVECAM_360;
                         } else if (touchedXPercentage < 0.46) { //Les 2 lacs
                             MainActivity.clickedImageNumber = Webcam.LES_2_LACS;
+                        } else if (touchedXPercentage < 0.58) { //Boismint
+                            MainActivity.clickedImageNumber = Webcam.BOISMINT;
                         } else if (touchedXPercentage < 0.693) { //Funitel de thorens
                             MainActivity.clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
                         } else if (touchedXPercentage < 0.83 && touchedYPercentage < 0.36) { //La tryolienne
@@ -68,35 +68,12 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                         }
                         startActivity(new Intent(ChooseFromMapActivity.this, WebcamActivity.class));
                     } else {
-                        showConnectionError();
+                        MainActivity.showConnectionError(ChooseFromMapActivity.this);
                     }
                 }
                 return true;
             }
         });
-    }
-
-    private void showConnectionError() {
-        AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(this);
-        }
-        builder.setTitle("Connection error")
-                .setMessage("You need an active internet connection to view a webcam!")
-                .setPositiveButton("Open settings", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-                    }
-                })
-                .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 
     int getHeight() {

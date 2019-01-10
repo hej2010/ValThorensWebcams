@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_choose_from_map"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorDarkBlue"
@@ -30,11 +28,9 @@
         android:clickable="true"
         android:contentDescription="@string/map_desc"
         android:cropToPadding="false"
-        android:focusable="true"
-        app:srcCompat="@drawable/map5" />
+        android:focusable="true" />
 
     <TextView
-        android:id="@+id/txtCoordinates"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imgMap"
