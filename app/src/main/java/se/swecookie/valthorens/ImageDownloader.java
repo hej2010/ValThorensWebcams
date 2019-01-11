@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,8 +31,6 @@ class ImageDownloader {
     private TextView txtDate;
     private RelativeLayout rLLoading;
     private int id;
-    private int currentWebcamWidth;
-    private int currentWebcamHeight;
     private AsyncTask<Void, Void, Bitmap> downloadTask;
     private static String errorMessage;
 
@@ -76,8 +73,6 @@ class ImageDownloader {
                 return null;
             }
             if (imageDownloader.id < 7) {
-                imageDownloader.currentWebcamWidth = 12755; // 12755
-                imageDownloader.currentWebcamHeight = 2160; // 2160
                 Elements scripts = doc.getElementsByTag("script");
                 String script = "";
                 for (Element d : scripts) {
@@ -130,106 +125,63 @@ class ImageDownloader {
             } else {
                 switch (imageDownloader.id) {
                     case 7:
-                        imageDownloader.currentWebcamWidth = 6775;
-                        imageDownloader.currentWebcamHeight = 1110;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                         break;
                     case 8:
-                        imageDownloader.currentWebcamWidth = 7057;
-                        imageDownloader.currentWebcamHeight = 1520;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
                     case 9:
-                        imageDownloader.currentWebcamWidth = 6136;
-                        imageDownloader.currentWebcamHeight = 800;
                         imageDownloader.currentURL = "https://backend.roundshot.com/cams/232/default";
                         break;
                     case 10:
-                        imageDownloader.currentWebcamWidth = 9999;
-                        imageDownloader.currentWebcamHeight = 1986;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                         break;
                     case 11:
-                        imageDownloader.currentWebcamWidth = 7140;
-                        imageDownloader.currentWebcamHeight = 1586;
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                         break;
                 }
 
-                if (imageDownloader.id != 9) {
-                    /*Elements date = doc.select("p");
-                    String script;
-                    boolean found = false;
-                    for (Element d : date) {
-                        if (d.toString().contains("Last update : ")) {
-                            script = d.text();
-                            imageDownloader.imageDate = script;
-                            String[] temp = imageDownloader.imageDate.split(" ");
-                            if (temp.length >= 6) {
-                                String[] arr = temp[5].split(":");
-                                if (arr[0].length() == 1) {
-                                    arr[0] = "0" + arr[0];
+                boolean found = false;
+                Elements elements = doc.select(".webcam-navigation .desc");
+                String script;
+                for (Element element : elements) {
+                    if (element.toString().contains("/")) {
+                        script = element.text();
+                        String[] temp = script.split(" ");
+                        String date = null;
+                        String time = null;
+                        for (String s : temp) {
+                            if (s.contains("/") && s.split("/").length == 3) {
+                                String[] d = s.split("/");
+                                if (d[1].length() == 1) {
+                                    d[1] = "0" + d[1];
                                 }
-                                if (arr[1].length() == 1) {
-                                    arr[1] = "0" + arr[1];
+                                if (d[0].length() == 1) {
+                                    d[0] = "0" + d[0];
                                 }
-                                temp[5] = arr[0] + ":" + arr[1];
-                                String[] datee = temp[3].split("/");
-                                temp[3] = datee[2] + "-" + datee[1] + "-" + datee[0];
-                                imageDownloader.imageDate = "Taken at " + temp[3] + " " + temp[5] + ", CET";
-                                found = true;
-                                break;
+                                date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
+                            } else if (s.contains(":") && s.split(":").length == 2) {
+                                String[] t = s.split(":");
+                                if (t[0].length() == 1) {
+                                    t[0] = "0" + t[0];
+                                }
+                                if (t[1].length() == 1) {
+                                    t[1] = "0" + t[1];
+                                }
+                                time = t[0] + ":" + t[1]; //hh:mm
                             }
                         }
-                    }*/
-                    Elements elements = doc.select(".webcam-navigation .desc");
-                    String script;
-                    boolean found = false;
-                    Log.e("d", "d: " + elements.toString());
-                    for (Element element : elements) {
-                        if (element.toString().contains("/")) {
-                            Log.e("d", "s: " + element.text());
-                            script = element.text();
-                            String[] temp = script.split(" ");
-                            String date = null;
-                            String time = null;
-                            for (String s : temp) {
-                                Log.e("s temp", "s: " + s);
-                                if (s.contains("/") && s.split("/").length == 3) {
-                                    Log.e("found", "found date: " + s);
-                                    String[] d = s.split("/");
-                                    if (d[1].length() == 1) {
-                                        d[1] = "0" + d[1];
-                                    }
-                                    if (d[0].length() == 1) {
-                                        d[0] = "0" + d[0];
-                                    }
-                                    date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
-                                } else if (s.contains(":") && s.split(":").length == 2) {
-                                    Log.e("found", "found time: " + s);
-                                    String[] t = s.split(":");
-                                    if (t[0].length() == 1) {
-                                        t[0] = "0" + t[0];
-                                    }
-                                    if (t[1].length() == 1) {
-                                        t[1] = "0" + t[1];
-                                    }
-                                    time = t[0] + ":" + t[1]; //hh:mm
-                                }
-                            }
-                            if (date != null && time != null) {
-                                imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
-                                found = true;
-                                break;
-                            }
+                        if (date != null && time != null) {
+                            imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
+                            found = true;
+                            break;
                         }
                     }
-                    if (!found) {
-                        imageDownloader.imageDate = "Updates every 10 minutes during daylight";
-                    }
-                } else {
-                    imageDownloader.imageDate = "Updates every 10 minutes during daylight";
                 }
+                if (!found) {
+                    imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_10_minutes);
+                }
+
             }
             try {
                 int height = imageDownloader.getHeight();
@@ -238,13 +190,9 @@ class ImageDownloader {
                     height = 1500;
                 }
 
-                /*Resources r = imageDownloader.context.getResources();
-                float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, r.getDisplayMetrics()) * 4;
-                double scaleWith = (height - px) / imageDownloader.currentWebcamHeight;*/
-
                 return Picasso.get()
                         .load(imageDownloader.currentURL)
-                        .resize(0 /*(int) (imageDownloader.currentWebcamWidth * scaleWith)*/, height/*(int) (imageDownloader.currentWebcamHeight * scaleWith)*/)
+                        .resize(0, height)
                         .centerInside()
                         .get();
             } catch (IOException e) {

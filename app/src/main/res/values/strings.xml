@@ -24,6 +24,7 @@
     <string name="webcam_desc">Webcam image from Val Thorens</string>
     <string name="webcam_fullscreen_hint">Tap the image to view it in fullscreen!</string>
     <string name="dismiss">Dismiss</string>
+    <string name="webcam_10_minutes">Updates every 10 minutes during daylight</string>
 
     <string name="connection_title">Connection error</string>
     <string name="connection_message">You need an active internet connection to view a webcam!</string>
