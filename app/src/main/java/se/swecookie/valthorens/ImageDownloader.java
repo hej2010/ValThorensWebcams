@@ -3,12 +3,11 @@ package se.swecookie.valthorens;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -71,7 +70,7 @@ class ImageDownloader {
                 e.printStackTrace();
             }
 
-            if (doc == null /*&& dateDoc == null*/) {
+            if (doc == null) {
                 errorMessage = "Empty server response";
                 cancel(true);
                 return null;
@@ -158,8 +157,9 @@ class ImageDownloader {
                 }
 
                 if (imageDownloader.id != 9) {
-                    Elements date = doc.select("p");
+                    /*Elements date = doc.select("p");
                     String script;
+                    boolean found = false;
                     for (Element d : date) {
                         if (d.toString().contains("Last update : ")) {
                             script = d.text();
@@ -177,22 +177,74 @@ class ImageDownloader {
                                 String[] datee = temp[3].split("/");
                                 temp[3] = datee[2] + "-" + datee[1] + "-" + datee[0];
                                 imageDownloader.imageDate = "Taken at " + temp[3] + " " + temp[5] + ", CET";
+                                found = true;
+                                break;
+                            }
+                        }
+                    }*/
+                    Elements elements = doc.select(".webcam-navigation .desc");
+                    String script;
+                    boolean found = false;
+                    Log.e("d", "d: " + elements.toString());
+                    for (Element element : elements) {
+                        if (element.toString().contains("/")) {
+                            Log.e("d", "s: " + element.text());
+                            script = element.text();
+                            String[] temp = script.split(" ");
+                            String date = null;
+                            String time = null;
+                            for (String s : temp) {
+                                Log.e("s temp", "s: " + s);
+                                if (s.contains("/") && s.split("/").length == 3) {
+                                    Log.e("found", "found date: " + s);
+                                    String[] d = s.split("/");
+                                    if (d[1].length() == 1) {
+                                        d[1] = "0" + d[1];
+                                    }
+                                    if (d[0].length() == 1) {
+                                        d[0] = "0" + d[0];
+                                    }
+                                    date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
+                                } else if (s.contains(":") && s.split(":").length == 2) {
+                                    Log.e("found", "found time: " + s);
+                                    String[] t = s.split(":");
+                                    if (t[0].length() == 1) {
+                                        t[0] = "0" + t[0];
+                                    }
+                                    if (t[1].length() == 1) {
+                                        t[1] = "0" + t[1];
+                                    }
+                                    time = t[0] + ":" + t[1]; //hh:mm
+                                }
+                            }
+                            if (date != null && time != null) {
+                                imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
+                                found = true;
+                                break;
                             }
                         }
                     }
+                    if (!found) {
+                        imageDownloader.imageDate = "Updates every 10 minutes during daylight";
+                    }
                 } else {
-                    imageDownloader.imageDate = "Updated every 10 minutes during daylight";
+                    imageDownloader.imageDate = "Updates every 10 minutes during daylight";
                 }
             }
             try {
                 int height = imageDownloader.getHeight();
-                Resources r = imageDownloader.context.getResources();
+
+                if (height > 1500) {
+                    height = 1500;
+                }
+
+                /*Resources r = imageDownloader.context.getResources();
                 float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18, r.getDisplayMetrics()) * 4;
-                double scaleWith = (height - px) / imageDownloader.currentWebcamHeight;
+                double scaleWith = (height - px) / imageDownloader.currentWebcamHeight;*/
 
                 return Picasso.get()
                         .load(imageDownloader.currentURL)
-                        .resize((int) (imageDownloader.currentWebcamWidth * scaleWith), (int) (imageDownloader.currentWebcamHeight * scaleWith))
+                        .resize(0 /*(int) (imageDownloader.currentWebcamWidth * scaleWith)*/, height/*(int) (imageDownloader.currentWebcamHeight * scaleWith)*/)
                         .centerInside()
                         .get();
             } catch (IOException e) {

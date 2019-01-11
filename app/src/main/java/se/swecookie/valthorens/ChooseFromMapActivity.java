@@ -42,33 +42,31 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                     //txtCoordinates.setText("Touch coordinates : " + posX + "x" + event.getY() + ", perc: " + (int) (touchedXPercentage * 1000) + ", " + (int) (touchedYPercentage * 1000));
                     if (MainActivity.checkConnection(ChooseFromMapActivity.this)) {
                         if (touchedXPercentage < 0.1102) { //Funitel 3 vallees
-                            MainActivity.clickedImageNumber = Webcam.FUNITEL_3_VALLEES;
+                            MainActivity.clickedWebcam = Webcam.FUNITEL_3_VALLEES;
                         } else if (touchedXPercentage < 0.2) { //Plein sud
-                            MainActivity.clickedImageNumber = Webcam.PLEIN_SUD;
+                            MainActivity.clickedWebcam = Webcam.PLEIN_SUD;
                         } else if (touchedXPercentage < 0.276) { //De la maison
                             if (touchedYPercentage > 0.5) {
-                                MainActivity.clickedImageNumber = Webcam.DE_LA_MAISON;
+                                MainActivity.clickedWebcam = Webcam.DE_LA_MAISON;
                             } else {
-                                MainActivity.clickedImageNumber = Webcam.STADE;
+                                MainActivity.clickedWebcam = Webcam.STADE;
                             }
                         } else if (touchedXPercentage < 0.3625) { //Livecam 360
-                            MainActivity.clickedImageNumber = Webcam.LIVECAM_360;
+                            MainActivity.clickedWebcam = Webcam.LIVECAM_360;
                         } else if (touchedXPercentage < 0.46) { //Les 2 lacs
-                            MainActivity.clickedImageNumber = Webcam.LES_2_LACS;
+                            MainActivity.clickedWebcam = Webcam.LES_2_LACS;
                         } else if (touchedXPercentage < 0.58) { //Boismint
-                            MainActivity.clickedImageNumber = Webcam.BOISMINT;
+                            MainActivity.clickedWebcam = Webcam.BOISMINT;
                         } else if (touchedXPercentage < 0.693) { //Funitel de thorens
-                            MainActivity.clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
+                            MainActivity.clickedWebcam = Webcam.FUNITEL_DE_THORENS;
                         } else if (touchedXPercentage < 0.83 && touchedYPercentage < 0.36) { //La tryolienne
-                            MainActivity.clickedImageNumber = Webcam.LA_TYROLIENNE;
+                            MainActivity.clickedWebcam = Webcam.LA_TYROLIENNE;
                         } else if (touchedXPercentage < 0.83 && touchedYPercentage > 0.36) { // Cime Caron
-                            MainActivity.clickedImageNumber = Webcam.CIME_CARON;
+                            MainActivity.clickedWebcam = Webcam.CIME_CARON;
                         } else {    //Plan Bouchet
-                            MainActivity.clickedImageNumber = Webcam.PLAN_BOUCHET;
+                            MainActivity.clickedWebcam = Webcam.PLAN_BOUCHET;
                         }
                         startActivity(new Intent(ChooseFromMapActivity.this, WebcamActivity.class));
-                    } else {
-                        MainActivity.showConnectionError(ChooseFromMapActivity.this);
                     }
                 }
                 return true;

@@ -2,29 +2,24 @@ package se.swecookie.valthorens;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
-    public static Webcam clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
-    private ProgressBar progressBar;
-
-    private int loadedCount;
-    private static final int TOTAL_COUNT = 11;
-    private static final int[] WEBCAM_DRAWABLE_ID = {R.drawable.funitel_3_vallees, R.drawable.de_la_maison, R.drawable.les_2_lacs, R.drawable.funitel_de_thorens, R.drawable.la_tyrolienne,
-            R.drawable.stade, R.drawable.plan_bouchet, R.drawable.boismint, R.drawable.livecam_360, R.drawable.plein_sud, R.drawable.cime_caron};
-    private ImageView[] WEBCAM_IMAGEVIEW;
+    public static Webcam clickedWebcam = Webcam.FUNITEL_DE_THORENS;
+    public static Webcam[] webcams;
+    private LinearLayout llTitle, llAbout;
+    private boolean titleShown, aboutShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,76 +27,60 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init();
-
-        getImages();
     }
 
     private void init() {
-        ImageView funitel_3_vallees = findViewById(R.id.funitel_3_vallees);
-        ImageView de_la_maison = findViewById(R.id.de_la_maison);
-        ImageView les_2_lacs = findViewById(R.id.les_2_lacs);
-        ImageView funitel_de_thorens = findViewById(R.id.funitel_de_thorens);
-        ImageView la_tyrolienne = findViewById(R.id.la_tyrolienne);
-        ImageView stade = findViewById(R.id.stade);
-        ImageView boismint = findViewById(R.id.boismint);
-        ImageView plan_bouchet = findViewById(R.id.plan_bouchet);
-        ImageView livecam_360 = findViewById(R.id.livecam_360);
-        ImageView plein_sud = findViewById(R.id.plein_sud);
-        ImageView cime_caron = findViewById(R.id.cime_caron);
-        progressBar = findViewById(R.id.progressBar);
-        loadedCount = 0;
-
-        WEBCAM_IMAGEVIEW = new ImageView[]{funitel_3_vallees, de_la_maison, les_2_lacs, funitel_de_thorens, la_tyrolienne, stade, plan_bouchet, boismint, livecam_360, plein_sud, cime_caron};
-    }
-
-    public void onClick(View view) {
-        boolean connected = checkConnection(MainActivity.this);
-        if (!connected && view.getId() != R.id.choose_from_map) {
-            showConnectionError(this);
-        } else {
-            switch (view.getId()) {
-                case R.id.choose_from_map:
-                    startActivity(new Intent(MainActivity.this, ChooseFromMapActivity.class));
-                    return;
-                case R.id.funitel_3_vallees:
-                    clickedImageNumber = Webcam.FUNITEL_3_VALLEES;
-                    break;
-                case R.id.de_la_maison:
-                    clickedImageNumber = Webcam.DE_LA_MAISON;
-                    break;
-                case R.id.les_2_lacs:
-                    clickedImageNumber = Webcam.LES_2_LACS;
-                    break;
-                case R.id.funitel_de_thorens:
-                    clickedImageNumber = Webcam.FUNITEL_DE_THORENS;
-                    break;
-                case R.id.la_tyrolienne:
-                    clickedImageNumber = Webcam.LA_TYROLIENNE;
-                    break;
-                case R.id.stade:
-                    clickedImageNumber = Webcam.STADE;
-                    break;
-                case R.id.boismint:
-                    clickedImageNumber = Webcam.BOISMINT;
-                    break;
-                case R.id.plan_bouchet:
-                    clickedImageNumber = Webcam.PLAN_BOUCHET;
-                    break;
-                case R.id.livecam_360:
-                    clickedImageNumber = Webcam.LIVECAM_360;
-                    break;
-                case R.id.plein_sud:
-                    clickedImageNumber = Webcam.PLEIN_SUD;
-                    break;
-                case R.id.cime_caron:
-                    clickedImageNumber = Webcam.CIME_CARON;
-                    break;
-            }
-            startActivity(new Intent(MainActivity.this, WebcamActivity.class));
+        if (webcams == null) {
+            webcams = Webcam.values();
         }
+
+        final RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
+        llTitle = findViewById(R.id.llTitle);
+        llAbout = findViewById(R.id.llAbout);
+        llAbout.setVisibility(View.GONE);
+        titleShown = true;
+        aboutShown = false;
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.Adapter mAdapter = new MainAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                assert layoutManager != null;
+                int pos = layoutManager.findFirstVisibleItemPosition();
+                if (!titleShown && !recyclerView.canScrollVertically(-1) && pos == 0) {
+                    titleShown = true;
+                    llTitle.setVisibility(View.VISIBLE);
+                } else if (titleShown && pos > 0) {
+                    titleShown = false;
+                    llTitle.setVisibility(View.GONE);
+                }
+                pos = layoutManager.findLastVisibleItemPosition();
+                if (!aboutShown && !recyclerView.canScrollVertically(1) && pos == Webcam.NR_OF_WEBCAMS) {
+                    aboutShown = true;
+                    llAbout.setVisibility(View.VISIBLE);
+                    recyclerView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            recyclerView.smoothScrollBy(0, 400, new LinearInterpolator());
+                        }
+                    });
+                } else if (aboutShown && pos < Webcam.NR_OF_WEBCAMS) {
+                    aboutShown = false;
+                    llAbout.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
-    static void showConnectionError(final AppCompatActivity context) {
+    private static void showConnectionError(final Context context) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
@@ -110,42 +89,12 @@ public class MainActivity extends AppCompatActivity {
         }
         builder.setTitle(context.getString(R.string.connection_title))
                 .setMessage(context.getString(R.string.connection_message))
-                .setPositiveButton(context.getString(R.string.open_settings), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        context.startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-                    }
-                })
-                .setNegativeButton(context.getString(R.string.dismiss), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setPositiveButton(context.getString(R.string.ok), null)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
-    private void getImages() {
-        for (int i = 0; i < TOTAL_COUNT; i++) {
-            Picasso.get()
-                    .load(WEBCAM_DRAWABLE_ID[i])
-                    .into(WEBCAM_IMAGEVIEW[i], new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            loadedCount++;
-                            if (loadedCount >= TOTAL_COUNT) {
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-        }
-    }
-
-    static boolean checkConnection(AppCompatActivity context) {
+    static boolean checkConnection(final Context context) {
         boolean connected = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = null;
@@ -160,6 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 // connected to the mobile provider's data plan
                 connected = true;
             }
+        }
+        if (!connected) {
+            showConnectionError(context);
         }
         return connected;
     }

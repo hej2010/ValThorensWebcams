@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
+    android:layout_gravity="center_horizontal"
+    android:animateLayoutChanges="true"
     android:background="@color/colorDarkRed"
-    android:fillViewport="false"
     tools:context="se.swecookie.valthorens.MainActivity">
 
     <LinearLayout
-        android:layout_width="380dp"
+        android:id="@+id/llTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <TextView
@@ -32,226 +33,41 @@
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ImageView
-            android:id="@+id/choose_from_map"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/choose_from_map" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorAccent" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-
-        <ImageView
-            android:id="@+id/funitel_3_vallees"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/de_la_maison"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/les_2_lacs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/funitel_de_thorens"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/stade"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/boismint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/la_tyrolienne"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/plan_bouchet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/livecam_360"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/plein_sud"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="1dp" />
-
-        <ImageView
-            android:id="@+id/cime_caron"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:focusable="true"
-            android:onClick="onClick"
-            android:scaleType="fitXY" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/holo_blue_dark"
-                android:clickable="true"
-                android:focusable="true"
-                android:onClick="onAboutClicked"
-                android:text="@string/main_about"
-                android:textColor="@color/colorTextLight" />
-        </LinearLayout>
-
     </LinearLayout>
 
-</ScrollView>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llAbout"
+        android:layout_below="@+id/llTitle"
+        android:layout_centerHorizontal="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="@dimen/recyclerWidth"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/holo_blue_dark"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="onAboutClicked"
+            android:text="@string/main_about"
+            android:textColor="@color/colorTextLight" />
+    </LinearLayout>
+
+</RelativeLayout>

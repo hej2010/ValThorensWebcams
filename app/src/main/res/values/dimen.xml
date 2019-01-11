@@ -4,5 +4,7 @@
     <dimen name="about_view">100dp</dimen>
     <dimen name="about_image_height">137dp</dimen>
     <dimen name="about_padding">25dp</dimen>
+    <dimen name="recyclerWidth">380dp</dimen>
+    <dimen name="recyclerItemHeight">155dp</dimen>
 
 </resources>

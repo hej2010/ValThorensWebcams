@@ -83,52 +83,57 @@ public class WebcamActivity extends AppCompatActivity {
     }
 
     private void setTitleToCameraName() {
-        switch (MainActivity.clickedImageNumber) {
+        final Webcam webcam = MainActivity.webcams[MainActivity.clickedWebcam.i];
+        String s = "";
+        String t = "";
+        switch (webcam) {
             case FUNITEL_3_VALLEES:
-                txtWebCamTitle.setText(getString(R.string.camera_1_funitel_3_vallees));
-                getImage(1, "http://skaping.com/valthorens/3vallees");
+                t = getString(R.string.camera_1_funitel_3_vallees);
+                s = "http://skaping.com/valthorens/3vallees";
                 break;
             case DE_LA_MAISON:
-                txtWebCamTitle.setText(getString(R.string.camera_2_de_la_maison));
-                getImage(2, "http://skaping.com/valthorens/lamaison");
+                t = getString(R.string.camera_2_de_la_maison);
+                s = "http://skaping.com/valthorens/lamaison";
                 break;
             case LES_2_LACS:
-                txtWebCamTitle.setText(getString(R.string.camera_3_les_2_lacs));
-                getImage(3, "http://skaping.com/valthorens/2lacs");
+                t = getString(R.string.camera_3_les_2_lacs);
+                s = "http://skaping.com/valthorens/2lacs";
                 break;
             case FUNITEL_DE_THORENS:
-                txtWebCamTitle.setText(getString(R.string.camera_4_funitel_de_thorens));
-                getImage(4, "http://skaping.com/valthorens/funitelthorens");
+                t = getString(R.string.camera_4_funitel_de_thorens);
+                s = "http://skaping.com/valthorens/funitelthorens";
                 break;
             case STADE:
-                txtWebCamTitle.setText(getString(R.string.camera_5_stade));
-                getImage(5, "http://www.skaping.com/valthorens/stade");
+                t = getString(R.string.camera_5_stade);
+                s = "http://www.skaping.com/valthorens/stade";
                 break;
             case BOISMINT:
-                txtWebCamTitle.setText(getString(R.string.camera_11_boismint));
-                getImage(6, "http://www.skaping.com/valthorens/boismint");
+                t = getString(R.string.camera_11_boismint);
+                s = "http://www.skaping.com/valthorens/boismint";
                 break;
             case LA_TYROLIENNE:
-                txtWebCamTitle.setText(getString(R.string.camera_6_la_tyrolienne));
-                getImage(7, "http://www.valthorens.com/en/webcam/livecam-tyrolienne"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html
+                t = getString(R.string.camera_6_la_tyrolienne);
+                s = "http://www.valthorens.com/en/webcam/livecam-tyrolienne"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html
                 break;
             case PLAN_BOUCHET:
-                txtWebCamTitle.setText(getString(R.string.camera_7_plan_bouchet));
-                getImage(8, "http://www.valthorens.com/en/webcam/livecam-plan-bouchet"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html
+                t = getString(R.string.camera_7_plan_bouchet);
+                s = "http://www.valthorens.com/en/webcam/livecam-plan-bouchet"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html
                 break;
             case LIVECAM_360:
-                txtWebCamTitle.setText(getString(R.string.camera_8_livecam_360));
-                getImage(9, "http://www.valthorens.com/en/webcam/livecam-station"); // http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html
+                t = getString(R.string.camera_8_livecam_360);
+                s = "http://www.valthorens.com/en/webcam/livecam-station"; // http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html
                 break;
             case PLEIN_SUD:
-                txtWebCamTitle.setText(getString(R.string.camera_9_plein_sud));
-                getImage(10, "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html
+                t = getString(R.string.camera_9_plein_sud);
+                s = "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html
                 break;
             case CIME_CARON:
-                txtWebCamTitle.setText(getString(R.string.camera_10_cime_caron));
-                getImage(11, "http://www.valthorens.com/en/webcam/livecam-cime-caron"); // http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html
+                t = getString(R.string.camera_10_cime_caron);
+                s = "http://www.valthorens.com/en/webcam/livecam-cime-caron"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html
                 break;
         }
+        txtWebCamTitle.setText(t);
+        getImage(webcam.i, s);
     }
 
     private void getImage(int id, String url) {
