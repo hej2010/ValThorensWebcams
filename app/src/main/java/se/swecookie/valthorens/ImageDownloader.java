@@ -3,7 +3,6 @@ package se.swecookie.valthorens;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
@@ -31,7 +32,7 @@ class ImageDownloader {
     private TextView txtDate;
     private RelativeLayout rLLoading;
     private int id;
-    private AsyncTask<Void, Void, Bitmap> downloadTask;
+    private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
     void startDownload(ImageView imageView, TextView txtView, int id, String url, Context cont, RelativeLayout loader) {
@@ -45,7 +46,7 @@ class ImageDownloader {
         this.id = id;
     }
 
-    private static class DownloadPhoto extends AsyncTask<Void, Void, Bitmap> {
+    private static class DownloadPhoto extends AsyncTask<Void, Void, Void> {
         private final WeakReference<ImageDownloader> weakReference;
 
         DownloadPhoto(ImageDownloader imageDownloader) {
@@ -53,8 +54,8 @@ class ImageDownloader {
         }
 
         @Override
-        protected Bitmap doInBackground(Void... voids) {
-            ImageDownloader imageDownloader = weakReference.get();
+        protected Void doInBackground(Void... voids) {
+            final ImageDownloader imageDownloader = weakReference.get();
             imageDownloader.imageDate = "";
             Document doc = null;
 
@@ -131,7 +132,7 @@ class ImageDownloader {
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                         break;
                     case 9:
-                        imageDownloader.currentURL = "https://backend.roundshot.com/cams/232/default";
+                        imageDownloader.currentURL = "http://backend.roundshot.com/cams/232/default";
                         break;
                     case 10:
                         imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
@@ -183,40 +184,39 @@ class ImageDownloader {
                 }
 
             }
-            try {
-                int height = imageDownloader.getHeight();
 
-                if (height > 1500) {
-                    height = 1500;
-                }
-
-                return Picasso.get()
-                        .load(imageDownloader.currentURL)
-                        .resize(0, height)
-                        .centerInside()
-                        .get();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-
+            return null;
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            ImageDownloader imageDownloader = weakReference.get();
-            if (!isCancelled()) {
-                if (bitmap == null) {
-                    imageDownloader.showErrorDialog();
-                } else {
-                    imageDownloader.rLLoading.setVisibility(View.GONE);
-                    imageDownloader.image.setImageBitmap(bitmap);
-                    imageDownloader.image.setVisibility(View.VISIBLE);
-                    imageDownloader.txtDate.setText(imageDownloader.imageDate);
-                    imageDownloader.txtDate.setVisibility(View.VISIBLE);
-                }
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            final ImageDownloader imageDownloader = weakReference.get();
+            int height = imageDownloader.getHeight();
+
+            if (height > 1500) {
+                height = 1500;
             }
+
+            Picasso.get()
+                    .load(imageDownloader.currentURL)
+                    .resize(0, height)
+                    .centerInside()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                    .into(imageDownloader.image, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            imageDownloader.rLLoading.setVisibility(View.GONE);
+                            imageDownloader.image.setVisibility(View.VISIBLE);
+                            imageDownloader.txtDate.setText(imageDownloader.imageDate);
+                            imageDownloader.txtDate.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            imageDownloader.showErrorDialog();
+                        }
+                    });
         }
     }
 
