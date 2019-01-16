@@ -20,8 +20,10 @@ public class WebcamActivity extends AppCompatActivity {
 
     private boolean focused;
     private Snackbar snackbar = null;
+    private Webcam clickedWebcam;
 
     private static final String prefsFirstLaunch = "firstLaunch";
+    public static final String EXTRA_WEBCAM = "w";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +35,21 @@ public class WebcamActivity extends AppCompatActivity {
         txtDate = findViewById(R.id.txtDate);
         loadingPanel = findViewById(R.id.loadingPanel);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            clickedWebcam = (Webcam) extras.getSerializable(EXTRA_WEBCAM);
+        } else {
+            throw new IllegalStateException("clickedWebcam is null!");
+        }
+
         setTitleToCameraName();
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
-        boolean isFirstLaunch = prefs.getBoolean(prefsFirstLaunch, true);
-
-        if (isFirstLaunch) {
-            snackbar = Snackbar.make(imgWebcam, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
+        if (isFirstLaunch()) {
+            snackbar = Snackbar.make(txtDate, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.dismiss), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+                            setFirstLaunch();
                         }
                     }).setActionTextColor(getResources().getColor(R.color.colorTextLight));
             View sbView = snackbar.getView();
@@ -58,7 +64,7 @@ public class WebcamActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (snackbar != null && snackbar.isShown()) {
                     snackbar.dismiss();
-                    prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+                    setFirstLaunch();
                 }
                 if (!focused) {
                     txtDate.setVisibility(View.GONE);
@@ -73,6 +79,16 @@ public class WebcamActivity extends AppCompatActivity {
         });
     }
 
+    private boolean isFirstLaunch() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
+        return prefs.getBoolean(prefsFirstLaunch, true);
+    }
+
+    private void setFirstLaunch() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
+        prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+    }
+
     private void toggleFullscreen(AppCompatActivity activity) {
         int newUiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
         newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
@@ -83,10 +99,9 @@ public class WebcamActivity extends AppCompatActivity {
     }
 
     private void setTitleToCameraName() {
-        final Webcam webcam = MainActivity.webcams[MainActivity.clickedWebcam.i];
         String s = "";
         String t = "";
-        switch (webcam) {
+        switch (clickedWebcam) {
             case FUNITEL_3_VALLEES:
                 t = getString(R.string.camera_1_funitel_3_vallees);
                 s = "http://skaping.com/valthorens/3vallees";
@@ -133,7 +148,7 @@ public class WebcamActivity extends AppCompatActivity {
                 break;
         }
         txtWebCamTitle.setText(t);
-        getImage(webcam.i, s);
+        getImage(clickedWebcam.i, s);
     }
 
     private void getImage(int id, String url) {

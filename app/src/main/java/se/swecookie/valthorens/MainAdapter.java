@@ -32,8 +32,9 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                     parent.getContext().startActivity(new Intent(parent.getContext(), ChooseFromMapActivity.class));
                 } else {
                     if (MainActivity.checkConnection(parent.getContext())) {
-                        MainActivity.clickedWebcam = MainActivity.webcams[id];
-                        parent.getContext().startActivity(new Intent(parent.getContext(), WebcamActivity.class));
+                        Webcam clickedWebcam = MainActivity.webcams[id];
+                        parent.getContext().startActivity(new Intent(parent.getContext(), WebcamActivity.class)
+                                .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
                     }
                 }
             }

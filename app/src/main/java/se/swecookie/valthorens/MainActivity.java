@@ -16,8 +16,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
-    public static Webcam clickedWebcam = Webcam.FUNITEL_DE_THORENS;
-    public static Webcam[] webcams;
+    public static final Webcam[] webcams = Webcam.values();
     private LinearLayout llTitle, llAbout;
     private boolean titleShown, aboutShown;
 
@@ -30,10 +29,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        if (webcams == null) {
-            webcams = Webcam.values();
-        }
-
         final RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
         llTitle = findViewById(R.id.llTitle);
         llAbout = findViewById(R.id.llAbout);
