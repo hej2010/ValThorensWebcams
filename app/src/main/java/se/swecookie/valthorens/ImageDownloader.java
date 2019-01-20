@@ -27,7 +27,7 @@ import java.net.SocketTimeoutException;
 class ImageDownloader {
     private ImageView image;
     private String currentURL;
-    private Context context;
+    private AppCompatActivity context;
     private String imageDate;
     private TextView txtDate;
     private RelativeLayout rLLoading;
@@ -35,7 +35,7 @@ class ImageDownloader {
     private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
-    void startDownload(ImageView imageView, TextView txtView, int id, String url, Context cont, RelativeLayout loader) {
+    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader) {
         image = imageView;
         txtDate = txtView;
         txtDate.setVisibility(View.INVISIBLE);
@@ -192,6 +192,9 @@ class ImageDownloader {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             final ImageDownloader imageDownloader = weakReference.get();
+            if (imageDownloader == null) {
+                return;
+            }
             int height = imageDownloader.getHeight();
 
             if (height > 1500) {
@@ -214,41 +217,38 @@ class ImageDownloader {
 
                         @Override
                         public void onError(Exception e) {
-                            imageDownloader.showErrorDialog();
+                            e.printStackTrace();
+                            if (!imageDownloader.context.isFinishing() && !imageDownloader.context.isDestroyed()) {
+                                imageDownloader.showErrorDialog();
+                            }
                         }
                     });
         }
     }
 
     private void showErrorDialog() {
-        if (context instanceof AppCompatActivity) {
-            ((AppCompatActivity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(context);
-                    }
-                    String message = "There seems to be trouble downloading the image, please try again later.\n\n";
-                    if (errorMessage != null) {
-                        message = message + "Error: " + errorMessage;
-                    }
-                    builder.setTitle("Error")
-                            .setMessage(message)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (context instanceof AppCompatActivity) {
-                                        ((AppCompatActivity) context).finish();
-                                    }
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
-                }
-            });
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
         }
+        String message = "There seems to be trouble downloading the image, please try again later.\n\n";
+        if (errorMessage != null) {
+            message = message + "Error: " + errorMessage;
+        }
+        if (context.isFinishing() || context.isDestroyed()) {
+            return;
+        }
+        builder.setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        context.finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private int getHeight() {

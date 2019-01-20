@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             builder = new AlertDialog.Builder(context);
         }
+        if (context instanceof AppCompatActivity) {
+            if (((AppCompatActivity) context).isFinishing() || ((AppCompatActivity) context).isDestroyed()) {
+                return;
+            }
+        }
         builder.setTitle(context.getString(R.string.connection_title))
                 .setMessage(context.getString(R.string.connection_message))
                 .setPositiveButton(context.getString(R.string.ok), null)
