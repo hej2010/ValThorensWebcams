@@ -78,7 +78,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView, imageView2;
+        final ImageView imageView, imageView2;
 
         MyViewHolder(View v) {
             super(v);

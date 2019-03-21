@@ -3,28 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <se.swecookie.valthorens.PressedImageView
-        android:id="@+id/imgView"
-        android:layout_width="@dimen/recyclerWidth"
-        android:layout_height="@dimen/recyclerItemHeight"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/main_desc_icon"
-        android:cropToPadding="false"
-        android:scaleType="fitXY" />
+        android:orientation="horizontal">
 
-    <se.swecookie.valthorens.PressedImageView
-        android:id="@+id/imgView2"
-        android:layout_width="@dimen/recyclerWidth"
-        android:layout_height="@dimen/recyclerItemHeight"
-        android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/main_desc_icon"
-        android:cropToPadding="false"
-        android:scaleType="fitXY" />
+        <se.swecookie.valthorens.PressedImageView
+            android:id="@+id/imgView"
+            android:layout_width="@dimen/recyclerWidth"
+            android:layout_height="@dimen/recyclerItemHeight"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:scaleType="fitXY" />
+
+        <se.swecookie.valthorens.PressedImageView
+            android:id="@+id/imgView2"
+            android:layout_width="@dimen/recyclerWidth"
+            android:layout_height="@dimen/recyclerItemHeight"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:cropToPadding="false"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>
 
 </LinearLayout>

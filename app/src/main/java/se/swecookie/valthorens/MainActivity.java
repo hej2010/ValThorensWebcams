@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -94,8 +93,6 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        Log.e("Main", "onConfigurationChanged");
-
         recalculateScreen();
     }
 
@@ -103,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float width = displayMetrics.widthPixels / displayMetrics.density;
 
-        float limit = getResources().getDimension(R.dimen.recyclerWidth) * 2;
+        float limit = (getResources().getDimension(R.dimen.recyclerWidth) / displayMetrics.density) * 2;
 
         if (width > limit && nrOfItemsPerRow != 2) {
             nrOfItemsPerRow = 2;
