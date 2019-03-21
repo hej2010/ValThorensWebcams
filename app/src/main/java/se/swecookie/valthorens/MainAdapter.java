@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,10 +22,9 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MainAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
-        ImageView imageView = (ImageView) LayoutInflater.from(parent.getContext()).inflate(R.layout.main_image_view, parent, false);
-        final MyViewHolder holder = new MyViewHolder(imageView);
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.main_image_view, parent, false);
+        final MyViewHolder holder = new MyViewHolder(linearLayout);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final int id = holder.getAdapterPosition();
@@ -55,11 +55,11 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        final ImageView imageView;
 
-        MyViewHolder(ImageView v) {
+        MyViewHolder(View v) {
             super(v);
-            imageView = v;
+            imageView = v.findViewById(R.id.imgView);
         }
     }
 

@@ -14,6 +14,12 @@ import com.squareup.picasso.Picasso;
 public class ChooseFromMapActivity extends AppCompatActivity {
     private ImageView imgMap;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
