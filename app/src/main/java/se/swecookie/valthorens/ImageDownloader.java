@@ -1,7 +1,6 @@
 package se.swecookie.valthorens;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,6 +22,10 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.SocketTimeoutException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 class ImageDownloader {
     private ImageView image;
@@ -159,6 +162,15 @@ class ImageDownloader {
                                 }
                                 if (d[0].length() == 1) {
                                     d[0] = "0" + d[0];
+                                }
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM", Locale.FRANCE);
+                                Date date2 = new Date();
+                                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                                String strDate = dateFormat.format(date2);
+                                if (d[0].equals(strDate)) {
+                                    String tmp = d[0];
+                                    d[0] = d[1];
+                                    d[1] = tmp;
                                 }
                                 date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
                             } else if (s.contains(":") && s.split(":").length == 2) {

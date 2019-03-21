@@ -5,10 +5,20 @@
     android:layout_gravity="center_horizontal"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <se.swecookie.valthorens.PressedImageView
         android:id="@+id/imgView"
+        android:layout_width="@dimen/recyclerWidth"
+        android:layout_height="@dimen/recyclerItemHeight"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/main_desc_icon"
+        android:cropToPadding="false"
+        android:scaleType="fitXY" />
+
+    <se.swecookie.valthorens.PressedImageView
+        android:id="@+id/imgView2"
         android:layout_width="@dimen/recyclerWidth"
         android:layout_height="@dimen/recyclerItemHeight"
         android:layout_gravity="center_horizontal"

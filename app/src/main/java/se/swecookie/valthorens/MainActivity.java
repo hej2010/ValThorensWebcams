@@ -3,6 +3,7 @@ package se.swecookie.valthorens;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -11,6 +12,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
@@ -18,7 +21,10 @@ import android.widget.LinearLayout;
 public class MainActivity extends AppCompatActivity {
     public static final Webcam[] webcams = Webcam.values();
     private LinearLayout llTitle, llAbout;
+    private RecyclerView mRecyclerView;
+
     private boolean titleShown, aboutShown;
+    private int nrOfItemsPerRow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,50 +35,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init() {
-        final RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         llTitle = findViewById(R.id.llTitle);
         llAbout = findViewById(R.id.llAbout);
         llAbout.setVisibility(View.GONE);
         titleShown = true;
         aboutShown = false;
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        RecyclerView.Adapter mAdapter = new MainAdapter();
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                assert layoutManager != null;
-                int pos = layoutManager.findFirstVisibleItemPosition();
-                if (!titleShown && !recyclerView.canScrollVertically(-1) && pos == 0) {
-                    titleShown = true;
-                    llTitle.setVisibility(View.VISIBLE);
-                } else if (titleShown && pos > 0) {
-                    titleShown = false;
-                    llTitle.setVisibility(View.GONE);
-                }
-                pos = layoutManager.findLastVisibleItemPosition();
-                if (!aboutShown && !recyclerView.canScrollVertically(1) && pos == Webcam.NR_OF_WEBCAMS) {
-                    aboutShown = true;
-                    llAbout.setVisibility(View.VISIBLE);
-                    recyclerView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.smoothScrollBy(0, 400, new LinearInterpolator());
-                        }
-                    });
-                } else if (aboutShown && pos < Webcam.NR_OF_WEBCAMS) {
-                    aboutShown = false;
-                    llAbout.setVisibility(View.GONE);
-                }
-            }
-        });
+        recalculateScreen();
     }
 
     private static void showConnectionError(final Context context) {
@@ -118,6 +88,80 @@ public class MainActivity extends AppCompatActivity {
 
     public void onAboutClicked(View view) {
         startActivity(new Intent(MainActivity.this, AboutActivity.class));
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Log.e("Main", "onConfigurationChanged");
+
+        recalculateScreen();
+    }
+
+    private void recalculateScreen() {
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float width = displayMetrics.widthPixels / displayMetrics.density;
+
+        float limit = getResources().getDimension(R.dimen.recyclerWidth) * 2;
+
+        if (width > limit && nrOfItemsPerRow != 2) {
+            nrOfItemsPerRow = 2;
+        } else if (width <= limit && nrOfItemsPerRow != 1) {
+            nrOfItemsPerRow = 1;
+        } else {
+            return;
+        }
+
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.Adapter mAdapter;
+        if (nrOfItemsPerRow == 1) {
+            mAdapter = new MainAdapter();
+        } else {
+            mAdapter = new MainAdapterDouble();
+        }
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                updateViews(recyclerView);
+            }
+        });
+        updateViews(mRecyclerView);
+    }
+
+    private void updateViews(@NonNull final RecyclerView recyclerView) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        assert layoutManager != null;
+
+        int pos = layoutManager.findFirstVisibleItemPosition();
+        if (!titleShown && !recyclerView.canScrollVertically(-1) && pos == 0) {
+            titleShown = true;
+            llTitle.setVisibility(View.VISIBLE);
+        } else if (titleShown && pos > 0) {
+            titleShown = false;
+            llTitle.setVisibility(View.GONE);
+        }
+
+        pos = layoutManager.findLastVisibleItemPosition();
+        if (!aboutShown && !recyclerView.canScrollVertically(1) &&
+                ((nrOfItemsPerRow == 1 && pos == Webcam.NR_OF_WEBCAMS) || (nrOfItemsPerRow == 2 && pos == Webcam.NR_OF_WEBCAMS / 2))) {
+            aboutShown = true;
+            llAbout.setVisibility(View.VISIBLE);
+            recyclerView.post(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.smoothScrollBy(0, 400, new LinearInterpolator());
+                }
+            });
+        } else if (aboutShown && ((nrOfItemsPerRow == 1 && pos < Webcam.NR_OF_WEBCAMS) || (nrOfItemsPerRow == 2 && pos < Webcam.NR_OF_WEBCAMS / 2))) {
+            aboutShown = false;
+            llAbout.setVisibility(View.GONE);
+        }
     }
 
 }
