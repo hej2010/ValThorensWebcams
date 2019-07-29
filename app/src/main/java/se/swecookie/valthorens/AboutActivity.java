@@ -1,8 +1,10 @@
 package se.swecookie.valthorens;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 
 public class AboutActivity extends AppCompatActivity {
@@ -19,15 +21,13 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
     }
 
-    public void onReturnClicked(View view) {
-        switch (view.getId()) {
-            case R.id.button:
-                finish();
-                break;
+    public void onReturnClicked(@NonNull View view) {
+        if (view.getId() == R.id.button) {
+            finish();
         }
     }
 
-    public void onImageClicked(View view) {
+    public void onImageClicked(@NonNull View view) {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.imageView), getString(R.string.about_image), Snackbar.LENGTH_LONG);
         snackbar.show();
     }

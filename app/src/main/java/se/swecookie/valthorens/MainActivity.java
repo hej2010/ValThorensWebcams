@@ -8,10 +8,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
@@ -52,8 +52,14 @@ public class MainActivity extends AppCompatActivity {
             builder = new AlertDialog.Builder(context);
         }
         if (context instanceof AppCompatActivity) {
-            if (((AppCompatActivity) context).isFinishing() || ((AppCompatActivity) context).isDestroyed()) {
-                return;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (((AppCompatActivity) context).isFinishing() || ((AppCompatActivity) context).isDestroyed()) {
+                    return;
+                }
+            } else {
+                if (((AppCompatActivity) context).isFinishing()) {
+                    return;
+                }
             }
         }
         builder.setTitle(context.getString(R.string.connection_title))

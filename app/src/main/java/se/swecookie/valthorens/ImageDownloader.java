@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -167,7 +167,12 @@ class ImageDownloader {
                                 Date date2 = new Date();
                                 dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
                                 String strDate = dateFormat.format(date2);
-                                if (d[0].equals(strDate)) {
+                                boolean largerThan = false;
+                                try {
+                                    largerThan = Integer.valueOf(d[1]) > 12;
+                                } catch (NumberFormatException ignored) {
+                                }
+                                if (d[0].equals(strDate) || largerThan) {
                                     String tmp = d[0];
                                     d[0] = d[1];
                                     d[1] = tmp;
@@ -230,8 +235,14 @@ class ImageDownloader {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            if (!imageDownloader.context.isFinishing() && !imageDownloader.context.isDestroyed()) {
-                                imageDownloader.showErrorDialog();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                if (!imageDownloader.context.isFinishing() && !imageDownloader.context.isDestroyed()) {
+                                    imageDownloader.showErrorDialog();
+                                }
+                            } else {
+                                if (!imageDownloader.context.isFinishing()) {
+                                    imageDownloader.showErrorDialog();
+                                }
                             }
                         }
                     });
@@ -249,8 +260,14 @@ class ImageDownloader {
         if (errorMessage != null) {
             message = message + "Error: " + errorMessage;
         }
-        if (context.isFinishing() || context.isDestroyed()) {
-            return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (context.isFinishing() || context.isDestroyed()) {
+                return;
+            }
+        } else {
+            if (context.isFinishing()) {
+                return;
+            }
         }
         builder.setTitle("Error")
                 .setMessage(message)

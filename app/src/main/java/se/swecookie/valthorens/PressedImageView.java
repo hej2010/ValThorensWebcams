@@ -3,7 +3,7 @@ package se.swecookie.valthorens;
 import android.content.Context;
 import android.util.AttributeSet;
 
-public class PressedImageView extends android.support.v7.widget.AppCompatImageView {
+public class PressedImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     public PressedImageView(Context context) {
         super(context);
