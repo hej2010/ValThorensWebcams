@@ -22,18 +22,19 @@
     <ImageView
         android:id="@+id/imgMap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/txtDate"
         android:layout_below="@+id/txtMapTitle"
-        android:adjustViewBounds="true"
         android:clickable="true"
         android:contentDescription="@string/map_desc"
-        android:cropToPadding="false"
-        android:focusable="true" />
+        android:focusable="true"
+        android:scaleType="fitCenter" />
 
     <TextView
+        android:id="@+id/txtDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imgMap"
+        android:layout_alignParentBottom="true"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/colorTextLight"

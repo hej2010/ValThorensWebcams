@@ -32,7 +32,9 @@ public class ChooseFromMapActivity extends AppCompatActivity {
 
         Picasso.get()
                 .load(R.drawable.map6)
-                .resize(1067, 489) // half size
+                //.resize(1067, 489) // half size
+                .fit()
+                .centerInside()
                 .into(imgMap);
 
         imgMap.setOnTouchListener(new View.OnTouchListener() {
