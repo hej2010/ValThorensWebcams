@@ -1,22 +1,28 @@
 package se.swecookie.valthorens;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class WebcamActivity extends AppCompatActivity {
-    private TextView txtWebCamTitle, txtDate;
+    private TextView txtWebCamTitle, txtDate, txtTitle, txtBody;
     private ImageView imgWebcam;
     private RelativeLayout loadingPanel;
     private ImageDownloader imageDownloader;
+    private LinearLayout lLMessage;
 
     private boolean focused;
     private Snackbar snackbar = null;
@@ -40,24 +46,31 @@ public class WebcamActivity extends AppCompatActivity {
         imgWebcam = findViewById(R.id.imgWebcam);
         txtDate = findViewById(R.id.txtDate);
         loadingPanel = findViewById(R.id.loadingPanel);
+        lLMessage = findViewById(R.id.lLMessage);
+        txtTitle = findViewById(R.id.txtTitle);
+        txtBody = findViewById(R.id.txtBody);
+        lLMessage.setVisibility(View.GONE);
+
+        lLMessage.setOnClickListener((view) -> {
+            view.setVisibility(View.GONE);
+            txtTitle.setText("");
+            txtBody.setText("");
+        });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             clickedWebcam = (Webcam) extras.getSerializable(EXTRA_WEBCAM);
         } else {
-            throw new IllegalStateException("clickedWebcam is null!");
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
         setTitleToCameraName();
 
         if (isFirstLaunch()) {
             snackbar = Snackbar.make(txtDate, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.dismiss), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            setFirstLaunch();
-                        }
-                    }).setActionTextColor(getResources().getColor(R.color.colorTextLight));
+                    .setAction(getString(R.string.dismiss), view -> setFirstLaunch()).setActionTextColor(getResources().getColor(R.color.colorTextLight));
             View sbView = snackbar.getView();
             sbView.setBackgroundColor(ContextCompat.getColor(WebcamActivity.this, R.color.colorAccent));
             snackbar.show();
@@ -65,23 +78,24 @@ public class WebcamActivity extends AppCompatActivity {
 
         focused = false;
 
-        imgWebcam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (snackbar != null && snackbar.isShown()) {
-                    snackbar.dismiss();
-                    setFirstLaunch();
-                }
-                if (!focused) {
-                    txtDate.setVisibility(View.GONE);
-                    txtWebCamTitle.setVisibility(View.GONE);
-                } else {
-                    txtDate.setVisibility(View.VISIBLE);
-                    txtWebCamTitle.setVisibility(View.VISIBLE);
-                }
-                focused = !focused;
-                toggleFullscreen(WebcamActivity.this);
+        imgWebcam.setOnClickListener(view -> {
+            if (snackbar != null && snackbar.isShown()) {
+                snackbar.dismiss();
+                setFirstLaunch();
             }
+            if (!focused) {
+                txtDate.setVisibility(View.GONE);
+                txtWebCamTitle.setVisibility(View.GONE);
+                lLMessage.setVisibility(View.GONE);
+            } else {
+                txtDate.setVisibility(View.VISIBLE);
+                txtWebCamTitle.setVisibility(View.VISIBLE);
+                if (!txtBody.getText().toString().isEmpty() || !txtTitle.getText().toString().isEmpty()) {
+                    lLMessage.setVisibility(View.VISIBLE);
+                }
+            }
+            focused = !focused;
+            toggleFullscreen(WebcamActivity.this);
         });
     }
 
@@ -99,7 +113,9 @@ public class WebcamActivity extends AppCompatActivity {
         int newUiOptions = activity.getWindow().getDecorView().getSystemUiVisibility();
         newUiOptions ^= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         newUiOptions ^= View.SYSTEM_UI_FLAG_FULLSCREEN;
-        newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            newUiOptions ^= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
 
         activity.getWindow().getDecorView().setSystemUiVisibility(newUiOptions);
     }
@@ -163,7 +179,7 @@ public class WebcamActivity extends AppCompatActivity {
         } else {
             imageDownloader.cancel();
         }
-        imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel);
+        imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage);
     }
 
     int getHeight() {

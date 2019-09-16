@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         recalculateScreen();
@@ -155,12 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 ((nrOfItemsPerRow == 1 && pos == Webcam.NR_OF_WEBCAMS) || (nrOfItemsPerRow == 2 && pos == Webcam.NR_OF_WEBCAMS / 2))) {
             aboutShown = true;
             llAbout.setVisibility(View.VISIBLE);
-            recyclerView.post(new Runnable() {
-                @Override
-                public void run() {
-                    recyclerView.smoothScrollBy(0, 400, new LinearInterpolator());
-                }
-            });
+            recyclerView.post(() -> recyclerView.smoothScrollBy(0, 400, new LinearInterpolator()));
         } else if (aboutShown && ((nrOfItemsPerRow == 1 && pos < Webcam.NR_OF_WEBCAMS) || (nrOfItemsPerRow == 2 && pos < Webcam.NR_OF_WEBCAMS / 2))) {
             aboutShown = false;
             llAbout.setVisibility(View.GONE);

@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -31,14 +33,15 @@ class ImageDownloader {
     private ImageView image;
     private String currentURL;
     private AppCompatActivity context;
-    private String imageDate;
-    private TextView txtDate;
+    private String imageDate, title, body;
+    private TextView txtDate, txtTitle, txtBody;
+    private LinearLayout lLMessage;
     private RelativeLayout rLLoading;
     private int id;
     private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
-    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader) {
+    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage) {
         image = imageView;
         txtDate = txtView;
         txtDate.setVisibility(View.INVISIBLE);
@@ -47,6 +50,9 @@ class ImageDownloader {
         context = cont;
         this.rLLoading = loader;
         this.id = id;
+        this.txtTitle = txtTitle;
+        this.txtBody = txtBody;
+        this.lLMessage = lLMessage;
     }
 
     private static class DownloadPhoto extends AsyncTask<Void, Void, Void> {
@@ -60,6 +66,8 @@ class ImageDownloader {
         protected Void doInBackground(Void... voids) {
             final ImageDownloader imageDownloader = weakReference.get();
             imageDownloader.imageDate = "";
+            imageDownloader.title = "";
+            imageDownloader.body = "";
             Document doc = null;
 
             try {
@@ -92,9 +100,8 @@ class ImageDownloader {
                     if (s.contains("new ImageMedia(\"//data.skaping.com/")) {
                         final String[] a = s.split("\"");
                         if (a.length > 1) {
-                            imageDownloader.currentURL = "https:" + a[1];
+                            imageDownloader.currentURL = "http:" + a[1];
                         } else {
-                            imageDownloader.imageDate = "";
                             break;
                         }
                         imageDownloader.imageDate = imageDownloader.currentURL.replace("https://data.skaping.com/ValThorensBouquetin/", "")
@@ -109,23 +116,40 @@ class ImageDownloader {
                         String[] temp = imageDownloader.imageDate.split(" ");
                         if (temp.length >= 4) {
                             imageDownloader.imageDate = "Taken at " + temp[0] + "-" + temp[1] + "-" + temp[2] + " " + temp[3] + ", CET";
-                        } else {
-                            imageDownloader.imageDate = "";
                         }
                         break;
                     } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
-                        imageDownloader.currentURL = "https:" + s.split("\"")[1];
-                        final String[] arr = imageDownloader.currentURL.split("/");
-                        if (arr.length > 4) {
-                            imageDownloader.imageDate = "Taken at " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
-                                    + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
-                        } else {
-                            imageDownloader.imageDate = "";
-                            break;
+                        imageDownloader.currentURL = "http:" + s.split("\"")[1];
+                        boolean found = false;
+                        if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
+                            String[] d = imageLinks[i + 1].split("\"");
+                            if (d.length > 1) {
+                                imageDownloader.imageDate = "Taken at " + d[1];
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            final String[] arr = imageDownloader.currentURL.split("/");
+                            if (arr.length > 4) {
+                                imageDownloader.imageDate = "Taken at " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
+                                        + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
+                            }
                         }
                         break;
                     }
                 }
+
+                String[] m = script.split("\"messages\":");
+                if (m.length > 1) {
+                    String m2 = m[1].split(",\"link")[0];
+                    // [{"title":"WEBCAM EN VACANCES","body":"\"En hibernation, de retours aux premi\u00e8res neiges ! \"",
+                    String[] m3 = m2.split("\"");
+                    if (m3.length > 8) {
+                        imageDownloader.title = m3[3].replace("\\u00e8", "è").trim().replace("\\", "");
+                        imageDownloader.body = m3[8].replace("\\u00e8", "è").trim().replace("\\", "");
+                    }
+                }
+
             } else {
                 switch (imageDownloader.id) {
                     case 7:
@@ -200,6 +224,13 @@ class ImageDownloader {
                     imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_10_minutes);
                 }
 
+                elements = doc.select(".panorama-view .alert .richText");
+                for (Element e : elements) {
+                    if (e.toString().contains("<p>")) {
+                        imageDownloader.body = e.text().trim();
+                    }
+                }
+
             }
 
             return null;
@@ -217,6 +248,8 @@ class ImageDownloader {
             if (height > 1500) {
                 height = 1500;
             }
+
+            imageDownloader.currentURL = imageDownloader.currentURL.replace("http:", "https:");
 
             Picasso.get()
                     .load(imageDownloader.currentURL)
@@ -246,6 +279,27 @@ class ImageDownloader {
                             }
                         }
                     });
+
+            boolean title = false, body = false;
+            if (!imageDownloader.title.isEmpty()) {
+                imageDownloader.txtTitle.setText(imageDownloader.title);
+                title = true;
+            }
+            if (!imageDownloader.body.isEmpty()) {
+                imageDownloader.txtBody.setText(imageDownloader.body);
+                body = true;
+            }
+            if (title || body) {
+                imageDownloader.lLMessage.setVisibility(View.VISIBLE);
+                if (!title) {
+                    imageDownloader.txtTitle.setVisibility(View.GONE);
+                }
+                if (!body) {
+                    imageDownloader.txtBody.setVisibility(View.GONE);
+                }
+            } else {
+                imageDownloader.lLMessage.setVisibility(View.GONE);
+            }
         }
     }
 

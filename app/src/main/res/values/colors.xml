@@ -8,4 +8,5 @@
     <color name="colorTextLight">#e1e1e1</color>
 
     <color name="colorDarkBlue">#000320</color>
+    <color name="colorMessageBG">#54000000</color>
 </resources>
