@@ -53,12 +53,12 @@
     <LinearLayout
         android:id="@+id/lLMessage"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
         android:background="@color/colorMessageBG"
         android:alpha="0.7"
         android:layout_margin="5dp"
+        android:orientation="vertical"
         android:padding="3dp"
         android:layout_alignBottom="@id/horizontalScrollView"
         android:layout_height="wrap_content">

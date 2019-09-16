@@ -94,6 +94,16 @@
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
 
+        <CheckBox
+            android:id="@+id/cBMessages"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:checked="true"
+            app:buttonTint="@color/colorAccent"
+            android:text="@string/about_cb_show_messages" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"

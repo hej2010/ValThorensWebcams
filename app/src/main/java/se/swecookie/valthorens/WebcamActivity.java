@@ -3,7 +3,6 @@ package se.swecookie.valthorens;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,11 +23,11 @@ public class WebcamActivity extends AppCompatActivity {
     private ImageDownloader imageDownloader;
     private LinearLayout lLMessage;
 
-    private boolean focused;
+    private boolean focused, showMessages;
     private Snackbar snackbar = null;
     private Webcam clickedWebcam;
 
-    private static final String prefsFirstLaunch = "firstLaunch";
+
     public static final String EXTRA_WEBCAM = "w";
 
     @Override
@@ -51,10 +50,17 @@ public class WebcamActivity extends AppCompatActivity {
         txtBody = findViewById(R.id.txtBody);
         lLMessage.setVisibility(View.GONE);
 
+        SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
+        showMessages = prefs.getBoolean(AboutActivity.PREFS_MESSAGES_KEY, true);
+
         lLMessage.setOnClickListener((view) -> {
             view.setVisibility(View.GONE);
             txtTitle.setText("");
             txtBody.setText("");
+            if (hasNotShownMessageInfo()) {
+                Toast.makeText(this, "Disable messages in About", Toast.LENGTH_LONG).show();
+                setHasShownMessageInfo();
+            }
         });
 
         Bundle extras = getIntent().getExtras();
@@ -90,7 +96,7 @@ public class WebcamActivity extends AppCompatActivity {
             } else {
                 txtDate.setVisibility(View.VISIBLE);
                 txtWebCamTitle.setVisibility(View.VISIBLE);
-                if (!txtBody.getText().toString().isEmpty() || !txtTitle.getText().toString().isEmpty()) {
+                if (showMessages && (!txtBody.getText().toString().isEmpty() || !txtTitle.getText().toString().isEmpty())) {
                     lLMessage.setVisibility(View.VISIBLE);
                 }
             }
@@ -100,13 +106,23 @@ public class WebcamActivity extends AppCompatActivity {
     }
 
     private boolean isFirstLaunch() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
-        return prefs.getBoolean(prefsFirstLaunch, true);
+        final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
+        return prefs.getBoolean(AboutActivity.PREFS_FIRST_LAUNCH_KEY, true);
     }
 
     private void setFirstLaunch() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WebcamActivity.this);
-        prefs.edit().putBoolean(prefsFirstLaunch, false).apply();
+        final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
+        prefs.edit().putBoolean(AboutActivity.PREFS_FIRST_LAUNCH_KEY, false).apply();
+    }
+
+    private boolean hasNotShownMessageInfo() {
+        final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
+        return !prefs.getBoolean(AboutActivity.PREFS_HAS_SHOWN_MESSAGE_INFO_KEY, false);
+    }
+
+    private void setHasShownMessageInfo() {
+        final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
+        prefs.edit().putBoolean(AboutActivity.PREFS_HAS_SHOWN_MESSAGE_INFO_KEY, true).apply();
     }
 
     private void toggleFullscreen(AppCompatActivity activity) {
@@ -179,7 +195,7 @@ public class WebcamActivity extends AppCompatActivity {
         } else {
             imageDownloader.cancel();
         }
-        imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage);
+        imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage, showMessages);
     }
 
     int getHeight() {

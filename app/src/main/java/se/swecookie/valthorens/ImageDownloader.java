@@ -37,11 +37,12 @@ class ImageDownloader {
     private TextView txtDate, txtTitle, txtBody;
     private LinearLayout lLMessage;
     private RelativeLayout rLLoading;
+    private boolean showMessages;
     private int id;
     private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
-    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage) {
+    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage, boolean showMessages) {
         image = imageView;
         txtDate = txtView;
         txtDate.setVisibility(View.INVISIBLE);
@@ -53,6 +54,7 @@ class ImageDownloader {
         this.txtTitle = txtTitle;
         this.txtBody = txtBody;
         this.lLMessage = lLMessage;
+        this.showMessages = showMessages;
     }
 
     private static class DownloadPhoto extends AsyncTask<Void, Void, Void> {
@@ -280,25 +282,27 @@ class ImageDownloader {
                         }
                     });
 
-            boolean title = false, body = false;
-            if (!imageDownloader.title.isEmpty()) {
-                imageDownloader.txtTitle.setText(imageDownloader.title);
-                title = true;
-            }
-            if (!imageDownloader.body.isEmpty()) {
-                imageDownloader.txtBody.setText(imageDownloader.body);
-                body = true;
-            }
-            if (title || body) {
-                imageDownloader.lLMessage.setVisibility(View.VISIBLE);
-                if (!title) {
-                    imageDownloader.txtTitle.setVisibility(View.GONE);
+            if (imageDownloader.showMessages) {
+                boolean title = false, body = false;
+                if (!imageDownloader.title.isEmpty()) {
+                    imageDownloader.txtTitle.setText(imageDownloader.title);
+                    title = true;
                 }
-                if (!body) {
-                    imageDownloader.txtBody.setVisibility(View.GONE);
+                if (!imageDownloader.body.isEmpty()) {
+                    imageDownloader.txtBody.setText(imageDownloader.body);
+                    body = true;
                 }
-            } else {
-                imageDownloader.lLMessage.setVisibility(View.GONE);
+                if (title || body) {
+                    imageDownloader.lLMessage.setVisibility(View.VISIBLE);
+                    if (!title) {
+                        imageDownloader.txtTitle.setVisibility(View.GONE);
+                    }
+                    if (!body) {
+                        imageDownloader.txtBody.setVisibility(View.GONE);
+                    }
+                } else {
+                    imageDownloader.lLMessage.setVisibility(View.GONE);
+                }
             }
         }
     }
