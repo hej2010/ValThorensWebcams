@@ -1,13 +1,14 @@
 package se.swecookie.valthorens;
 
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,18 +25,15 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     public MainAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.main_image_view, parent, false);
         final MyViewHolder holder = new MyViewHolder(linearLayout);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final int id = holder.getAdapterPosition();
-                if (id == 0) {
-                    parent.getContext().startActivity(new Intent(parent.getContext(), ChooseFromMapActivity.class));
-                } else {
-                    if (MainActivity.checkConnection(parent.getContext())) {
-                        Webcam clickedWebcam = MainActivity.webcams[id];
-                        parent.getContext().startActivity(new Intent(parent.getContext(), WebcamActivity.class)
-                                .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
-                    }
+        linearLayout.setOnClickListener(view -> {
+            final int id = holder.getAdapterPosition();
+            if (id == 0) {
+                parent.getContext().startActivity(new Intent(parent.getContext(), ChooseFromMapActivity.class));
+            } else {
+                if (MainActivity.checkConnection(parent.getContext())) {
+                    Webcam clickedWebcam = MainActivity.webcams[id];
+                    parent.getContext().startActivity(new Intent(parent.getContext(), WebcamActivity.class)
+                            .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
                 }
             }
         });

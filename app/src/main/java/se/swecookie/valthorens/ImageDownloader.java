@@ -1,7 +1,6 @@
 package se.swecookie.valthorens;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.view.View;
@@ -329,11 +328,7 @@ class ImageDownloader {
         }
         builder.setTitle("Error")
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        context.finish();
-                    }
-                })
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> context.finish())
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }

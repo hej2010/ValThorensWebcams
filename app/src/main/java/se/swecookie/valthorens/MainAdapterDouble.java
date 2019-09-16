@@ -2,13 +2,14 @@ package se.swecookie.valthorens;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
@@ -36,32 +37,26 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Context context = view.getContext();
-                final int id = holder.getAdapterPosition();
-                if (id == 0) {
-                    context.startActivity(new Intent(context, ChooseFromMapActivity.class));
-                } else {
-                    if (MainActivity.checkConnection(context)) {
-                        Webcam clickedWebcam = MainActivity.webcams[id * 2];
-                        context.startActivity(new Intent(context, WebcamActivity.class)
-                                .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
-                    }
-                }
-            }
-        });
-        holder.imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Context context = view.getContext();
-                final int id = holder.getAdapterPosition();
+        holder.imageView.setOnClickListener(view -> {
+            final Context context = view.getContext();
+            final int id = holder.getAdapterPosition();
+            if (id == 0) {
+                context.startActivity(new Intent(context, ChooseFromMapActivity.class));
+            } else {
                 if (MainActivity.checkConnection(context)) {
-                    Webcam clickedWebcam = MainActivity.webcams[id * 2 + 1];
+                    Webcam clickedWebcam = MainActivity.webcams[id * 2];
                     context.startActivity(new Intent(context, WebcamActivity.class)
                             .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
                 }
+            }
+        });
+        holder.imageView2.setOnClickListener(view -> {
+            final Context context = view.getContext();
+            final int id = holder.getAdapterPosition();
+            if (MainActivity.checkConnection(context)) {
+                Webcam clickedWebcam = MainActivity.webcams[id * 2 + 1];
+                context.startActivity(new Intent(context, WebcamActivity.class)
+                        .putExtra(WebcamActivity.EXTRA_WEBCAM, clickedWebcam));
             }
         });
         Picasso.get().load(imageViews.get(position).img1)

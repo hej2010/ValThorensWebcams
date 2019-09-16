@@ -2,12 +2,13 @@ package se.swecookie.valthorens;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.CheckBox;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class AboutActivity extends AppCompatActivity {
     static String PREFS_NAME = "prefs";
