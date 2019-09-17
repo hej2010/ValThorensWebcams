@@ -81,6 +81,8 @@ public class WebcamActivity extends AppCompatActivity {
             sbView.setBackgroundColor(ContextCompat.getColor(WebcamActivity.this, R.color.colorAccent));
             snackbar.show();
         }
+        // TODO Les Menuires: https://lesmenuires.com/webcams/
+        // TODO Meribel: https://ski-resort.meribel.net/all-the-webcam.html
 
         focused = false;
 

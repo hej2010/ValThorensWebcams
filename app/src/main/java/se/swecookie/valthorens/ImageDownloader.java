@@ -20,9 +20,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -73,11 +71,9 @@ class ImageDownloader {
 
             try {
                 doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
-            } catch (SocketTimeoutException e) {
+            } catch (Exception e) {
                 errorMessage = e.getMessage();
                 return null;
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
             if (doc == null) {
