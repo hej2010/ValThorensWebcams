@@ -87,20 +87,23 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
         Preview p = previews.get(position);
         final boolean connection = MainActivity.checkConnection(context, false);
 
-        if (!connection || p.getWebcam() == Webcam.LIVECAM_360 || p.getWebcam() == Webcam.CHOOSE_FROM_MAP) {
+        if ((!connection && !p.gotPreview()) || p.getWebcam() == Webcam.LIVECAM_360 || p.getWebcam() == Webcam.CHOOSE_FROM_MAP) {
             holder.txtTitle.setText("");
         } else {
             holder.txtTitle.setText(p.getWebcam().name);
         }
 
-        Picasso.get().load(imageViews[position])
-                .placeholder(null)
-                .into(holder.imageView);
-        if (p.getPreviewUrl() != null && connection) {
+        if (p.isNotLoading() && p.getPreviewUrl() == null) {
+            Picasso.get().load(imageViews[position])
+                    .placeholder(null)
+                    .into(holder.imageView);
+        }
+        if (p.getPreviewUrl() != null && (connection || p.gotPreview())) {
             Log.e("p " + position, "p != null: " + p.getPreviewUrl());
             Picasso.get().load(p.getPreviewUrl())
                     .placeholder(null)
                     .into(holder.imageView);
+            p.setGotPreview();
         } else if (p.isNotLoading() && !p.gotPreview() && connection) {
             p.setLoading(true);
             Log.e("thread " + position, "before start");
@@ -115,13 +118,11 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                         doc = Jsoup.connect(webcam.url).ignoreContentType(true).get();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        p.setGotPreview();
                         p.setLoading(false);
                         return;
                     }
                     if (doc == null) {
                         // empty response
-                        p.setGotPreview();
                         p.setLoading(false);
                         return;
                     }
