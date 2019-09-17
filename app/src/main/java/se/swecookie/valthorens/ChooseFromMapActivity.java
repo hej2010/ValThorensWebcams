@@ -46,7 +46,7 @@ public class ChooseFromMapActivity extends AppCompatActivity {
                 double touchedXPercentage = posX / maxWidth;
                 double touchedYPercentage = posY / maxHeight;
                 //txtCoordinates.setText("Touch coordinates : " + posX + "x" + event.getY() + ", perc: " + (int) (touchedXPercentage * 1000) + ", " + (int) (touchedYPercentage * 1000));
-                if (MainActivity.checkConnection(ChooseFromMapActivity.this)) {
+                if (MainActivity.checkConnection(ChooseFromMapActivity.this, true)) {
                     Webcam clickedWebcam;
                     if (touchedXPercentage < 0.1102) { //Funitel 3 vallees
                         clickedWebcam = Webcam.FUNITEL_3_VALLEES;

@@ -18,10 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public static final Webcam[] webcams = Webcam.values();
     private LinearLayout llTitle, llAbout;
     private RecyclerView mRecyclerView;
+    private List<Preview> previews;
 
     private boolean titleShown, aboutShown;
     private int nrOfItemsPerRow;
@@ -41,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
         llAbout.setVisibility(View.GONE);
         titleShown = true;
         aboutShown = false;
+
+        previews = new ArrayList<>(12);
+        for (Webcam w : Webcam.values()) {
+            previews.add(new Preview(w));
+        }
 
         recalculateScreen();
     }
@@ -70,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    static boolean checkConnection(final Context context) {
+    static boolean checkConnection(final Context context, boolean show) {
         boolean connected = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = null;
@@ -86,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 connected = true;
             }
         }
-        if (!connected) {
+        if (!connected && show) {
             showConnectionError(context);
         }
         return connected;
@@ -122,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         RecyclerView.Adapter mAdapter;
         if (nrOfItemsPerRow == 1) {
-            mAdapter = new MainAdapter();
+            mAdapter = new MainAdapter(this, previews);
         } else {
-            mAdapter = new MainAdapterDouble();
+            mAdapter = new MainAdapterDouble(this, previews);
         }
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

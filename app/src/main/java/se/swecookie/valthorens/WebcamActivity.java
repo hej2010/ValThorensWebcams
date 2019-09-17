@@ -41,6 +41,15 @@ public class WebcamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webcam2);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            clickedWebcam = (Webcam) extras.getSerializable(EXTRA_WEBCAM);
+        } else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         txtWebCamTitle = findViewById(R.id.txtWebCamTitle);
         imgWebcam = findViewById(R.id.imgWebcam);
         txtDate = findViewById(R.id.txtDate);
@@ -62,15 +71,6 @@ public class WebcamActivity extends AppCompatActivity {
                 setHasShownMessageInfo();
             }
         });
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            clickedWebcam = (Webcam) extras.getSerializable(EXTRA_WEBCAM);
-        } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
 
         setTitleToCameraName();
 
@@ -139,56 +139,8 @@ public class WebcamActivity extends AppCompatActivity {
     }
 
     private void setTitleToCameraName() {
-        String s = "";
-        String t = "";
-        switch (clickedWebcam) {
-            case FUNITEL_3_VALLEES:
-                t = getString(R.string.camera_1_funitel_3_vallees);
-                s = "http://skaping.com/valthorens/3vallees";
-                break;
-            case DE_LA_MAISON:
-                t = getString(R.string.camera_2_de_la_maison);
-                s = "http://skaping.com/valthorens/lamaison";
-                break;
-            case LES_2_LACS:
-                t = getString(R.string.camera_3_les_2_lacs);
-                s = "http://skaping.com/valthorens/2lacs";
-                break;
-            case FUNITEL_DE_THORENS:
-                t = getString(R.string.camera_4_funitel_de_thorens);
-                s = "http://skaping.com/valthorens/funitelthorens";
-                break;
-            case STADE:
-                t = getString(R.string.camera_5_stade);
-                s = "http://www.skaping.com/valthorens/stade";
-                break;
-            case BOISMINT:
-                t = getString(R.string.camera_11_boismint);
-                s = "http://www.skaping.com/valthorens/boismint";
-                break;
-            case LA_TYROLIENNE:
-                t = getString(R.string.camera_6_la_tyrolienne);
-                s = "http://www.valthorens.com/en/webcam/livecam-tyrolienne"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-tyrolienne.648.html
-                break;
-            case PLAN_BOUCHET:
-                t = getString(R.string.camera_7_plan_bouchet);
-                s = "http://www.valthorens.com/en/webcam/livecam-plan-bouchet"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-plan-bouchet.704.html
-                break;
-            case LIVECAM_360:
-                t = getString(R.string.camera_8_livecam_360);
-                s = "http://www.valthorens.com/en/webcam/livecam-station"; // http://www.valthorens.com/en/live/livecams--webcams/resort-livecam.550.html
-                break;
-            case PLEIN_SUD:
-                t = getString(R.string.camera_9_plein_sud);
-                s = "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-folie-douce---plein-sud.418.html
-                break;
-            case CIME_CARON:
-                t = getString(R.string.camera_10_cime_caron);
-                s = "http://www.valthorens.com/en/webcam/livecam-cime-caron"; // http://www.valthorens.com/en/live/livecams--webcams/webcam-cime-caron.416.html
-                break;
-        }
-        txtWebCamTitle.setText(t);
-        getImage(clickedWebcam.i, s);
+        txtWebCamTitle.setText(clickedWebcam.name);
+        getImage(clickedWebcam.i, clickedWebcam.url);
     }
 
     private void getImage(int id, String url) {

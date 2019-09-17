@@ -6,18 +6,6 @@
     <string name="main_desc_icon">Webcam location</string>
     <string name="main_about">About</string>
 
-    <string name="camera_1_funitel_3_vallees">Funitel 3 Vallées</string>
-    <string name="camera_2_de_la_maison">De La Maison</string>
-    <string name="camera_3_les_2_lacs">Les 2 Lacs</string>
-    <string name="camera_4_funitel_de_thorens">Funitel De Thorens</string>
-    <string name="camera_6_la_tyrolienne">La Tyrolienne</string>
-    <string name="camera_5_stade">Stade</string>
-    <string name="camera_7_plan_bouchet">Plan Bouchet</string>
-    <string name="camera_8_livecam_360">Livecam 360&#176;</string>
-    <string name="camera_9_plein_sud">Plein Sud</string>
-    <string name="camera_10_cime_caron">Cime Caron</string>
-    <string name="camera_11_boismint">Boismint</string>
-
     <string name="map_title">Click on a circle to view that webcam</string>
     <string name="map_desc">Map over Val Thorens</string>
 

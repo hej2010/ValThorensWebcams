@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:clickable="true"
+    android:id="@+id/layout"
     android:focusable="true"
     android:orientation="vertical">
 
@@ -17,4 +18,15 @@
         android:cropToPadding="false"
         android:scaleType="fitXY" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:layout_gravity="top|center_horizontal"
+        android:textColor="@color/colorTextLight"
+        android:background="@color/colorMessageBG"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/txtTitle"/>
+
+</FrameLayout>

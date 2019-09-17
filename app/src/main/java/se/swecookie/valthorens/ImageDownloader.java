@@ -39,13 +39,13 @@ class ImageDownloader {
     private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
-    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity cont, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage, boolean showMessages) {
+    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity context, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage, boolean showMessages) {
         image = imageView;
         txtDate = txtView;
         txtDate.setVisibility(View.INVISIBLE);
         currentURL = url;
         downloadTask = new DownloadPhoto(ImageDownloader.this).execute();
-        context = cont;
+        this.context = context;
         this.rLLoading = loader;
         this.id = id;
         this.txtTitle = txtTitle;
