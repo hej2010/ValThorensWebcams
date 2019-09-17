@@ -105,7 +105,14 @@ class ImageDownloader {
                         } else {
                             break;
                         }
-                        imageDownloader.imageDate = imageDownloader.currentURL.replace("https://data.skaping.com/ValThorensBouquetin/", "")
+                        //Log.e("date", "url: " + imageDownloader.currentURL); // data.skaping.com/ValThorensLaMaison/2019/09/17/10-22.jpg
+                        String date = a[1].split("/20")[1]; // 19/09/17/10-22.jpg
+                        String[] arr = date.split("/");
+                        String time = arr[3].replace(".jpg", "").replace("-", ":");
+                        date = "20" + arr[0] + "-" + arr[1] + "-" + arr[2];
+                        imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
+                        /*imageDownloader.imageDate = imageDownloader.currentURL.replace("http:", "https:")
+                                .replace("https://data.skaping.com/ValThorensBouquetin/", "")
                                 .replace("https://data.skaping.com/funitelthorens-360/", "")
                                 .replace("https://data.skaping.com/ValThorensLaMaison/", "")
                                 .replace("https://data.skaping.com/vt2lacs-360/", "")
@@ -117,7 +124,7 @@ class ImageDownloader {
                         String[] temp = imageDownloader.imageDate.split(" ");
                         if (temp.length >= 4) {
                             imageDownloader.imageDate = "Taken at " + temp[0] + "-" + temp[1] + "-" + temp[2] + " " + temp[3] + ", CET";
-                        }
+                        }*/
                         break;
                     } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
                         imageDownloader.currentURL = "http:" + s.split("\"")[1];
@@ -264,6 +271,29 @@ class ImageDownloader {
                             imageDownloader.image.setVisibility(View.VISIBLE);
                             imageDownloader.txtDate.setText(imageDownloader.imageDate);
                             imageDownloader.txtDate.setVisibility(View.VISIBLE);
+
+                            if (imageDownloader.showMessages) {
+                                boolean title = false, body = false;
+                                if (!imageDownloader.title.isEmpty()) {
+                                    imageDownloader.txtTitle.setText(imageDownloader.title);
+                                    title = true;
+                                }
+                                if (!imageDownloader.body.isEmpty()) {
+                                    imageDownloader.txtBody.setText(imageDownloader.body);
+                                    body = true;
+                                }
+                                if (title || body) {
+                                    imageDownloader.lLMessage.setVisibility(View.VISIBLE);
+                                    if (!title) {
+                                        imageDownloader.txtTitle.setVisibility(View.GONE);
+                                    }
+                                    if (!body) {
+                                        imageDownloader.txtBody.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    imageDownloader.lLMessage.setVisibility(View.GONE);
+                                }
+                            }
                         }
 
                         @Override
@@ -280,29 +310,6 @@ class ImageDownloader {
                             }
                         }
                     });
-
-            if (imageDownloader.showMessages) {
-                boolean title = false, body = false;
-                if (!imageDownloader.title.isEmpty()) {
-                    imageDownloader.txtTitle.setText(imageDownloader.title);
-                    title = true;
-                }
-                if (!imageDownloader.body.isEmpty()) {
-                    imageDownloader.txtBody.setText(imageDownloader.body);
-                    body = true;
-                }
-                if (title || body) {
-                    imageDownloader.lLMessage.setVisibility(View.VISIBLE);
-                    if (!title) {
-                        imageDownloader.txtTitle.setVisibility(View.GONE);
-                    }
-                    if (!body) {
-                        imageDownloader.txtBody.setVisibility(View.GONE);
-                    }
-                } else {
-                    imageDownloader.lLMessage.setVisibility(View.GONE);
-                }
-            }
         }
     }
 
