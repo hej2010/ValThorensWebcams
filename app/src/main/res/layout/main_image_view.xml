@@ -44,4 +44,12 @@
 
     </FrameLayout>
 
+    <View
+        android:layout_width="@dimen/recyclerWidth"
+        android:layout_height="1dp"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.4"
+        android:layout_below="@id/fLPreview"
+        android:background="@color/colorAccent" />
+
 </RelativeLayout>

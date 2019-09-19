@@ -5,6 +5,7 @@
     <dimen name="about_image_height">137dp</dimen>
     <dimen name="about_padding">25dp</dimen>
     <dimen name="recyclerWidth">380dp</dimen>
+    <dimen name="recyclerWidthDouble">760dp</dimen>
     <dimen name="recyclerPreviewHeight">64dp</dimen>
     <dimen name="recyclerItemHeight">155dp</dimen>
 

@@ -105,4 +105,11 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="@dimen/recyclerWidthDouble"
+        android:layout_height="1dp"
+        android:alpha="0.4"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorAccent" />
+
 </LinearLayout>
