@@ -4,9 +4,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -17,7 +18,6 @@ public class AboutActivity extends AppCompatActivity {
     static String PREFS_PREVIEWS_KEY = "previews";
     static final String PREFS_FIRST_LAUNCH_KEY = "first";
     static final String PREFS_HAS_SHOWN_MESSAGE_INFO_KEY = "info";
-    private Toast toast;
 
     @Override
     protected void onStart() {
@@ -30,7 +30,6 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        toast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         CheckBox cBMessages = findViewById(R.id.cBMessages);
         CheckBox cBPreviews = findViewById(R.id.cBPreviews);
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -39,9 +38,24 @@ public class AboutActivity extends AppCompatActivity {
         cBPreviews.setChecked(prefs.getBoolean(PREFS_PREVIEWS_KEY, true));
         cBPreviews.setOnCheckedChangeListener((compoundButton, isChecked) -> {
             prefs.edit().putBoolean(PREFS_PREVIEWS_KEY, isChecked).apply();
-            toast.cancel();
-            toast = Toast.makeText(this, "Restart the app to apply changes", Toast.LENGTH_SHORT);
-            toast.show();
+            MainActivity.showPreviews = isChecked;
+        });
+
+        ImageView imgHelpMessages = findViewById(R.id.imgHelpMessages);
+        imgHelpMessages.setOnClickListener(view -> {
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            b.setTitle(getString(R.string.about_help_messages_title))
+                    .setMessage(getString(R.string.about_help_messages_message))
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
+        });
+        ImageView imgHelpPreviews = findViewById(R.id.imgHelpPreviews);
+        imgHelpPreviews.setOnClickListener(view -> {
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            b.setTitle(getString(R.string.about_help_previews_title))
+                    .setMessage(getString(R.string.about_help_previews_message))
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
         });
     }
 

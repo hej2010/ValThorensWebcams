@@ -1,6 +1,5 @@
 package se.swecookie.valthorens;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -34,7 +33,6 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
     private final List<DoubleInt> imageViews;
     private final List<DoublePreview> previews;
     private final WeakReference<MainActivity> weakReference;
-    private final boolean showPreviews;
 
     MainAdapterDouble(@NonNull MainActivity mainActivity, @NonNull List<Preview> previews) {
         this.imageViews = new ArrayList<>();
@@ -53,7 +51,6 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
         this.previews.add(new DoublePreview(previews.get(8), previews.get(9)));
         this.previews.add(new DoublePreview(previews.get(10), previews.get(11)));
         this.weakReference = new WeakReference<>(mainActivity);
-        showPreviews = mainActivity.getSharedPreferences(AboutActivity.PREFS_NAME, Context.MODE_PRIVATE).getBoolean(AboutActivity.PREFS_PREVIEWS_KEY, true);
     }
 
     @NonNull
@@ -109,9 +106,12 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
         final boolean connection = MainActivity.checkConnection(context, false);
         final boolean correctWebcam1 = p.prv1.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i && p.prv1.getWebcam().i != Webcam.LIVECAM_360.i;
         final boolean correctWebcam2 = p.prv2.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i && p.prv2.getWebcam().i != Webcam.LIVECAM_360.i;
+        final boolean showPreviews = MainActivity.showPreviews;
 
         holder.fLPreview1.setVisibility((connection || p.prv1.hasPreviewBeenShown())
                 && correctWebcam1 && !p.prv1.isNotFound() && showPreviews ? View.VISIBLE : View.GONE);
+        holder.fLPreview2.setVisibility((connection || p.prv2.hasPreviewBeenShown())
+                && correctWebcam2 && !p.prv2.isNotFound() && showPreviews ? View.VISIBLE : View.GONE);
         holder.progress1.setVisibility(View.GONE);
         holder.progress2.setVisibility(View.GONE);
 

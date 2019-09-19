@@ -1,6 +1,5 @@
 package se.swecookie.valthorens;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,14 +31,12 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final int[] imageViews;
     private final List<Preview> previews;
     private final WeakReference<MainActivity> weakReference;
-    private final boolean showPreviews;
 
     MainAdapter(@NonNull MainActivity mainActivity, @NonNull List<Preview> previews) {
         this.imageViews = new int[]{R.drawable.choose_from_map, R.drawable.funitel_3_vallees, R.drawable.de_la_maison, R.drawable.les_2_lacs, R.drawable.funitel_de_thorens, R.drawable.stade,
                 R.drawable.boismint, R.drawable.la_tyrolienne, R.drawable.plan_bouchet, R.drawable.livecam_360, R.drawable.plein_sud, R.drawable.cime_caron};
         this.previews = previews;
         this.weakReference = new WeakReference<>(mainActivity);
-        showPreviews = mainActivity.getSharedPreferences(AboutActivity.PREFS_NAME, Context.MODE_PRIVATE).getBoolean(AboutActivity.PREFS_PREVIEWS_KEY, true);
     }
 
     @NonNull
@@ -96,6 +93,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
         Preview p = previews.get(position);
         final boolean connection = MainActivity.checkConnection(context, false);
         final boolean correctWebcam = position != Webcam.CHOOSE_FROM_MAP.i && position != Webcam.LIVECAM_360.i;
+        final boolean showPreviews = MainActivity.showPreviews;
 
         holder.fLPreview.setVisibility((connection || p.hasPreviewBeenShown())
                 && correctWebcam && !p.isNotFound() && showPreviews ? View.VISIBLE : View.GONE);

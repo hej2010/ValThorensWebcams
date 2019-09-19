@@ -25,7 +25,12 @@
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
     <string name="about_version">Version 2.3</string>
     <string name="about_cb_show_messages">Show webcam messages</string>
-    <string name="about_cb_show_previews">Load webcam previews</string>
+    <string name="about_cb_show_previews">Show webcam previews</string>
     <string name="about_return">Return</string>
+
+    <string name="about_help_messages_title">Webcam messages help</string>
+    <string name="about_help_messages_message">Enable webcam messages to show status messages and information (if there are any) about the viewed webcam</string>
+    <string name="about_help_previews_title">Webcam previews help</string>
+    <string name="about_help_previews_message">Enable webcam previews to show a preview/thumbnail below each webcam in the list</string>
 
 </resources>

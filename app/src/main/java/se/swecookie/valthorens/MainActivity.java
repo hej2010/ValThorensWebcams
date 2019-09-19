@@ -26,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llTitle, llAbout;
     private RecyclerView mRecyclerView;
     private List<Preview> previews;
+    private RecyclerView.Adapter mAdapter;
 
     private boolean titleShown, aboutShown;
     private int nrOfItemsPerRow;
+    public static boolean showPreviews = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         llAbout.setVisibility(View.GONE);
         titleShown = true;
         aboutShown = false;
+        checkLoadPreviewsSettings();
 
         previews = new ArrayList<>(12);
         for (Webcam w : webcams) {
@@ -52,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         recalculateScreen();
+    }
+
+    private void checkLoadPreviewsSettings() {
+        showPreviews = getSharedPreferences(AboutActivity.PREFS_NAME, Context.MODE_PRIVATE).getBoolean(AboutActivity.PREFS_PREVIEWS_KEY, true);
     }
 
     private static void showConnectionError(final Context context) {
@@ -129,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        RecyclerView.Adapter mAdapter;
+
         if (nrOfItemsPerRow == 1) {
             mAdapter = new MainAdapter(this, previews);
         } else {
@@ -145,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateViews(mRecyclerView);
+        mAdapter.notifyItemRangeChanged(0, webcams.length);
     }
 
     private void updateViews(@NonNull final RecyclerView recyclerView) {
@@ -172,4 +180,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkLoadPreviewsSettings();
+        if (mAdapter != null) {
+            mAdapter.notifyItemRangeChanged(0, webcams.length);
+        }
+    }
 }

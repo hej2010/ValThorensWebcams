@@ -94,25 +94,62 @@
             android:textAlignment="center"
             android:textColor="@color/colorTextLight" />
 
-        <CheckBox
-            android:id="@+id/cBMessages"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorTextLight"
-            android:checked="true"
-            app:buttonTint="@color/colorAccent"
-            android:text="@string/about_cb_show_messages" />
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/cBPreviews"
+            <CheckBox
+                android:id="@+id/cBMessages"
+                android:layout_width="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextLight"
+                android:checked="true"
+                app:buttonTint="@color/colorAccent"
+                android:text="@string/about_cb_show_messages" />
+
+            <se.swecookie.valthorens.PressedImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/imgHelpMessages"
+                android:layout_marginStart="30dp"
+                android:layout_toEndOf="@id/cBMessages"
+                android:src="@drawable/ic_help"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cBMessages"
+                android:layout_marginLeft="30dp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorTextLight"
-            android:checked="true"
-            app:buttonTint="@color/colorAccent"
-            android:text="@string/about_cb_show_previews" />
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/cBPreviews"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextLight"
+                android:checked="true"
+                app:buttonTint="@color/colorAccent"
+                android:text="@string/about_cb_show_previews" />
+
+            <se.swecookie.valthorens.PressedImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/imgHelpPreviews"
+                android:layout_marginStart="30dp"
+                android:layout_toEndOf="@id/cBPreviews"
+                android:src="@drawable/ic_help"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/cBPreviews"
+                android:layout_marginLeft="30dp" />
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/button"
