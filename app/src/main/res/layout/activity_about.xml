@@ -104,6 +104,16 @@
             app:buttonTint="@color/colorAccent"
             android:text="@string/about_cb_show_messages" />
 
+        <CheckBox
+            android:id="@+id/cBPreviews"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextLight"
+            android:checked="true"
+            app:buttonTint="@color/colorAccent"
+            android:text="@string/about_cb_show_previews" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"

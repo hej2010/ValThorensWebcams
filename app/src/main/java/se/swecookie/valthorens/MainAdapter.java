@@ -1,6 +1,8 @@
 package se.swecookie.valthorens;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,19 +32,21 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final int[] imageViews;
     private final List<Preview> previews;
     private final WeakReference<MainActivity> weakReference;
+    private final boolean showPreviews;
 
     MainAdapter(@NonNull MainActivity mainActivity, @NonNull List<Preview> previews) {
         this.imageViews = new int[]{R.drawable.choose_from_map, R.drawable.funitel_3_vallees, R.drawable.de_la_maison, R.drawable.les_2_lacs, R.drawable.funitel_de_thorens, R.drawable.stade,
                 R.drawable.boismint, R.drawable.la_tyrolienne, R.drawable.plan_bouchet, R.drawable.livecam_360, R.drawable.plein_sud, R.drawable.cime_caron};
         this.previews = previews;
         this.weakReference = new WeakReference<>(mainActivity);
+        showPreviews = mainActivity.getSharedPreferences(AboutActivity.PREFS_NAME, Context.MODE_PRIVATE).getBoolean(AboutActivity.PREFS_PREVIEWS_KEY, true);
     }
 
     @NonNull
     @Override
     public MainAdapter.MyViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
-        FrameLayout frameLayout = (FrameLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.main_image_view, parent, false);
-        return new MyViewHolder(frameLayout);
+        RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.main_image_view, parent, false);
+        return new MyViewHolder(relativeLayout);
     }
 
     /*
@@ -71,7 +76,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                 return;
             }
         }
-        holder.frameLayout.setOnClickListener(view -> {
+        holder.relativeLayout.setOnClickListener(view -> {
             final int id = holder.getAdapterPosition();
             if (id == 0) {
                 context.startActivity(new Intent(context, ChooseFromMapActivity.class));
@@ -84,82 +89,112 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
             }
         });
 
+        Picasso.get().load(imageViews[position])
+                .placeholder(null)
+                .into(holder.imageView);
+
         Preview p = previews.get(position);
         final boolean connection = MainActivity.checkConnection(context, false);
+        final boolean correctWebcam = position != Webcam.CHOOSE_FROM_MAP.i && position != Webcam.LIVECAM_360.i;
 
-        if ((!connection && !p.gotPreview()) || p.getWebcam() == Webcam.LIVECAM_360 || p.getWebcam() == Webcam.CHOOSE_FROM_MAP) {
-            holder.txtTitle.setText("");
-        } else {
-            holder.txtTitle.setText(p.getWebcam().name);
-        }
+        holder.fLPreview.setVisibility((connection || p.hasPreviewBeenShown())
+                && correctWebcam && !p.isNotFound() && showPreviews ? View.VISIBLE : View.GONE);
+        holder.progress.setVisibility(View.GONE);
 
-        if (p.isNotLoading() && p.getPreviewUrl() == null) {
-            Picasso.get().load(imageViews[position])
-                    .placeholder(null)
-                    .into(holder.imageView);
+        if (!correctWebcam || !showPreviews) {
+            return;
         }
-        if (p.getPreviewUrl() != null && (connection || p.gotPreview())) {
-            Log.e("p " + position, "p != null: " + p.getPreviewUrl());
+        if (p.hasPreviewBeenShown() || (connection && p.gotPreviewUrl())) {
+            holder.progress.setVisibility(View.GONE);
             Picasso.get().load(p.getPreviewUrl())
                     .placeholder(null)
-                    .into(holder.imageView);
-            p.setGotPreview();
-        } else if (p.isNotLoading() && !p.gotPreview() && connection) {
-            p.setLoading(true);
-            Log.e("thread " + position, "before start");
-            new Thread(() -> {
-                Log.e("thread", "start");
-                final Webcam webcam = Webcam.fromInt(position);
-                String previewUrl = webcam.previewUrl;
-
-                if (previewUrl == null && webcam.url != null && webcam != Webcam.LIVECAM_360) {
-                    Document doc;
-                    try {
-                        doc = Jsoup.connect(webcam.url).ignoreContentType(true).get();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        p.setLoading(false);
-                        return;
-                    }
-                    if (doc == null) {
-                        // empty response
-                        p.setLoading(false);
-                        return;
-                    }
-                    Elements elements = doc.getElementsByTag("meta");
-                    for (Element e : elements) {
-                        String html = e.outerHtml();
-                        if (html.contains("=\"og:image\"")) {
-                            previewUrl = html.split("\"")[3].replace("/large/", "/thumb/");
-                            break;
+                    .into(holder.imgPreview, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            p.setPreviewShown(true);
                         }
-                    }
-                }
-                if (previewUrl != null) {
-                    Log.e("url", "position: " + position + " holdPos: " + holder.getAdapterPosition() + " ; " + previewUrl);
-                    p.setPreviewUrl(previewUrl);
 
-                    if (position == holder.getAdapterPosition()) {
-                        String finalPreviewUrl = previewUrl;
-                        context.runOnUiThread(() -> Picasso.get().load(finalPreviewUrl)
-                                .placeholder(null)
-                                .into(holder.imageView));
-
-                    }
-                    holder.frameLayout.post(() -> notifyItemRangeChanged(0, 12));
-                }
-                p.setGotPreview();
-                p.setLoading(false);
-            }).start();
-        } else if (!connection || (p.isNotLoading() && p.gotPreview()) || p.getWebcam().url == null) {
-            Log.e("p " + position, "!p.isLoading() && p.gotPreview()");
-            Picasso.get().load(imageViews[position])
-                    .placeholder(null)
-                    .into(holder.imageView);
-        } else {
-            Log.e("p " + position, "else");
+                        @Override
+                        public void onError(Exception e) {
+                            p.setPreviewShown(false);
+                            e.printStackTrace();
+                        }
+                    });
+            // TODO animate?
+        } else if (connection && p.isNotLoading() && !p.gotPreviewUrl() && !p.isNotFound()) {
+            holder.progress.setVisibility(View.VISIBLE);
+            p.setLoading(true);
+            new GetWebcamPreview(p, this, position).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else if (p.isNotLoading()) {
+            p.setLoading(false);
+            p.setPreviewShown(false);
+            holder.imgPreview.setImageDrawable(null);
         }
 
+    }
+
+    private static class GetWebcamPreview extends AsyncTask<Void, Void, String> {
+        private final Preview p;
+        private final MainAdapter adapter;
+        private final int position;
+
+        private GetWebcamPreview(Preview p, MainAdapter adapter, int position) {
+            this.p = p;
+            this.adapter = adapter;
+            this.position = position;
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            final Webcam webcam = Webcam.fromInt(position);
+            String previewUrl = webcam.previewUrl;
+
+            if (previewUrl == null && webcam.url != null && webcam != Webcam.LIVECAM_360) {
+                Document doc;
+                try {
+                    doc = Jsoup.connect(webcam.url).ignoreContentType(true).get();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+                if (doc == null) {
+                    // empty response
+                    return null;
+                }
+                Elements elements = doc.getElementsByTag("meta");
+                for (Element e : elements) {
+                    String html = e.outerHtml();
+                    if (html.contains("=\"og:image\"") && html.contains("/static/")) {
+                        previewUrl = html.split("\"")[3].replace("/large/", "/thumb/");
+                        break;
+                    }
+                }
+
+            }
+            return previewUrl;
+        }
+
+        @Override
+        protected void onPostExecute(String url) {
+            super.onPostExecute(url);
+            if (url == null) {
+                p.setLoading(false);
+                p.setPreviewShown(false);
+                p.setNotFound();
+            } else {
+                p.setLoading(false);
+                p.setGotPreview();
+                p.setPreviewUrl(url);
+            }
+            Log.e("t " + position, "onPostExecute: " + url);
+
+            adapter.notifyItemChanged(position);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
     }
 
     @Override
@@ -168,15 +203,18 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        final ImageView imageView;
-        final FrameLayout frameLayout;
-        final TextView txtTitle;
+        final ImageView imageView, imgPreview;
+        final RelativeLayout relativeLayout;
+        final FrameLayout fLPreview;
+        final ProgressBar progress;
 
         MyViewHolder(View v) {
             super(v);
             imageView = v.findViewById(R.id.imgView);
-            frameLayout = v.findViewById(R.id.layout);
-            txtTitle = v.findViewById(R.id.txtTitle);
+            relativeLayout = v.findViewById(R.id.layout);
+            imgPreview = v.findViewById(R.id.imgPreview);
+            fLPreview = v.findViewById(R.id.fLPreview);
+            progress = v.findViewById(R.id.progress);
         }
     }
 

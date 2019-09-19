@@ -11,23 +11,97 @@
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
-        <se.swecookie.valthorens.PressedImageView
-            android:id="@+id/imgView"
-            android:layout_width="@dimen/recyclerWidth"
-            android:layout_height="@dimen/recyclerItemHeight"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:scaleType="fitXY" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/rL1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:gravity="center_horizontal"
+            android:focusable="true"
+            android:orientation="vertical">
 
-        <se.swecookie.valthorens.PressedImageView
-            android:id="@+id/imgView2"
-            android:layout_width="@dimen/recyclerWidth"
-            android:layout_height="@dimen/recyclerItemHeight"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/main_desc_icon"
-            android:cropToPadding="false"
-            android:scaleType="fitXY" />
+            <se.swecookie.valthorens.PressedImageView
+                android:id="@+id/imgView1"
+                android:layout_width="@dimen/recyclerWidth"
+                android:layout_height="@dimen/recyclerItemHeight"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:scaleType="fitXY" />
+
+            <FrameLayout
+                android:id="@+id/fLPreview1"
+                android:layout_below="@id/imgView1"
+                android:layout_width="@dimen/recyclerWidth"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:id="@+id/progress1"
+                    android:layout_height="wrap_content" />
+
+                <se.swecookie.valthorens.PressedImageView
+                    android:id="@+id/imgPreview1"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/recyclerPreviewHeight"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/main_desc_icon"
+                    android:scaleType="centerCrop" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:id="@+id/rL2"
+            android:gravity="center_horizontal"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <se.swecookie.valthorens.PressedImageView
+                android:id="@+id/imgView2"
+                android:layout_width="@dimen/recyclerWidth"
+                android:layout_height="@dimen/recyclerItemHeight"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/main_desc_icon"
+                android:cropToPadding="false"
+                android:scaleType="fitXY" />
+
+            <FrameLayout
+                android:id="@+id/fLPreview2"
+                android:layout_below="@id/imgView2"
+                android:layout_width="@dimen/recyclerWidth"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <ProgressBar
+                    android:layout_width="match_parent"
+                    android:id="@+id/progress2"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content" />
+
+                <se.swecookie.valthorens.PressedImageView
+                    android:id="@+id/imgPreview2"
+                    android:layout_marginBottom="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/recyclerPreviewHeight"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/main_desc_icon"
+                    android:scaleType="centerCrop" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

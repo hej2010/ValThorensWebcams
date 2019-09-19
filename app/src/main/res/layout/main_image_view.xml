@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:clickable="true"
+    android:gravity="center_horizontal"
     android:id="@+id/layout"
     android:focusable="true"
     android:orientation="vertical">
@@ -18,15 +19,29 @@
         android:cropToPadding="false"
         android:scaleType="fitXY" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:layout_gravity="top|center_horizontal"
-        android:textColor="@color/colorTextLight"
-        android:background="@color/colorMessageBG"
+    <FrameLayout
+        android:id="@+id/fLPreview"
+        android:layout_below="@id/imgView"
+        android:layout_width="@dimen/recyclerWidth"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:id="@+id/txtTitle"/>
+        android:layout_gravity="center_horizontal">
 
-</FrameLayout>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+        <se.swecookie.valthorens.PressedImageView
+            android:id="@+id/imgPreview"
+            android:layout_marginBottom="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/recyclerPreviewHeight"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/main_desc_icon"
+            android:scaleType="centerCrop" />
+
+    </FrameLayout>
+
+</RelativeLayout>

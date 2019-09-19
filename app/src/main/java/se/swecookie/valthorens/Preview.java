@@ -5,13 +5,13 @@ import androidx.annotation.Nullable;
 
 class Preview {
     private String previewUrl;
-    private boolean loading, gotPreview;
+    private boolean loading, gotPreviewUrl, previewShown, notFound;
     private Webcam webcam;
 
     Preview(@NonNull Webcam webcam) {
         this.previewUrl = webcam.previewUrl == null ? null : webcam.previewUrl.replace("http:", "https:");
         loading = false;
-        gotPreview = false;
+        gotPreviewUrl = false;
         this.webcam = webcam;
     }
 
@@ -32,15 +32,31 @@ class Preview {
         return !loading;
     }
 
-    boolean gotPreview() {
-        return gotPreview;
+    boolean gotPreviewUrl() {
+        return gotPreviewUrl;
     }
 
     void setGotPreview() {
-        this.gotPreview = true;
+        this.gotPreviewUrl = true;
     }
 
     Webcam getWebcam() {
         return webcam;
+    }
+
+    boolean hasPreviewBeenShown() {
+        return previewShown;
+    }
+
+    void setPreviewShown(boolean previewShown) {
+        this.previewShown = previewShown;
+    }
+
+    boolean isNotFound() {
+        return notFound;
+    }
+
+    void setNotFound() {
+        this.notFound = true;
     }
 }

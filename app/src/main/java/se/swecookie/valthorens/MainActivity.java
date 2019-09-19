@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         aboutShown = false;
 
         previews = new ArrayList<>(12);
-        for (Webcam w : Webcam.values()) {
+        for (Webcam w : webcams) {
             previews.add(new Preview(w));
         }
 

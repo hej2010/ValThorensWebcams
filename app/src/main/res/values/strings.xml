@@ -4,7 +4,7 @@
     <string name="main_title">Webcams in Val Thorens</string>
     <string name="main_desc">Click on an image to view the webcam at that location</string>
     <string name="main_desc_icon">Webcam location</string>
-    <string name="main_about">About</string>
+    <string name="main_about">About &amp; settings</string>
 
     <string name="map_title">Click on a circle to view that webcam</string>
     <string name="map_desc">Map over Val Thorens</string>
@@ -25,6 +25,7 @@
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
     <string name="about_version">Version 2.3</string>
     <string name="about_cb_show_messages">Show webcam messages</string>
+    <string name="about_cb_show_previews">Load webcam previews</string>
     <string name="about_return">Return</string>
 
 </resources>
