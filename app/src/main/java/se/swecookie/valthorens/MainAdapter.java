@@ -3,7 +3,6 @@ package se.swecookie.valthorens;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -163,7 +162,10 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                 for (Element e : elements) {
                     String html = e.outerHtml();
                     if (html.contains("=\"og:image\"") && html.contains("/static/")) {
-                        previewUrl = html.split("\"")[3].replace("/large/", "/thumb/");
+                        String[] arr = html.split("\"");
+                        if (arr.length > 3) {
+                            previewUrl = arr[3].replace("/large/", "/thumb/");
+                        }
                         break;
                     }
                 }
@@ -184,7 +186,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                 p.setGotPreview();
                 p.setPreviewUrl(url);
             }
-            Log.e("t " + position, "onPostExecute: " + url);
+            //Log.e("t " + position, "onPostExecute: " + url);
 
             adapter.notifyItemChanged(position);
         }

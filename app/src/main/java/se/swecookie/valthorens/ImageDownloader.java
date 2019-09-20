@@ -67,7 +67,7 @@ class ImageDownloader {
             imageDownloader.imageDate = "";
             imageDownloader.title = "";
             imageDownloader.body = "";
-            Document doc = null;
+            Document doc;
 
             try {
                 doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
@@ -102,28 +102,25 @@ class ImageDownloader {
                             break;
                         }
                         //Log.e("date", "url: " + imageDownloader.currentURL); // data.skaping.com/ValThorensLaMaison/2019/09/17/10-22.jpg
-                        String date = a[1].split("/20")[1]; // 19/09/17/10-22.jpg
-                        String[] arr = date.split("/");
-                        String time = arr[3].replace(".jpg", "").replace("-", ":");
-                        date = "20" + arr[0] + "-" + arr[1] + "-" + arr[2];
-                        imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
-                        /*imageDownloader.imageDate = imageDownloader.currentURL.replace("http:", "https:")
-                                .replace("https://data.skaping.com/ValThorensBouquetin/", "")
-                                .replace("https://data.skaping.com/funitelthorens-360/", "")
-                                .replace("https://data.skaping.com/ValThorensLaMaison/", "")
-                                .replace("https://data.skaping.com/vt2lacs-360/", "")
-                                .replace("https://data.skaping.com/setam/stade-val-thorens/", "")
-                                .replace("https://data.skaping.com/val-thorens/boismint/", "")
-                                .replace(".jpg", "")
-                                .replace("/", " ")
-                                .replace("-", ":");
-                        String[] temp = imageDownloader.imageDate.split(" ");
-                        if (temp.length >= 4) {
-                            imageDownloader.imageDate = "Taken at " + temp[0] + "-" + temp[1] + "-" + temp[2] + " " + temp[3] + ", CET";
-                        }*/
+                        String[] dArr = a[1].split("/20");
+                        if (dArr.length > 1) {
+                            String date = dArr[1]; // 19/09/17/10-22.jpg
+                            String[] arr = date.split("/");
+                            if (arr.length > 3) {
+                                String time = arr[3].replace(".jpg", "").replace("-", ":");
+                                date = "20" + arr[0] + "-" + arr[1] + "-" + arr[2];
+                                imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
+                            }
+                        }
+                        if (imageDownloader.imageDate == null || imageDownloader.imageDate.isEmpty()) {
+                            imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_10_minutes);
+                        }
                         break;
                     } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
-                        imageDownloader.currentURL = "http:" + s.split("\"")[1];
+                        String[] tArr = s.split("\"");
+                        if (tArr.length > 1) {
+                            imageDownloader.currentURL = "http:" + tArr[1];
+                        }
                         boolean found = false;
                         if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
                             String[] d = imageLinks[i + 1].split("\"");
@@ -205,7 +202,9 @@ class ImageDownloader {
                                     d[0] = d[1];
                                     d[1] = tmp;
                                 }
-                                date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
+                                if (d.length > 2) {
+                                    date = d[2] + "-" + d[1] + "-" + d[0]; // yyyy-mm-dd
+                                }
                             } else if (s.contains(":") && s.split(":").length == 2) {
                                 String[] t = s.split(":");
                                 if (t[0].length() == 1) {
