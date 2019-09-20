@@ -12,9 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.material.snackbar.Snackbar;
 
 public class WebcamActivity extends AppCompatActivity {
     private TextView txtWebCamTitle, txtDate, txtTitle, txtBody;
@@ -24,7 +21,7 @@ public class WebcamActivity extends AppCompatActivity {
     private LinearLayout lLMessage;
 
     private boolean focused, showMessages;
-    private Snackbar snackbar = null;
+    //private Snackbar snackbar = null;
     private Webcam clickedWebcam;
 
 
@@ -74,23 +71,23 @@ public class WebcamActivity extends AppCompatActivity {
 
         setTitleToCameraName();
 
-        if (isFirstLaunch()) {
+        /*if (isFirstLaunch()) {
             snackbar = Snackbar.make(txtDate, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.dismiss), view -> setFirstLaunch()).setActionTextColor(getResources().getColor(R.color.colorTextLight));
             View sbView = snackbar.getView();
             sbView.setBackgroundColor(ContextCompat.getColor(WebcamActivity.this, R.color.colorAccent));
             snackbar.show();
-        }
+        }*/
         // TODO Les Menuires: https://lesmenuires.com/webcams/
         // TODO Meribel: https://ski-resort.meribel.net/all-the-webcam.html
 
         focused = false;
 
         imgWebcam.setOnClickListener(view -> {
-            if (snackbar != null && snackbar.isShown()) {
+            /*if (snackbar != null && snackbar.isShown()) {
                 snackbar.dismiss();
                 setFirstLaunch();
-            }
+            }*/
             if (!focused) {
                 txtDate.setVisibility(View.GONE);
                 txtWebCamTitle.setVisibility(View.GONE);
@@ -107,7 +104,7 @@ public class WebcamActivity extends AppCompatActivity {
         });
     }
 
-    private boolean isFirstLaunch() {
+    /*private boolean isFirstLaunch() {
         final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
         return prefs.getBoolean(AboutActivity.PREFS_FIRST_LAUNCH_KEY, true);
     }
@@ -115,7 +112,7 @@ public class WebcamActivity extends AppCompatActivity {
     private void setFirstLaunch() {
         final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
         prefs.edit().putBoolean(AboutActivity.PREFS_FIRST_LAUNCH_KEY, false).apply();
-    }
+    }*/
 
     private boolean hasNotShownMessageInfo() {
         final SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);

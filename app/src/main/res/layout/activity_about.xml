@@ -27,7 +27,6 @@
             android:clickable="true"
             android:contentDescription="@string/about_image"
             android:focusable="true"
-            android:onClick="onImageClicked"
             app:srcCompat="@drawable/egen" />
 
         <TextView

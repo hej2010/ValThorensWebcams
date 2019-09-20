@@ -10,13 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.snackbar.Snackbar;
-
 public class AboutActivity extends AppCompatActivity {
     static String PREFS_NAME = "prefs";
     static String PREFS_MESSAGES_KEY = "messages";
     static String PREFS_PREVIEWS_KEY = "previews";
-    static final String PREFS_FIRST_LAUNCH_KEY = "first";
+    //static final String PREFS_FIRST_LAUNCH_KEY = "first";
     static final String PREFS_HAS_SHOWN_MESSAGE_INFO_KEY = "info";
 
     @Override
@@ -63,11 +61,6 @@ public class AboutActivity extends AppCompatActivity {
         if (view.getId() == R.id.button) {
             finish();
         }
-    }
-
-    public void onImageClicked(@NonNull View view) {
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.imageView), getString(R.string.about_image), Snackbar.LENGTH_LONG);
-        snackbar.show();
     }
 
 }
