@@ -140,16 +140,16 @@ public class WebcamActivity extends AppCompatActivity {
 
     private void setTitleToCameraName() {
         txtWebCamTitle.setText(clickedWebcam.name);
-        getImage(clickedWebcam.i, clickedWebcam.url);
+        getImage(clickedWebcam);
     }
 
-    private void getImage(int id, String url) {
+    private void getImage(Webcam webcam) {
         if (imageDownloader == null) {
             imageDownloader = new ImageDownloader();
         } else {
             imageDownloader.cancel();
         }
-        imageDownloader.startDownload(imgWebcam, txtDate, id, url, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage, showMessages);
+        imageDownloader.startDownload(imgWebcam, txtDate, webcam, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage, showMessages);
     }
 
     int getHeight() {

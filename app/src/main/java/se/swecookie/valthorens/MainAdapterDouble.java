@@ -35,11 +35,11 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
 
     MainAdapterDouble(@NonNull MainActivity mainActivity, @NonNull List<Preview> previews) {
         this.imageViews = new ArrayList<>();
-        imageViews.add(new DoubleInt(R.drawable.choose_from_map, R.drawable.funitel_3_vallees));
+        imageViews.add(new DoubleInt(R.drawable.choose_from_map, R.drawable.livecam_360));
         imageViews.add(new DoubleInt(R.drawable.de_la_maison, R.drawable.les_2_lacs));
-        imageViews.add(new DoubleInt(R.drawable.funitel_de_thorens, R.drawable.stade));
-        imageViews.add(new DoubleInt(R.drawable.boismint, R.drawable.la_tyrolienne));
-        imageViews.add(new DoubleInt(R.drawable.plan_bouchet, R.drawable.livecam_360));
+        imageViews.add(new DoubleInt(R.drawable.funitel_de_thorens, R.drawable.funitel_3_vallees));
+        imageViews.add(new DoubleInt(R.drawable.stade, R.drawable.boismint));
+        imageViews.add(new DoubleInt(R.drawable.la_tyrolienne, R.drawable.plan_bouchet));
         imageViews.add(new DoubleInt(R.drawable.plein_sud, R.drawable.cime_caron));
 
         this.previews = new ArrayList<>();
@@ -191,6 +191,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
         protected String doInBackground(Void... voids) {
             String previewUrl = webcam.previewUrl;
 
+            //Log.e("d " + webcam.i, "doInBackground: " + webcam.url);
             if (previewUrl == null && webcam.url != null && webcam != Webcam.LIVECAM_360) {
                 Document doc;
                 try {
@@ -201,12 +202,13 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
                 }
                 if (doc == null) {
                     // empty response
+                   // Log.e("d " + webcam.i, "doc == null");
                     return null;
                 }
                 Elements elements = doc.getElementsByTag("meta");
                 for (Element e : elements) {
                     String html = e.outerHtml();
-                    if (html.contains("=\"og:image\"") && html.contains("/static/")) {
+                    if (html.contains("=\"og:image\"") && html.contains("/large/")) {
                         String[] arr = html.split("\"");
                         if (arr.length > 3) {
                             previewUrl = arr[3].replace("/large/", "/thumb/");

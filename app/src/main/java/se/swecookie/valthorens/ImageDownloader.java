@@ -20,7 +20,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,19 +34,19 @@ class ImageDownloader {
     private LinearLayout lLMessage;
     private RelativeLayout rLLoading;
     private boolean showMessages;
-    private int id;
+    private Webcam webcam;
     private AsyncTask<Void, Void, Void> downloadTask;
     private static String errorMessage;
 
-    void startDownload(ImageView imageView, TextView txtView, int id, String url, AppCompatActivity context, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage, boolean showMessages) {
+    void startDownload(ImageView imageView, TextView txtView, Webcam webcam, AppCompatActivity context, RelativeLayout loader, TextView txtTitle, TextView txtBody, LinearLayout lLMessage, boolean showMessages) {
         image = imageView;
         txtDate = txtView;
         txtDate.setVisibility(View.INVISIBLE);
-        currentURL = url;
+        currentURL = webcam.url;
         downloadTask = new DownloadPhoto(ImageDownloader.this).execute();
         this.context = context;
         this.rLLoading = loader;
-        this.id = id;
+        this.webcam = webcam;
         this.txtTitle = txtTitle;
         this.txtBody = txtBody;
         this.lLMessage = lLMessage;
@@ -55,15 +54,14 @@ class ImageDownloader {
     }
 
     private static class DownloadPhoto extends AsyncTask<Void, Void, Void> {
-        private final WeakReference<ImageDownloader> weakReference;
+        private final ImageDownloader imageDownloader;
 
         DownloadPhoto(ImageDownloader imageDownloader) {
-            weakReference = new WeakReference<>(imageDownloader);
+            this.imageDownloader = imageDownloader;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            final ImageDownloader imageDownloader = weakReference.get();
             imageDownloader.imageDate = "";
             imageDownloader.title = "";
             imageDownloader.body = "";
@@ -82,7 +80,7 @@ class ImageDownloader {
                 return null;
             }
             try {
-                if (imageDownloader.id < 7) {
+                if (!imageDownloader.webcam.isStatic) {
                     Elements scripts = doc.getElementsByTag("script");
                     String script = "";
                     for (Element d : scripts) {
@@ -95,7 +93,7 @@ class ImageDownloader {
                     String[] imageLinks = script.split(",");
                     for (int i = imageLinks.length - 1; i >= 0; i--) {
                         String s = imageLinks[i];
-                        if (s.contains("new ImageMedia(\"//data.skaping.com/")) {
+                        /*if (s.contains("new ImageMedia(\"//data.skaping.com/")) {
                             final String[] a = s.split("\"");
                             if (a.length > 1) {
                                 imageDownloader.currentURL = "http:" + a[1];
@@ -117,7 +115,8 @@ class ImageDownloader {
                                 imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_10_minutes);
                             }
                             break;
-                        } else if (s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
+                        } else */
+                        if (s.contains("new ImageMedia(\"//data.skaping.com") || s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
                             String[] tArr = s.split("\"");
                             if (tArr.length > 1) {
                                 imageDownloader.currentURL = "http:" + tArr[1];
@@ -153,20 +152,20 @@ class ImageDownloader {
                     }
 
                 } else {
-                    switch (imageDownloader.id) {
-                        case 7:
+                    switch (imageDownloader.webcam) {
+                        case LA_TYROLIENNE:
                             imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                             break;
-                        case 8:
+                        case PLAN_BOUCHET:
                             imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                             break;
-                        case 9:
+                        case LIVECAM_360:
                             imageDownloader.currentURL = "http://backend.roundshot.com/cams/232/default";
                             break;
-                        case 10:
+                        case PLEIN_SUD:
                             imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                             break;
-                        case 11:
+                        case CIME_CARON:
                             imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                             break;
                     }
@@ -246,7 +245,6 @@ class ImageDownloader {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            final ImageDownloader imageDownloader = weakReference.get();
             if (imageDownloader == null) {
                 return;
             }

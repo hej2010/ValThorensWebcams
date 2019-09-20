@@ -1,24 +1,26 @@
 package se.swecookie.valthorens;
 
 enum Webcam {
-    CHOOSE_FROM_MAP(0, null, null, null),
-    FUNITEL_3_VALLEES(1, "Funitel 3 Vallées", "http://skaping.com/valthorens/3vallees", null),
-    DE_LA_MAISON(2, "De La Maison", "http://skaping.com/valthorens/lamaison", null),
-    LES_2_LACS(3, "Les 2 Lacs", "http://skaping.com/valthorens/2lacs", null),
-    FUNITEL_DE_THORENS(4, "Funitel De Thorens", "http://skaping.com/valthorens/funitelthorens", null),
-    STADE(5, "Stade", "http://www.skaping.com/valthorens/stade", null),
-    BOISMINT(6, "Boismint", "http://www.skaping.com/valthorens/boismint", null),
-    LA_TYROLIENNE(7, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg"),
-    PLAN_BOUCHET(8, "Plan Bouchet", "http://www.valthorens.com/en/webcam/livecam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg"),
-    LIVECAM_360(9, "Livecam 360\u00B0", "http://www.valthorens.com/en/webcam/livecam-station", null),
-    PLEIN_SUD(10, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
-    CIME_CARON(11, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
+    CHOOSE_FROM_MAP(0, true, null, null, null),
+    LIVECAM_360(1, true, "Livecam 360\u00B0", "http://www.valthorens.com/en/webcam/livecam-station", null),
+    DE_LA_MAISON(2, false, "De La Maison", "http://skaping.com/valthorens/lamaison", null),
+    LES_2_LACS(3, false, "Les 2 Lacs", "http://skaping.com/valthorens/2lacs", null),
+    FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://skaping.com/valthorens/funitelthorens", null),
+    FUNITEL_3_VALLEES(5, false, "Funitel 3 Vallées", "http://skaping.com/valthorens/3vallees", null),
+    STADE(6, false, "Stade", "http://www.skaping.com/valthorens/stade", null),
+    BOISMINT(7, false, "Boismint", "http://www.skaping.com/valthorens/boismint", null),
+    LA_TYROLIENNE(8, true, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg"),
+    PLAN_BOUCHET(9, true, "Plan Bouchet", "http://www.valthorens.com/en/webcam/livecam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg"),
+    PLEIN_SUD(10, true, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
+    CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
 
     final int i;
     final String name, url, previewUrl;
+    final boolean isStatic;
 
-    Webcam(int i, String name, String url, String previewUrl) {
+    Webcam(int i, boolean isStatic, String name, String url, String previewUrl) {
         this.i = i;
+        this.isStatic = isStatic;
         this.name = name;
         this.url = url;
         this.previewUrl = previewUrl;
@@ -31,7 +33,7 @@ enum Webcam {
             case 0:
                 return CHOOSE_FROM_MAP;
             case 1:
-                return FUNITEL_3_VALLEES;
+                return LIVECAM_360;
             case 2:
                 return DE_LA_MAISON;
             case 3:
@@ -39,15 +41,15 @@ enum Webcam {
             case 4:
                 return FUNITEL_DE_THORENS;
             case 5:
-                return STADE;
+                return FUNITEL_3_VALLEES;
             case 6:
-                return BOISMINT;
+                return STADE;
             case 7:
-                return LA_TYROLIENNE;
+                return BOISMINT;
             case 8:
-                return PLAN_BOUCHET;
+                return LA_TYROLIENNE;
             case 9:
-                return LIVECAM_360;
+                return PLAN_BOUCHET;
             case 10:
                 return PLEIN_SUD;
             case 11:
