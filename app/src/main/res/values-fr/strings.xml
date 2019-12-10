@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
     <string name="app_name">Val Thorens Webcams</string>
+    <string name="about_version">Version 2.7</string>
 
     <string name="main_title">Webcams à Val Thorens</string>
     <string name="main_desc">Cliquez sur une image pour voir la webcam à cet endroit</string>
@@ -23,7 +24,6 @@
     <string name="about_legal_notice">Publié avec la permission de l\'Office de tourisme de Val Thorens</string>
     <string name="about_questions">Des questions ou des suggestions d\'amélioration ? Envoyez un e-mail à « contact\@arctosoft.com »</string>
     <string name="about_fullscreen">Astuce: appuyez sur une image pour l\'afficher en plein écran !</string>
-    <string name="about_version">Version 2.5</string>
     <string name="about_cb_show_messages">Afficher les messages des webcams</string>
     <string name="about_cb_show_previews">Afficher les aperçus des webcams</string>
     <string name="about_return">Retour</string>

@@ -1,4 +1,4 @@
-<resources>
+<?xml version="1.0" encoding="UTF-8"?><resources>
     <string name="app_name">Val Thorens Webcams</string>
     <string name="about_version">Version 2.7</string>
 
@@ -24,7 +24,6 @@
     <string name="about_legal_notice">Published with permission from Office de tourisme de Val Thorens</string>
     <string name="about_questions">Questions or suggestion for improvements? Send an email to \"contact@arctosoft.com\"</string>
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
-
     <string name="about_cb_show_messages">Show webcam messages</string>
     <string name="about_cb_show_previews">Show webcam previews</string>
     <string name="about_return">Return</string>
