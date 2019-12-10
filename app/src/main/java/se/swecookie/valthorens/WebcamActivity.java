@@ -64,7 +64,7 @@ public class WebcamActivity extends AppCompatActivity {
             txtTitle.setText("");
             txtBody.setText("");
             if (hasNotShownMessageInfo()) {
-                Toast.makeText(this, "Disable messages in About", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, getString(R.string.webcam_message_info), Toast.LENGTH_LONG).show();
                 setHasShownMessageInfo();
             }
         });

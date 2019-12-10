@@ -30,8 +30,6 @@ enum Webcam {
 
     public static Webcam fromInt(int i) {
         switch (i) {
-            case 0:
-                return CHOOSE_FROM_MAP;
             case 1:
                 return LIVECAM_360;
             case 2:
@@ -54,6 +52,7 @@ enum Webcam {
                 return PLEIN_SUD;
             case 11:
                 return CIME_CARON;
+            case 0:
             default:
                 return CHOOSE_FROM_MAP;
         }

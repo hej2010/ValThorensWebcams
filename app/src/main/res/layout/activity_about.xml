@@ -21,7 +21,6 @@
         android:paddingRight="@dimen/about_padding">
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/about_image_height"
             android:clickable="true"

@@ -125,14 +125,14 @@ class ImageDownloader {
                             if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
                                 String[] d = imageLinks[i + 1].split("\"");
                                 if (d.length > 1) {
-                                    imageDownloader.imageDate = "Taken at " + d[1];
+                                    imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + d[1];
                                     found = true;
                                 }
                             }
                             if (!found) {
                                 final String[] arr = imageDownloader.currentURL.split("/");
                                 if (arr.length > 4) {
-                                    imageDownloader.imageDate = "Taken at " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
+                                    imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
                                             + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
                                 }
                             }
@@ -217,7 +217,7 @@ class ImageDownloader {
                                 }
                             }
                             if (date != null && time != null) {
-                                imageDownloader.imageDate = "Taken at " + date + " " + time + ", CET";
+                                imageDownloader.imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + date + " " + time + ", CET";
                                 found = true;
                                 break;
                             }

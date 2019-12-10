@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Val Thorens Webcams</string>
+    <string name="about_version">Version 2.7</string>
 
     <string name="main_title">Webcams in Val Thorens</string>
     <string name="main_desc">Click on an image to view the webcam at that location</string>
@@ -10,9 +11,9 @@
     <string name="map_desc">Map over Val Thorens</string>
 
     <string name="webcam_desc">Webcam image from Val Thorens</string>
-    <string name="webcam_fullscreen_hint">Tap the image to view it in fullscreen!</string>
-    <string name="dismiss">Dismiss</string>
     <string name="webcam_10_minutes">Updates every 10 minutes during daylight</string>
+    <string name="webcam_taken_at">Taken at</string>
+    <string name="webcam_message_info">Disable messages in About</string>
 
     <string name="connection_title">Connection error</string>
     <string name="connection_message">You need an active internet connection to view a webcam!</string>
@@ -23,7 +24,7 @@
     <string name="about_legal_notice">Published with permission from Office de tourisme de Val Thorens</string>
     <string name="about_questions">Questions or suggestion for improvements? Send an email to \"contact@arctosoft.com\"</string>
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
-    <string name="about_version">Version 2.4</string>
+
     <string name="about_cb_show_messages">Show webcam messages</string>
     <string name="about_cb_show_previews">Show webcam previews</string>
     <string name="about_return">Return</string>

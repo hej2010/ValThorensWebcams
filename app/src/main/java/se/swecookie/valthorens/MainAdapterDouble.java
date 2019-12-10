@@ -238,10 +238,6 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
             adapter.notifyItemChanged(adapterPosition);
         }
 
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
     }
 
     @Override

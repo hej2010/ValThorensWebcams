@@ -11,9 +11,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AboutActivity extends AppCompatActivity {
-    static String PREFS_NAME = "prefs";
-    static String PREFS_MESSAGES_KEY = "messages";
-    static String PREFS_PREVIEWS_KEY = "previews";
+    static final String PREFS_NAME = "prefs";
+    static final String PREFS_MESSAGES_KEY = "messages";
+    static final String PREFS_PREVIEWS_KEY = "previews";
     //static final String PREFS_FIRST_LAUNCH_KEY = "first";
     static final String PREFS_HAS_SHOWN_MESSAGE_INFO_KEY = "info";
 

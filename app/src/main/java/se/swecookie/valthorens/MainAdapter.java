@@ -191,10 +191,6 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
             adapter.notifyItemChanged(position);
         }
 
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
     }
 
     @Override

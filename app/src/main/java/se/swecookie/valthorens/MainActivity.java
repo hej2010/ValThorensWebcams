@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         return connected;
     }
 
-    public void onAboutClicked(View view) {
+    public void onAboutClicked(@SuppressWarnings("unused") View view) {
         startActivity(new Intent(MainActivity.this, AboutActivity.class));
     }
 

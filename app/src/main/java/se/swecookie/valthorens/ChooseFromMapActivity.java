@@ -87,10 +87,12 @@ public class ChooseFromMapActivity extends AppCompatActivity {
         return displayMetrics.heightPixels;
     }
 
-    int getWidth() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        return displayMetrics.widthPixels;
-    }
+// --Commented out by Inspection START (2019-12-10 16:37):
+//    int getWidth() {
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//        return displayMetrics.widthPixels;
+//    }
+// --Commented out by Inspection STOP (2019-12-10 16:37)
 
 }

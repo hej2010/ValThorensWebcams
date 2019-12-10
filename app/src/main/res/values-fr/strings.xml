@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <string name="app_name">Val Thorens Webcams</string>
+
+    <string name="main_title">Webcams à Val Thorens</string>
+    <string name="main_desc">Cliquez sur une image pour voir la webcam à cet endroit</string>
+    <string name="main_desc_icon">Emplacement des webcams</string>
+    <string name="main_about">À propos &amp; paramètres</string>
+
+    <string name="map_title">Cliquez sur un cercle pour voir cette webcam</string>
+    <string name="map_desc">Carte de Val Thorens</string>
+
+    <string name="webcam_desc">Image des webcams de Val Thorens</string>
+    <string name="webcam_10_minutes">Mises à jour toutes les 10 minutes pendant la journée</string>
+    <string name="webcam_taken_at">Pris à</string>
+    <string name="webcam_message_info">Désactiver les messages dans à propos</string>
+
+    <string name="connection_title">Erreur de connexion</string>
+    <string name="connection_message">Vous avez besoin d\'une connexion Internet active pour voir une webcam !</string>
+    <string name="ok">OK</string>
+
+    <string name="about_image">Photo de Val Thorens 2016</string>
+    <string name="about_source">Webcams de valthorens.com</string>
+    <string name="about_legal_notice">Publié avec la permission de l\'Office de tourisme de Val Thorens</string>
+    <string name="about_questions">Des questions ou des suggestions d\'amélioration ? Envoyez un e-mail à « contact\@arctosoft.com »</string>
+    <string name="about_fullscreen">Astuce: appuyez sur une image pour l\'afficher en plein écran !</string>
+    <string name="about_version">Version 2.5</string>
+    <string name="about_cb_show_messages">Afficher les messages des webcams</string>
+    <string name="about_cb_show_previews">Afficher les aperçus des webcams</string>
+    <string name="about_return">Retour</string>
+
+    <string name="about_help_messages_title">Aide pour les messages des webcams</string>
+    <string name="about_help_messages_message">Activer les messages de la webcam pour afficher des messages d\'état et des informations (le cas échéant) sur la webcam visualisée</string>
+    <string name="about_help_previews_title">Aide pour la prévisualisation des webcams</string>
+    <string name="about_help_previews_message">Activer les aperçus des webcams pour afficher un aperçu/une vignette sous chaque webcam de la liste.</string>
+
+</resources>
