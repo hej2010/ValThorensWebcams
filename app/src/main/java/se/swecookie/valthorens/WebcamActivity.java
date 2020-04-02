@@ -1,8 +1,15 @@
 package se.swecookie.valthorens;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,11 +18,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
-public class WebcamActivity extends AppCompatActivity {
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+
+public class WebcamActivity extends AppCompatActivity implements IOnImageDownloaded {
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 4;
+    public static final String EXTRA_WEBCAM = "w";
+
     private TextView txtWebCamTitle, txtDate, txtTitle, txtBody;
-    private ImageView imgWebcam;
+    private ImageView imgWebcam, imgDownload;
     private RelativeLayout loadingPanel;
     private ImageDownloader imageDownloader;
     private LinearLayout lLMessage;
@@ -23,9 +41,8 @@ public class WebcamActivity extends AppCompatActivity {
     private boolean focused, showMessages;
     //private Snackbar snackbar = null;
     private Webcam clickedWebcam;
-
-
-    public static final String EXTRA_WEBCAM = "w";
+    private Toast toast;
+    private String imageUrl, imageDate;
 
     @Override
     protected void onStart() {
@@ -42,7 +59,7 @@ public class WebcamActivity extends AppCompatActivity {
         if (extras != null) {
             clickedWebcam = (Webcam) extras.getSerializable(EXTRA_WEBCAM);
         } else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            showToast(getString(R.string.error));
             finish();
             return;
         }
@@ -54,7 +71,9 @@ public class WebcamActivity extends AppCompatActivity {
         lLMessage = findViewById(R.id.lLMessage);
         txtTitle = findViewById(R.id.txtTitle);
         txtBody = findViewById(R.id.txtBody);
+        imgDownload = findViewById(R.id.imgDownload);
         lLMessage.setVisibility(View.GONE);
+        imgDownload.setVisibility(View.GONE);
 
         SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
         showMessages = prefs.getBoolean(AboutActivity.PREFS_MESSAGES_KEY, true);
@@ -64,35 +83,26 @@ public class WebcamActivity extends AppCompatActivity {
             txtTitle.setText("");
             txtBody.setText("");
             if (hasNotShownMessageInfo()) {
-                Toast.makeText(this, getString(R.string.webcam_message_info), Toast.LENGTH_LONG).show();
+                showToast(getString(R.string.webcam_message_info));
                 setHasShownMessageInfo();
             }
         });
 
         setTitleToCameraName();
 
-        /*if (isFirstLaunch()) {
-            snackbar = Snackbar.make(txtDate, getString(R.string.webcam_fullscreen_hint), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.dismiss), view -> setFirstLaunch()).setActionTextColor(getResources().getColor(R.color.colorTextLight));
-            View sbView = snackbar.getView();
-            sbView.setBackgroundColor(ContextCompat.getColor(WebcamActivity.this, R.color.colorAccent));
-            snackbar.show();
-        }*/
         // TODO Les Menuires: https://lesmenuires.com/webcams/
         // TODO Meribel: https://ski-resort.meribel.net/all-the-webcam.html
 
         focused = false;
 
         imgWebcam.setOnClickListener(view -> {
-            /*if (snackbar != null && snackbar.isShown()) {
-                snackbar.dismiss();
-                setFirstLaunch();
-            }*/
             if (!focused) {
+                imgDownload.setVisibility(View.GONE);
                 txtDate.setVisibility(View.GONE);
                 txtWebCamTitle.setVisibility(View.GONE);
                 lLMessage.setVisibility(View.GONE);
             } else {
+                imgDownload.setVisibility(View.VISIBLE);
                 txtDate.setVisibility(View.VISIBLE);
                 txtWebCamTitle.setVisibility(View.VISIBLE);
                 if (showMessages && (!txtBody.getText().toString().isEmpty() || !txtTitle.getText().toString().isEmpty())) {
@@ -102,6 +112,14 @@ public class WebcamActivity extends AppCompatActivity {
             focused = !focused;
             toggleFullscreen(WebcamActivity.this);
         });
+    }
+
+    private void showToast(String string) {
+        if (toast != null) {
+            toast.cancel();
+        }
+        toast = Toast.makeText(this, string, Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     /*private boolean isFirstLaunch() {
@@ -146,7 +164,8 @@ public class WebcamActivity extends AppCompatActivity {
         } else {
             imageDownloader.cancel();
         }
-        imageDownloader.startDownload(imgWebcam, txtDate, webcam, WebcamActivity.this, loadingPanel, txtTitle, txtBody, lLMessage, showMessages);
+        txtDate.setVisibility(View.INVISIBLE);
+        imageDownloader.startDownload(webcam, WebcamActivity.this, this);
     }
 
     int getHeight() {
@@ -160,6 +179,183 @@ public class WebcamActivity extends AppCompatActivity {
         super.onDestroy();
         if (imageDownloader != null) {
             imageDownloader.cancel();
+        }
+    }
+
+    public void onDownloadClicked(View view) {
+        if (view.getId() == R.id.imgDownload) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        // Explain, the user has previously denied the request
+                        showPermissionNeededDialog();
+                    } else {
+                        // Ignore, user has denied a permission and selected the Don't ask again option in the permission request dialog, or if a device policy prohibits the permission
+                        askForPermission();
+                    }
+                }
+            } else {
+                downloadImage();
+            }
+        }
+    }
+
+    private void showPermissionDeniedToast() {
+        showToast(getString(R.string.webcam_download_permission_denied));
+    }
+
+    private void downloadImage() {
+        imgDownload.setVisibility(View.GONE);
+        showToast(getString(R.string.downloading));
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
+        request.setTitle(getString(R.string.webcam_download_notification_title, clickedWebcam.name));
+        request.setDescription(txtDate.getText().toString());
+
+        request.allowScanningByMediaScanner();
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        String fileName = clickedWebcam.name.replace(" ", "_")
+                + "-"
+                + (imageDate == null ? System.currentTimeMillis() : imageDate)
+                + ".jpg";
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+
+        // get download service and enqueue file
+        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        if (manager != null) {
+            manager.enqueue(request);
+        } else {
+            showToast(getString(R.string.error));
+        }
+    }
+
+    @Override
+    public void onImageDownloaded(String currentURL, int height, String imageDate, String title, String body, String errorMessage) {
+        if (currentURL == null || currentURL.isEmpty()) {
+            showErrorDialog(errorMessage);
+        } else {
+            if (getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE).getBoolean(AboutActivity.PREFS_DOWNLOADS_KEY, true)) {
+                imgDownload.setVisibility(View.VISIBLE);
+            }
+            currentURL = currentURL.replace("http:", "https:");
+            this.imageUrl = currentURL;
+            if (imageDate != null && imageDate.startsWith("Taken at")) {
+                this.imageDate = imageDate.split("Taken at ")[1];
+            }
+
+            Picasso.get()
+                    .load(currentURL)
+                    .resize(0, height)
+                    .centerInside()
+                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                    .into(imgWebcam, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            WebcamActivity.this.loadingPanel.setVisibility(View.GONE);
+                            imgWebcam.setVisibility(View.VISIBLE);
+                            txtDate.setText(imageDate);
+                            txtDate.setVisibility(View.VISIBLE);
+
+                            if (showMessages) {
+                                boolean showTitle = false, showBody = false;
+                                if (!title.isEmpty()) {
+                                    txtTitle.setText(title);
+                                    showTitle = true;
+                                }
+                                if (!body.isEmpty()) {
+                                    txtBody.setText(body);
+                                    showBody = true;
+                                }
+                                if (showTitle || showBody) {
+                                    lLMessage.setVisibility(View.VISIBLE);
+                                    if (!showTitle) {
+                                        txtTitle.setVisibility(View.GONE);
+                                    }
+                                    if (!showBody) {
+                                        txtBody.setVisibility(View.GONE);
+                                    }
+                                } else {
+                                    lLMessage.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                if (!isFinishing() && !isDestroyed()) {
+                                    showErrorDialog(errorMessage);
+                                }
+                            } else {
+                                if (!isFinishing()) {
+                                    showErrorDialog(errorMessage);
+                                }
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void showErrorDialog(@Nullable String errorMessage) {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        String message = getString(R.string.webcam_load_error);
+        if (errorMessage != null) {
+            message = message + "Error: " + errorMessage;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (isFinishing() || isDestroyed()) {
+                return;
+            }
+        } else {
+            if (isFinishing()) {
+                return;
+            }
+        }
+        builder.setTitle(getString(R.string.error))
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> finish())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void showPermissionNeededDialog() {
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(this);
+        }
+        builder.setTitle(getString(R.string.webcam_download_permission_needed_title))
+                .setMessage(getString(R.string.webcam_download_permission_needed_message))
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    askForPermission();
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    private void askForPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // permission was granted, yay! Do the
+                // contacts-related task you need to do.
+                downloadImage();
+            } else {
+                // permission denied, boo! Disable the
+                // functionality that depends on this permission.
+                showPermissionDeniedToast();
+            }
         }
     }
 }

@@ -14,6 +14,16 @@
     <string name="webcam_10_minutes">Updates every 10 minutes during daylight</string>
     <string name="webcam_taken_at">Taken at</string>
     <string name="webcam_message_info">Disable messages in About</string>
+    <string name="webcam_download_desc">Download the photo</string>
+    <string name="webcam_download_notification_title">Downloading %1$s</string>
+    <string name="webcam_download_permission_needed_title">Permission needed</string>
+    <string name="webcam_download_permission_needed_message">The app needs storage permission to download the image</string>
+    <string name="webcam_download_permission_denied">Permission not granted</string>
+
+    <string name="webcam_load_error">There seems to be trouble downloading the image, please try again later.\n\n</string>
+    <string name="webcam_load_error_empty">Empty server response</string>
+    <string name="error">Error</string>
+    <string name="downloading">Downloading</string>
 
     <string name="connection_title">Connection error</string>
     <string name="connection_message">You need an active internet connection to view a webcam!</string>
@@ -26,11 +36,14 @@
     <string name="about_fullscreen">Hint: tap an image to view it in fullscreen!</string>
     <string name="about_cb_show_messages">Show webcam messages</string>
     <string name="about_cb_show_previews">Show webcam previews</string>
+    <string name="about_cb_enable_downloads">Enable the download of webcam photos</string>
     <string name="about_return">Return</string>
 
     <string name="about_help_messages_title">Webcam messages help</string>
     <string name="about_help_messages_message">Enable webcam messages to show status messages and information (if there are any) about the viewed webcam</string>
     <string name="about_help_previews_title">Webcam previews help</string>
     <string name="about_help_previews_message">Enable webcam previews to show a preview/thumbnail below each webcam in the list</string>
+    <string name="about_help_downloads_title">Webcam download help</string>
+    <string name="about_help_downloads_message">Display a download button when viewing a webcam</string>
 
 </resources>

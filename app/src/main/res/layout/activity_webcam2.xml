@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:fontFamily="serif-monospace"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@color/colorTextLight"
         android:textSize="18sp"
@@ -31,9 +32,9 @@
     </RelativeLayout>
 
     <HorizontalScrollView
+        android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/horizontalScrollView"
         android:layout_above="@+id/txtDate"
         android:layout_below="@+id/txtWebCamTitle">
 
@@ -53,15 +54,15 @@
     <LinearLayout
         android:id="@+id/lLMessage"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/horizontalScrollView"
+        android:layout_margin="5dp"
+        android:alpha="0.7"
+        android:background="@color/colorMessageBG"
         android:clickable="true"
         android:focusable="true"
-        android:background="@color/colorMessageBG"
-        android:alpha="0.7"
-        android:layout_margin="5dp"
         android:orientation="vertical"
-        android:padding="3dp"
-        android:layout_alignBottom="@id/horizontalScrollView"
-        android:layout_height="wrap_content">
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/txtTitle"
@@ -74,9 +75,9 @@
         <TextView
             android:id="@+id/txtBody"
             android:layout_width="wrap_content"
-            android:textSize="12sp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -86,9 +87,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:fontFamily="serif-monospace"
+        android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textColor="@color/colorTextLight"
         android:textSize="18sp"
         android:textStyle="normal|bold" />
+
+    <ImageView
+        android:id="@+id/imgDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.5"
+        android:contentDescription="@string/webcam_download_desc"
+        android:onClick="onDownloadClicked"
+        android:padding="10dp"
+        android:src="@drawable/ic_file_download" />
 
 </RelativeLayout>

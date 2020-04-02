@@ -14,6 +14,16 @@
     <string name="webcam_10_minutes">Mises à jour toutes les 10 minutes pendant la journée</string>
     <string name="webcam_taken_at">Pris à</string>
     <string name="webcam_message_info">Désactiver les messages dans à propos</string>
+    <string name="webcam_download_desc">Télécharger la photo</string>
+    <string name="webcam_download_notification_title">Téléchargement %1$s</string>
+    <string name="webcam_download_permission_needed_title">Autorisation nécessaire</string>
+    <string name="webcam_download_permission_needed_message">L\'application a besoin d\'une autorisation de stockage pour télécharger l\'image</string>
+    <string name="webcam_download_permission_denied">Autorisation non accordée</string>
+
+    <string name="webcam_load_error">Il semble qu\'il y ait un problème pour télécharger l\'image, veuillez réessayer plus tard.\n\n</string>
+    <string name="webcam_load_error_empty">Réponse du serveur vide</string>
+    <string name="error">Erreur</string>
+    <string name="downloading">Téléchargement</string>
 
     <string name="connection_title">Erreur de connexion</string>
     <string name="connection_message">Vous avez besoin d\'une connexion Internet active pour voir une webcam !</string>
@@ -26,11 +36,14 @@
     <string name="about_fullscreen">Astuce: appuyez sur une image pour l\'afficher en plein écran !</string>
     <string name="about_cb_show_messages">Afficher les messages des webcams</string>
     <string name="about_cb_show_previews">Afficher les aperçus des webcams</string>
+    <string name="about_cb_enable_downloads">Activer le téléchargement de photos webcam</string>
     <string name="about_return">Retour</string>
 
     <string name="about_help_messages_title">Aide pour les messages des webcams</string>
     <string name="about_help_messages_message">Activer les messages de la webcam pour afficher des messages d\'état et des informations (le cas échéant) sur la webcam visualisée</string>
     <string name="about_help_previews_title">Aide pour la prévisualisation des webcams</string>
     <string name="about_help_previews_message">Activer les aperçus des webcams pour afficher un aperçu/une vignette sous chaque webcam de la liste.</string>
+    <string name="about_help_downloads_title">Aide au téléchargement de la webcam</string>
+    <string name="about_help_downloads_message">Afficher un bouton de téléchargement lors de la visualisation d\'une webcam</string>
 
 </resources>

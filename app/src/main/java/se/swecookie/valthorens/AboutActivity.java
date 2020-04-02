@@ -14,7 +14,7 @@ public class AboutActivity extends AppCompatActivity {
     static final String PREFS_NAME = "prefs";
     static final String PREFS_MESSAGES_KEY = "messages";
     static final String PREFS_PREVIEWS_KEY = "previews";
-    //static final String PREFS_FIRST_LAUNCH_KEY = "first";
+    static final String PREFS_DOWNLOADS_KEY = "downloads";
     static final String PREFS_HAS_SHOWN_MESSAGE_INFO_KEY = "info";
 
     @Override
@@ -30,6 +30,7 @@ public class AboutActivity extends AppCompatActivity {
 
         CheckBox cBMessages = findViewById(R.id.cBMessages);
         CheckBox cBPreviews = findViewById(R.id.cBPreviews);
+        CheckBox cBDownloads = findViewById(R.id.cBDownloads);
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         cBMessages.setChecked(prefs.getBoolean(PREFS_MESSAGES_KEY, true));
         cBMessages.setOnCheckedChangeListener((compoundButton, isChecked) -> prefs.edit().putBoolean(PREFS_MESSAGES_KEY, isChecked).apply());
@@ -38,6 +39,8 @@ public class AboutActivity extends AppCompatActivity {
             prefs.edit().putBoolean(PREFS_PREVIEWS_KEY, isChecked).apply();
             MainActivity.showPreviews = isChecked;
         });
+        cBDownloads.setChecked(prefs.getBoolean(PREFS_DOWNLOADS_KEY, true));
+        cBDownloads.setOnCheckedChangeListener((compoundButton, isChecked) -> prefs.edit().putBoolean(PREFS_DOWNLOADS_KEY, isChecked).apply());
 
         ImageView imgHelpMessages = findViewById(R.id.imgHelpMessages);
         imgHelpMessages.setOnClickListener(view -> {
@@ -52,6 +55,14 @@ public class AboutActivity extends AppCompatActivity {
             AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
             b.setTitle(getString(R.string.about_help_previews_title))
                     .setMessage(getString(R.string.about_help_previews_message))
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
+        });
+        ImageView imgHelpDownloads = findViewById(R.id.imgHelpDownloads);
+        imgHelpDownloads.setOnClickListener(view -> {
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            b.setTitle(getString(R.string.about_help_downloads_title))
+                    .setMessage(getString(R.string.about_help_downloads_message))
                     .setPositiveButton(R.string.ok, null)
                     .show();
         });

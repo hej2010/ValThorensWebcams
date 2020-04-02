@@ -31,6 +31,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:text="@string/main_about"
             android:textAlignment="center"
             android:textColor="@color/colorTextLight"
@@ -47,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_source"
@@ -58,6 +60,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_legal_notice"
@@ -67,6 +70,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_questions"
@@ -77,6 +81,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_fullscreen"
@@ -86,6 +91,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/about_version"
@@ -94,58 +100,87 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
 
             <CheckBox
                 android:id="@+id/cBMessages"
                 android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorTextLight"
+                android:layout_centerHorizontal="true"
                 android:checked="true"
-                app:buttonTint="@color/colorAccent"
-                android:text="@string/about_cb_show_messages" />
+                android:text="@string/about_cb_show_messages"
+                android:textColor="@color/colorTextLight"
+                app:buttonTint="@color/colorAccent" />
 
             <se.swecookie.valthorens.PressedImageView
-                android:layout_width="wrap_content"
                 android:id="@+id/imgHelpMessages"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@id/cBMessages"
-                android:src="@drawable/ic_help"
-                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_toEndOf="@id/cBMessages"
                 android:layout_toRightOf="@id/cBMessages"
-                android:layout_marginLeft="30dp" />
+                android:src="@drawable/ic_help" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
 
             <CheckBox
                 android:id="@+id/cBPreviews"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorTextLight"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
                 android:checked="true"
-                app:buttonTint="@color/colorAccent"
-                android:text="@string/about_cb_show_previews" />
+                android:text="@string/about_cb_show_previews"
+                android:textColor="@color/colorTextLight"
+                app:buttonTint="@color/colorAccent" />
 
             <se.swecookie.valthorens.PressedImageView
-                android:layout_width="wrap_content"
                 android:id="@+id/imgHelpPreviews"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@id/cBPreviews"
-                android:src="@drawable/ic_help"
-                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_toEndOf="@id/cBPreviews"
                 android:layout_toRightOf="@id/cBPreviews"
-                android:layout_marginLeft="30dp" />
+                android:src="@drawable/ic_help" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/cBDownloads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:checked="true"
+                android:text="@string/about_cb_enable_downloads"
+                android:textColor="@color/colorTextLight"
+                app:buttonTint="@color/colorAccent" />
+
+            <se.swecookie.valthorens.PressedImageView
+                android:id="@+id/imgHelpDownloads"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_toEndOf="@id/cBDownloads"
+                android:layout_toRightOf="@id/cBDownloads"
+                android:src="@drawable/ic_help" />
 
         </RelativeLayout>
 
