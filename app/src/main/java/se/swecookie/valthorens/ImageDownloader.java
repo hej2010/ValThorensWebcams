@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 class ImageDownloader {
+    private static final String TAG = "ImageDownloader";
     private ImageView image;
     private String currentURL;
     private AppCompatActivity context;
@@ -68,8 +69,10 @@ class ImageDownloader {
             Document doc;
 
             try {
+                //Log.e(TAG, "doInBackground: " + imageDownloader.currentURL);
                 doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
             } catch (Exception e) {
+                e.printStackTrace();
                 errorMessage = e.getMessage();
                 return null;
             }
@@ -116,7 +119,7 @@ class ImageDownloader {
                             }
                             break;
                         } else */
-                        if (s.contains("new ImageMedia(\"//data.skaping.com") || s.contains("new ImageMedia(\"//storage.gra3.cloud.ovh.net")) {
+                        if (s.contains("new ImageMedia(\"//data.skaping.com") || s.contains("new ImageMedia(\"//storage.gra")) {
                             String[] tArr = s.split("\"");
                             if (tArr.length > 1) {
                                 imageDownloader.currentURL = "http:" + tArr[1];
@@ -194,7 +197,7 @@ class ImageDownloader {
                                     String strDate = dateFormat.format(date2);
                                     boolean largerThan = false;
                                     try {
-                                        largerThan = Integer.valueOf(d[1]) > 12;
+                                        largerThan = Integer.parseInt(d[1]) > 12;
                                     } catch (NumberFormatException ignored) {
                                     }
                                     if (d[0].equals(strDate) || largerThan) {
