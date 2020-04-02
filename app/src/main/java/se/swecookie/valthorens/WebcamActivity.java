@@ -233,7 +233,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
         if (currentURL == null || currentURL.isEmpty()) {
             showErrorDialog(errorMessage);
         } else {
-            if (getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE).getBoolean(AboutActivity.PREFS_DOWNLOADS_KEY, true)) {
+            if (getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE).getBoolean(AboutActivity.PREFS_DOWNLOADS_KEY, false)) {
                 imgDownload.setVisibility(View.VISIBLE);
             }
             currentURL = currentURL.replace("http:", "https:");

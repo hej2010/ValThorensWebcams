@@ -39,7 +39,7 @@ public class AboutActivity extends AppCompatActivity {
             prefs.edit().putBoolean(PREFS_PREVIEWS_KEY, isChecked).apply();
             MainActivity.showPreviews = isChecked;
         });
-        cBDownloads.setChecked(prefs.getBoolean(PREFS_DOWNLOADS_KEY, true));
+        cBDownloads.setChecked(prefs.getBoolean(PREFS_DOWNLOADS_KEY, false));
         cBDownloads.setOnCheckedChangeListener((compoundButton, isChecked) -> prefs.edit().putBoolean(PREFS_DOWNLOADS_KEY, isChecked).apply());
 
         ImageView imgHelpMessages = findViewById(R.id.imgHelpMessages);
