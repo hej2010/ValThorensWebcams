@@ -1,6 +1,6 @@
-package se.swecookie.valthorens;
+package se.swecookie.valthorens.data;
 
-enum Webcam {
+public enum Webcam {
     CHOOSE_FROM_MAP(0, true, null, null, null),
     LIVECAM_360(1, true, "Livecam 360\u00B0", "http://www.valthorens.com/en/webcam/livecam-station", null),
     DE_LA_MAISON(2, false, "De La Maison", "http://skaping.com/valthorens/lamaison", null),
@@ -14,9 +14,9 @@ enum Webcam {
     PLEIN_SUD(10, true, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
     CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
 
-    final int i;
-    final String name, url, previewUrl;
-    final boolean isStatic;
+    public final int i;
+    public final String name, url, previewUrl;
+    public final boolean isStatic;
 
     Webcam(int i, boolean isStatic, String name, String url, String previewUrl) {
         this.i = i;

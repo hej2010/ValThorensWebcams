@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
+import se.swecookie.valthorens.data.Webcam;
+
 public class ChooseFromMapActivity extends AppCompatActivity {
     private ImageView imgMap;
 

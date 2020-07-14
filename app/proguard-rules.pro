@@ -20,10 +20,6 @@
 
 -keeppackagenames org.jsoup.nodes
 
--dontwarn android.support.v7.**
--keep class android.support.v7.** { *; }
--keep interface android.support.v7.** { *; }
-
 # JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
 

@@ -1,62 +1,62 @@
-package se.swecookie.valthorens;
+package se.swecookie.valthorens.data;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-class Preview {
+public class Preview {
     private String previewUrl;
     private boolean loading, gotPreviewUrl, previewShown, notFound;
     private Webcam webcam;
 
-    Preview(@NonNull Webcam webcam) {
+    public Preview(@NonNull Webcam webcam) {
         this.previewUrl = webcam.previewUrl == null ? null : webcam.previewUrl.replace("http:", "https:");
         loading = false;
         gotPreviewUrl = false;
         this.webcam = webcam;
     }
 
-    void setLoading(boolean loading) {
+    public void setLoading(boolean loading) {
         this.loading = loading;
     }
 
-    void setPreviewUrl(@NonNull String previewUrl) {
+    public void setPreviewUrl(@NonNull String previewUrl) {
         this.previewUrl = previewUrl.replace("http:", "https:");
     }
 
     @Nullable
-    String getPreviewUrl() {
+    public String getPreviewUrl() {
         return previewUrl;
     }
 
-    boolean isNotLoading() {
+    public boolean isNotLoading() {
         return !loading;
     }
 
-    boolean gotPreviewUrl() {
+    public boolean gotPreviewUrl() {
         return gotPreviewUrl;
     }
 
-    void setGotPreview() {
+    public void setGotPreview() {
         this.gotPreviewUrl = true;
     }
 
-    Webcam getWebcam() {
+    public Webcam getWebcam() {
         return webcam;
     }
 
-    boolean hasPreviewBeenShown() {
+    public boolean hasPreviewBeenShown() {
         return previewShown;
     }
 
-    void setPreviewShown(boolean previewShown) {
+    public void setPreviewShown(boolean previewShown) {
         this.previewShown = previewShown;
     }
 
-    boolean isNotFound() {
+    public boolean isNotFound() {
         return notFound;
     }
 
-    void setNotFound() {
+    public void setNotFound() {
         this.notFound = true;
     }
 }

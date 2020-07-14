@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -25,6 +26,9 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import se.swecookie.valthorens.data.Preview;
+import se.swecookie.valthorens.data.Webcam;
 
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final int[] imageViews;
@@ -72,7 +76,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                 return;
             }
         }
-        holder.relativeLayout.setOnClickListener(view -> {
+        holder.cardView.setOnClickListener(view -> {
             final int id = holder.getAdapterPosition();
             if (id == 0) {
                 context.startActivity(new Intent(context, ChooseFromMapActivity.class));
@@ -200,14 +204,14 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView, imgPreview;
-        final RelativeLayout relativeLayout;
+        final CardView cardView;
         final FrameLayout fLPreview;
         final ProgressBar progress;
 
-        MyViewHolder(View v) {
+        MyViewHolder(RelativeLayout v) {
             super(v);
             imageView = v.findViewById(R.id.imgView);
-            relativeLayout = v.findViewById(R.id.layout);
+            cardView = v.findViewById(R.id.layout);
             imgPreview = v.findViewById(R.id.imgPreview);
             fLPreview = v.findViewById(R.id.fLPreview);
             progress = v.findViewById(R.id.progress);

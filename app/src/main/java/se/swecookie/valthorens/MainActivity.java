@@ -21,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.swecookie.valthorens.data.Preview;
+import se.swecookie.valthorens.data.Webcam;
+
 public class MainActivity extends AppCompatActivity {
     public static final Webcam[] webcams = Webcam.values();
     private LinearLayout llTitle, llAbout;

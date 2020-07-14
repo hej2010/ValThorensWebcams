@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import se.swecookie.valthorens.data.Webcam;
+
 class ImageDownloader {
     private static final String TAG = "ImageDownloader";
     private String currentURL;

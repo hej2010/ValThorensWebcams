@@ -28,6 +28,9 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.swecookie.valthorens.data.Preview;
+import se.swecookie.valthorens.data.Webcam;
+
 class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHolder> {
     private final List<DoubleInt> imageViews;
     private final List<DoublePreview> previews;

@@ -28,6 +28,8 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
+import se.swecookie.valthorens.data.Webcam;
+
 public class WebcamActivity extends AppCompatActivity implements IOnImageDownloaded {
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 4;
     public static final String EXTRA_WEBCAM = "w";

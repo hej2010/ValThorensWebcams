@@ -33,8 +33,7 @@
             android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".WebcamActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="sensorLandscape" />
+            android:configChanges="orientation|screenSize" />
         <activity android:name=".AboutActivity" />
     </application>
 
