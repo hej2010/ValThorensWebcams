@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Callback;
@@ -251,7 +252,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
     static class MyViewHolder extends RecyclerView.ViewHolder {
         final ImageView imageView, imageView2, imgPreview1, imgPreview2;
         final FrameLayout fLPreview1, fLPreview2;
-        final RelativeLayout rL1, rL2;
+        final CardView rL1, rL2;
         final ProgressBar progress1, progress2;
 
         MyViewHolder(View v) {
