@@ -4,112 +4,127 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="2">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/rL1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="0dp"
-        app:cardUseCompatPadding="true">
+        android:layout_weight="1">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rL1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_centerHorizontal="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="true">
 
-            <se.swecookie.valthorens.PressedImageView
-                android:id="@+id/imgView1"
-                android:layout_width="@dimen/recyclerWidth"
-                android:layout_height="@dimen/recyclerItemHeight"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/main_desc_icon"
-                android:cropToPadding="false"
-                android:scaleType="fitXY" />
-
-            <FrameLayout
-                android:id="@+id/fLPreview1"
-                android:layout_width="@dimen/recyclerWidth"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/imgView1"
-                android:layout_gravity="center_horizontal">
-
-                <ProgressBar
-                    android:id="@+id/progress1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <se.swecookie.valthorens.PressedImageView
-                    android:id="@+id/imgPreview1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/recyclerPreviewHeight"
-                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/imgView1"
+                    android:layout_width="@dimen/recyclerWidth"
+                    android:layout_height="@dimen/recyclerItemHeight"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/main_desc_icon"
-                    android:scaleType="centerCrop" />
+                    android:cropToPadding="false"
+                    android:scaleType="fitXY" />
 
-            </FrameLayout>
-
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/rL2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="0dp"
-        app:cardUseCompatPadding="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <se.swecookie.valthorens.PressedImageView
-                android:id="@+id/imgView2"
-                android:layout_width="@dimen/recyclerWidth"
-                android:layout_height="@dimen/recyclerItemHeight"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/main_desc_icon"
-                android:cropToPadding="false"
-                android:scaleType="fitXY" />
-
-            <FrameLayout
-                android:id="@+id/fLPreview2"
-                android:layout_width="@dimen/recyclerWidth"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imgView2"
-                android:layout_gravity="center_horizontal">
-
-                <ProgressBar
-                    android:id="@+id/progress2"
-                    android:layout_width="match_parent"
+                <FrameLayout
+                    android:id="@+id/fLPreview1"
+                    android:layout_width="@dimen/recyclerWidth"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:layout_below="@id/imgView1"
+                    android:layout_gravity="center_horizontal">
+
+                    <ProgressBar
+                        android:id="@+id/progress1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <se.swecookie.valthorens.PressedImageView
+                        android:id="@+id/imgPreview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/recyclerPreviewHeight"
+                        android:layout_gravity="center_horizontal"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/main_desc_icon"
+                        android:scaleType="centerCrop" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rL2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <se.swecookie.valthorens.PressedImageView
-                    android:id="@+id/imgPreview2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/recyclerPreviewHeight"
-                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/imgView2"
+                    android:layout_width="@dimen/recyclerWidth"
+                    android:layout_height="@dimen/recyclerItemHeight"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/main_desc_icon"
-                    android:scaleType="centerCrop" />
+                    android:cropToPadding="false"
+                    android:scaleType="fitXY" />
 
-            </FrameLayout>
+                <FrameLayout
+                    android:id="@+id/fLPreview2"
+                    android:layout_width="@dimen/recyclerWidth"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/imgView2"
+                    android:layout_gravity="center_horizontal">
 
-        </RelativeLayout>
+                    <ProgressBar
+                        android:id="@+id/progress2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
 
-    </androidx.cardview.widget.CardView>
+                    <se.swecookie.valthorens.PressedImageView
+                        android:id="@+id/imgPreview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/recyclerPreviewHeight"
+                        android:layout_gravity="center_horizontal"
+                        android:adjustViewBounds="true"
+                        android:contentDescription="@string/main_desc_icon"
+                        android:scaleType="centerCrop" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </LinearLayout>
