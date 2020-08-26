@@ -1,6 +1,7 @@
 package se.swecookie.valthorens;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -48,7 +50,8 @@ class ImageDownloader {
             Document doc;
 
             try {
-                //Log.e(TAG, "doInBackground: " + imageDownloader.currentURL);
+                Log.e(TAG, "doInBackground: " + imageDownloader.currentURL);
+                Log.e(TAG, "doInBackground: " + imageDownloader.webcam.url + "; " + imageDownloader.webcam.previewUrl);
                 doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -63,6 +66,7 @@ class ImageDownloader {
             }
             try {
                 if (!imageDownloader.webcam.isStatic) {
+                    Log.e(TAG, "doInBackground: not static");
                     Elements scripts = doc.getElementsByTag("script");
                     String script = "";
                     for (Element d : scripts) {
@@ -80,33 +84,29 @@ class ImageDownloader {
                             if (tArr.length > 1) {
                                 imageDownloader.currentURL = "http:" + tArr[1];
                             }
-                            boolean found = false;
-                            if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
-                                String[] d = imageLinks[i + 1].split("\"");
-                                if (d.length > 1) {
-                                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + d[1];
-                                    found = true;
-                                }
-                            }
-                            if (!found) {
-                                final String[] arr = imageDownloader.currentURL.split("/");
-                                if (arr.length > 4) {
-                                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
-                                            + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
-                                }
-                            }
+                            checkDate(i, imageLinks);
+                            break;
+                        } else if (s.startsWith(" \"//data.skaping.com/") || s.startsWith(" \"//storage.gra.cloud.ovh.net/")) {
+                            imageDownloader.currentURL = "http:" + s.replace("\"", "").trim();
+                            checkDate(i, imageLinks);
                             break;
                         }
                     }
 
+                    // "messages":[{"title":"Webcam Hors Service","body":"Cette webcam est d\u00e9sactiv\u00e9e en raison du risque de foudre.\r\nRetour en novembre !",
+                    // [{"title":"WEBCAM EN VACANCES","body":"\"En hibernation, de retours aux premi\u00e8res neiges ! \"",
                     String[] m = script.split("\"messages\":");
+                    Log.e(TAG, "doInBackground: m is " + m.length);
                     if (m.length > 1) {
-                        String m2 = m[1].split(",\"link")[0];
-                        // [{"title":"WEBCAM EN VACANCES","body":"\"En hibernation, de retours aux premi\u00e8res neiges ! \"",
-                        String[] m3 = m2.split("\"");
-                        if (m3.length > 8) {
-                            title = m3[3].replace("\\u00e8", "è").trim().replace("\\", "");
-                            body = m3[8].replace("\\u00e8", "è").trim().replace("\\", "");
+                        String[] m2 = m[1].split("\\}\\]");
+                        if (m2.length > 1) {
+                            // now we should have: [{"title":"Webcam Hors Service","body":"Cette webcam est d\u00e9sactiv\u00e9e en raison du risque de foudre.\r\nRetour en novembre !","link":null,"delay":null
+                            String[] m3 = m2[0].split("\"");
+                            Log.e(TAG, "doInBackground: " + m2[0]);
+                            if (m3.length > 7) {
+                                title = fixDateString(m3[3]);
+                                body = fixDateString(m3[7]);
+                            }
                         }
                     }
 
@@ -199,6 +199,32 @@ class ImageDownloader {
             }
 
             return null;
+        }
+
+        private String fixDateString(String s) {
+            Log.e(TAG, "fixDateString: before: " + s);
+            return s.replace("\\u00e8", "è")
+                    .replace("\\u00e9", "é")
+                    .replace("\\r\\n", "\n")
+                    .trim();
+        }
+
+        private void checkDate(int i, String[] imageLinks) {
+            boolean found = false;
+            if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
+                String[] d = imageLinks[i + 1].split("\"");
+                if (d.length > 1) {
+                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + d[1];
+                    found = true;
+                }
+            }
+            if (!found) {
+                final String[] arr = imageDownloader.currentURL.split("/");
+                if (arr.length > 4) {
+                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
+                            + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
+                }
+            }
         }
 
         @Override
