@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -32,6 +31,7 @@ import java.util.List;
 import se.swecookie.valthorens.data.Preview;
 import se.swecookie.valthorens.data.Webcam;
 
+@SuppressWarnings("ConstantConditions")
 class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHolder> {
     private final List<DoubleInt> imageViews;
     private final List<DoublePreview> previews;
@@ -206,7 +206,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
                 }
                 if (doc == null) {
                     // empty response
-                   // Log.e("d " + webcam.i, "doc == null");
+                    // Log.e("d " + webcam.i, "doc == null");
                     return null;
                 }
                 Elements elements = doc.getElementsByTag("meta");

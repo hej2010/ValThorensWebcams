@@ -30,6 +30,7 @@ import java.util.List;
 import se.swecookie.valthorens.data.Preview;
 import se.swecookie.valthorens.data.Webcam;
 
+@SuppressWarnings("ConstantConditions")
 class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     private final int[] imageViews;
     private final List<Preview> previews;

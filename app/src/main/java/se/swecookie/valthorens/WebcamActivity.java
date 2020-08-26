@@ -338,9 +338,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
         builder.setTitle(getString(R.string.webcam_download_permission_needed_title))
                 .setMessage(getString(R.string.webcam_download_permission_needed_message))
                 .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                    askForPermission();
-                })
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> askForPermission())
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
