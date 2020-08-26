@@ -40,7 +40,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
     private ImageDownloader imageDownloader;
     private LinearLayout lLMessage;
 
-    private boolean focused, showMessages;
+    private boolean focused, showMessages, showDownload;
     //private Snackbar snackbar = null;
     private Webcam clickedWebcam;
     private Toast toast;
@@ -79,6 +79,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
 
         SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
         showMessages = prefs.getBoolean(AboutActivity.PREFS_MESSAGES_KEY, true);
+        showDownload = prefs.getBoolean(AboutActivity.PREFS_DOWNLOADS_KEY, false);
 
         lLMessage.setOnClickListener((view) -> {
             view.setVisibility(View.GONE);
@@ -104,7 +105,9 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                 txtWebCamTitle.setVisibility(View.GONE);
                 lLMessage.setVisibility(View.GONE);
             } else {
-                imgDownload.setVisibility(View.VISIBLE);
+                if (showDownload) {
+                    imgDownload.setVisibility(View.VISIBLE);
+                }
                 txtDate.setVisibility(View.VISIBLE);
                 txtWebCamTitle.setVisibility(View.VISIBLE);
                 if (showMessages && (!txtBody.getText().toString().isEmpty() || !txtTitle.getText().toString().isEmpty())) {
@@ -235,7 +238,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
         if (currentURL == null || currentURL.isEmpty()) {
             showErrorDialog(errorMessage);
         } else {
-            if (getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE).getBoolean(AboutActivity.PREFS_DOWNLOADS_KEY, false)) {
+            if (showDownload) {
                 imgDownload.setVisibility(View.VISIBLE);
             }
             currentURL = currentURL.replace("http:", "https:");
