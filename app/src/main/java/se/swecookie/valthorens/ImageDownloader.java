@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -239,7 +238,7 @@ class ImageDownloader {
                 height = 1500;
             }
 
-            iOnImageDownloaded.onImageDownloaded(imageDownloader.currentURL, height, imageDate, title, body, errorMessage);
+            iOnImageDownloaded.onImageInfoFound(imageDownloader.currentURL, height, imageDate, title, body, errorMessage);
         }
     }
 

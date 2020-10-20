@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
     <string name="app_name">Val Thorens Webcams</string>
-    <string name="about_version">Version 3.0</string>
+    <string name="about_version">Version 3.1</string>
 
     <string name="main_title">Webcams in Val Thorens</string>
     <string name="main_desc">Click on an image to view the webcam at that location</string>
@@ -19,6 +19,7 @@
     <string name="webcam_download_permission_needed_title">Permission needed</string>
     <string name="webcam_download_permission_needed_message">The app needs storage permission to download the image</string>
     <string name="webcam_download_permission_denied">Permission not granted</string>
+    <string name="webcam_progress" translatable="false">%1$d%% (%2$s/%3$s MB)</string>
 
     <string name="webcam_load_error">There seems to be trouble downloading the image, please try again later.\n\n</string>
     <string name="webcam_load_error_empty">Empty server response</string>

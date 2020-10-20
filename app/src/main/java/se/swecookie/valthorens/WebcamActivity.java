@@ -7,13 +7,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,27 +28,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import java.text.DecimalFormat;
 
 import se.swecookie.valthorens.data.Webcam;
 
 public class WebcamActivity extends AppCompatActivity implements IOnImageDownloaded {
+    private static final String TAG = "WebcamActivity";
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 4;
     public static final String EXTRA_WEBCAM = "w";
 
     private TextView txtWebCamTitle, txtDate, txtTitle, txtBody;
-    private ImageView imgWebcam, imgDownload;
+    private SubsamplingScaleImageView imgWebcam;
+    private ImageView imgDownload;
     private RelativeLayout loadingPanel;
     private ImageDownloader imageDownloader;
     private LinearLayout lLMessage;
+    private ProgressBar progressBar;
+    private TextView txtProgress;
+    private final DecimalFormat formater = new DecimalFormat("#.##");
 
     private boolean focused, showMessages, showDownload;
     //private Snackbar snackbar = null;
     private Webcam clickedWebcam;
     private Toast toast;
     private String imageUrl, imageDate;
+    private AsyncTask<Void, Void, Pair<Uri, Exception>> asyncTask;
 
     @Override
     protected void onStart() {
@@ -69,13 +80,15 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
         txtWebCamTitle = findViewById(R.id.txtWebCamTitle);
         imgWebcam = findViewById(R.id.imgWebcam);
         txtDate = findViewById(R.id.txtDate);
-        loadingPanel = findViewById(R.id.loadingPanel);
         lLMessage = findViewById(R.id.lLMessage);
         txtTitle = findViewById(R.id.txtTitle);
         txtBody = findViewById(R.id.txtBody);
         imgDownload = findViewById(R.id.imgDownload);
         lLMessage.setVisibility(View.GONE);
         imgDownload.setVisibility(View.GONE);
+        progressBar = findViewById(R.id.progressBar);
+        txtProgress = findViewById(R.id.txtProgress);
+        loadingPanel = findViewById(R.id.loadingPanel);
 
         SharedPreferences prefs = getSharedPreferences(AboutActivity.PREFS_NAME, MODE_PRIVATE);
         showMessages = prefs.getBoolean(AboutActivity.PREFS_MESSAGES_KEY, true);
@@ -179,14 +192,6 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
         return displayMetrics.heightPixels;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (imageDownloader != null) {
-            imageDownloader.cancel();
-        }
-    }
-
     public void onDownloadClicked(View view) {
         if (view.getId() == R.id.imgDownload) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -234,7 +239,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
     }
 
     @Override
-    public void onImageDownloaded(String currentURL, int height, String imageDate, String title, String body, String errorMessage) {
+    public void onImageInfoFound(String currentURL, int height, String imageDate, String title, String body, String errorMessage) {
         if (currentURL == null || currentURL.isEmpty()) {
             showErrorDialog(errorMessage);
         } else {
@@ -247,7 +252,36 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                 this.imageDate = imageDate.split("Taken at ")[1];
             }
 
-            Picasso.get()
+            Log.e(TAG, "onImageInfoFound: " + currentURL + "; date: " + imageDate);
+
+            asyncTask = new DownloadFileFromURL(this, currentURL, this).execute();
+            imgWebcam.setVisibility(View.VISIBLE);
+            txtDate.setText(imageDate);
+            txtDate.setVisibility(View.VISIBLE);
+
+            if (showMessages) {
+                boolean showTitle = false, showBody = false;
+                if (!title.isEmpty()) {
+                    txtTitle.setText(title);
+                    showTitle = true;
+                }
+                if (!body.isEmpty()) {
+                    txtBody.setText(body);
+                    showBody = true;
+                }
+                if (showTitle || showBody) {
+                    lLMessage.setVisibility(View.VISIBLE);
+                    if (!showTitle) {
+                        txtTitle.setVisibility(View.GONE);
+                    }
+                    if (!showBody) {
+                        txtBody.setVisibility(View.GONE);
+                    }
+                } else {
+                    lLMessage.setVisibility(View.GONE);
+                }
+            }
+            /*Picasso.get()
                     .load(currentURL)
                     .resize(0, height)
                     .centerInside()
@@ -297,7 +331,35 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                                 }
                             }
                         }
-                    });
+                    });*/
+        }
+    }
+
+    @Override
+    public void onImageProgress(int progress, long total, long lengthOfFile) {
+        progressBar.setProgress(progress);
+        double d1 = (total + 0.0) / 1000000;
+        double max = (lengthOfFile + 0.0) / 1000000;
+        runOnUiThread(() -> txtProgress.setText(getString(R.string.webcam_progress, progress, formater.format(d1), formater.format(max))));
+    }
+
+    @Override
+    public void onImageSavedToCache(Uri file, Exception e) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (isFinishing() || isDestroyed()) {
+                return;
+            }
+        } else {
+            if (isFinishing()) {
+                return;
+            }
+        }
+        if (file != null) {
+            imgWebcam.setImage(ImageSource.uri(file.toString()));
+            imgWebcam.setMinimumDpi(60);
+            loadingPanel.setVisibility(View.GONE);
+        } else {
+            showErrorDialog(e.getMessage());
         }
     }
 
@@ -360,5 +422,24 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                 showPermissionDeniedToast();
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (imageDownloader != null) {
+            imageDownloader.cancel();
+        }
+        if (asyncTask != null) {
+            asyncTask.cancel(true);
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (asyncTask != null) {
+            asyncTask.cancel(true);
+        }
+        super.onBackPressed();
     }
 }

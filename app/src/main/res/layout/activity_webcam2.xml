@@ -26,9 +26,28 @@
         android:gravity="center">
 
         <ProgressBar
+            android:id="@+id/progress1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:indeterminate="true" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress1"
+            android:max="100"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/txtProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progressBar"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/colorTextLight" />
     </RelativeLayout>
 
     <HorizontalScrollView
@@ -38,10 +57,11 @@
         android:layout_above="@+id/txtDate"
         android:layout_below="@+id/txtWebCamTitle">
 
-        <ImageView
+        <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
             android:id="@+id/imgWebcam"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:clickable="true"
             android:contentDescription="@string/webcam_desc"
             android:fitsSystemWindows="true"
