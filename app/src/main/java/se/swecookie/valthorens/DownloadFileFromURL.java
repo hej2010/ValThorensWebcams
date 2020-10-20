@@ -1,5 +1,6 @@
 package se.swecookie.valthorens;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -35,7 +36,7 @@ public class DownloadFileFromURL extends AsyncTask<Void, Void, Pair<Uri, Excepti
         OutputStream output = null;
         InputStream input = null;
         AppCompatActivity context = weakReference.get();
-        Exception e = null;
+        Exception e;
         try {
             URL url = new URL(this.url);
             URLConnection connection = url.openConnection();
@@ -127,4 +128,28 @@ public class DownloadFileFromURL extends AsyncTask<Void, Void, Pair<Uri, Excepti
         }
     }
 
+    public static void deleteCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            deleteDir(dir);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            if (children != null) {
+                for (String child : children) {
+                    deleteDir(new File(dir, child));
+                }
+            }
+            dir.delete();
+        } else if (dir != null && dir.isFile()) {
+            dir.delete();
+        } else {
+            return;
+        }
+    }
 }

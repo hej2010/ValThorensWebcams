@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout llTitle, llAbout;
     private RecyclerView mRecyclerView;
     private List<Preview> previews;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter<? extends RecyclerView.ViewHolder> mAdapter;
 
     private boolean titleShown, aboutShown;
     private int nrOfItemsPerRow;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             previews.add(new Preview(w));
         }
 
+        DownloadFileFromURL.deleteCache(this);
         recalculateScreen();
     }
 
