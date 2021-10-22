@@ -1,6 +1,7 @@
 package se.swecookie.valthorens;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -26,7 +27,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -194,7 +194,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
 
     public void onDownloadClicked(View view) {
         if (view.getId() == R.id.imgDownload) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                         // Explain, the user has previously denied the request
@@ -206,7 +206,22 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                 }
             } else {
                 downloadImage();
+            }*/
+            if (isStoragePermissionGranted(this)) {
+                downloadImage();
+            } else {
+                showPermissionNeededDialog();
             }
+        }
+    }
+
+    public static boolean isStoragePermissionGranted(@NonNull Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ||
+                (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return false;
         }
     }
 
@@ -215,26 +230,31 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
     }
 
     private void downloadImage() {
-        imgDownload.setVisibility(View.GONE);
-        showToast(getString(R.string.downloading));
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
-        request.setTitle(getString(R.string.webcam_download_notification_title, clickedWebcam.name));
+        //request.setTitle(getString(R.string.webcam_download_notification_title, clickedWebcam.name));
         request.setDescription(txtDate.getText().toString());
-
         request.allowScanningByMediaScanner();
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        String fileName = clickedWebcam.name.replace(" ", "_")
+        String fileName = clickedWebcam.name
                 + "-"
                 + (imageDate == null ? System.currentTimeMillis() : imageDate)
                 + ".jpg";
+        fileName = fileName.replace(" ", "_").replace(":","");
+        Log.e(TAG, "downloadImage: uri: " + Uri.parse(imageUrl) + " .... " + imageUrl + " with file name: " + fileName);
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        request.setTitle(fileName);
+        request.setAllowedOverMetered(true);
+        request.setAllowedOverRoaming(true);
 
         // get download service and enqueue file
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         if (manager != null) {
             manager.enqueue(request);
+            showToast(getString(R.string.downloading));
+            imgDownload.setVisibility(View.GONE);
         } else {
             showToast(getString(R.string.error));
+            Log.e(TAG, "downloadImage: error");
         }
     }
 
