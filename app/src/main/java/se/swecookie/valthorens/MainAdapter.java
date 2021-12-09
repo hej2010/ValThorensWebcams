@@ -78,7 +78,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
             }
         }
         holder.cardView.setOnClickListener(view -> {
-            final int id = holder.getAdapterPosition();
+            final int id = holder.getBindingAdapterPosition();
             if (id == 0) {
                 context.startActivity(new Intent(context, ChooseFromMapActivity.class));
             } else {
@@ -96,7 +96,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
 
         Preview p = previews.get(position);
         final boolean connection = MainActivity.checkConnection(context, false);
-        final boolean correctWebcam = position != Webcam.CHOOSE_FROM_MAP.i && position != Webcam.LIVECAM_360.i;
+        final boolean correctWebcam = position != Webcam.CHOOSE_FROM_MAP.i/* && position != Webcam.LIVECAM_360.i*/;
         final boolean showPreviews = MainActivity.showPreviews;
 
         holder.fLPreview.setVisibility((connection || p.hasPreviewBeenShown())
@@ -151,7 +151,7 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
             final Webcam webcam = Webcam.fromInt(position);
             String previewUrl = webcam.previewUrl;
 
-            if (previewUrl == null && webcam.url != null && webcam != Webcam.LIVECAM_360) {
+            if (previewUrl == null && webcam.url != null/* && webcam != Webcam.LIVECAM_360*/) {
                 Document doc;
                 try {
                     doc = Jsoup.connect(webcam.url).ignoreContentType(true).get();
@@ -169,9 +169,8 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
                     if (html.contains("=\"og:image\"") && html.contains("/large/")) {
                         String[] arr = html.split("\"");
                         if (arr.length > 3) {
-                            previewUrl = arr[3].replace("/large/", "/thumb/");
+                            return arr[3].replace("/large/", "/thumb/");
                         }
-                        break;
                     }
                 }
 

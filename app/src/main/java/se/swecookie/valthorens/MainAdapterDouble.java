@@ -89,7 +89,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
             }
         });
         holder.rL2.setOnClickListener(view -> {
-            final int id = holder.getAdapterPosition();
+            final int id = holder.getBindingAdapterPosition();
             if (MainActivity.checkConnection(context, true)) {
                 Webcam clickedWebcam = MainActivity.webcams[id * 2 + 1];
                 context.startActivity(new Intent(context, WebcamActivity.class)
@@ -107,8 +107,8 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
 
         DoublePreview p = previews.get(position);
         final boolean connection = MainActivity.checkConnection(context, false);
-        final boolean correctWebcam1 = p.prv1.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i && p.prv1.getWebcam().i != Webcam.LIVECAM_360.i;
-        final boolean correctWebcam2 = p.prv2.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i && p.prv2.getWebcam().i != Webcam.LIVECAM_360.i;
+        final boolean correctWebcam1 = p.prv1.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i/* && p.prv1.getWebcam().i != Webcam.LIVECAM_360.i*/;
+        final boolean correctWebcam2 = p.prv2.getWebcam().i != Webcam.CHOOSE_FROM_MAP.i/* && p.prv2.getWebcam().i != Webcam.LIVECAM_360.i*/;
         final boolean showPreviews = MainActivity.showPreviews;
 
         holder.fLPreview1.setVisibility((connection || p.prv1.hasPreviewBeenShown())
@@ -196,7 +196,7 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
             String previewUrl = webcam.previewUrl;
 
             //Log.e("d " + webcam.i, "doInBackground: " + webcam.url);
-            if (previewUrl == null && webcam.url != null && webcam != Webcam.LIVECAM_360) {
+            if (previewUrl == null && webcam.url != null/* && webcam != Webcam.LIVECAM_360*/) {
                 Document doc;
                 try {
                     doc = Jsoup.connect(webcam.url).ignoreContentType(true).get();
@@ -215,9 +215,8 @@ class MainAdapterDouble extends RecyclerView.Adapter<MainAdapterDouble.MyViewHol
                     if (html.contains("=\"og:image\"") && html.contains("/large/")) {
                         String[] arr = html.split("\"");
                         if (arr.length > 3) {
-                            previewUrl = arr[3].replace("/large/", "/thumb/");
+                            return arr[3].replace("/large/", "/thumb/");
                         }
-                        break;
                     }
                 }
 

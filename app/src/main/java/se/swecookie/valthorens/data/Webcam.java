@@ -2,7 +2,7 @@ package se.swecookie.valthorens.data;
 
 public enum Webcam {
     CHOOSE_FROM_MAP(0, true, null, null, null),
-    LIVECAM_360(1, true, "Livecam 360\u00B0", "http://www.valthorens.com/en/webcam/livecam-station", null),
+    LIVECAM_360(1, false, "Livecam 360\u00B0", "http://www.skaping.com/valthorens/station", null),
     DE_LA_MAISON(2, false, "De La Maison", "http://skaping.com/valthorens/lamaison", null),
     LES_2_LACS(3, false, "Les 2 Lacs", "http://skaping.com/valthorens/2lacs", null),
     FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://skaping.com/valthorens/funitelthorens", null),
