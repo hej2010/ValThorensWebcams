@@ -441,6 +441,8 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
                 // functionality that depends on this permission.
                 showPermissionDeniedToast();
             }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
