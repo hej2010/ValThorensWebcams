@@ -1,29 +1,38 @@
 package se.swecookie.valthorens.data;
 
 public enum Webcam {
-    CHOOSE_FROM_MAP(0, true, null, null, null),
-    LIVECAM_360(1, false, "Livecam 360\u00B0", "http://www.skaping.com/valthorens/station", null),
-    DE_LA_MAISON(2, false, "De La Maison", "http://www.skaping.com/valthorens/lamaison", null),
-    LES_2_LACS(3, false, "Les 2 Lacs", "http://www.skaping.com/valthorens/2lacs", null),
-    FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://www.skaping.com/valthorens/funitelthorens", null),
-    FUNITEL_3_VALLEES(5, false, "Funitel 3 Vallées", "http://www.skaping.com/valthorens/3vallees", null),
-    STADE(6, false, "Stade", "http://www.skaping.com/valthorens/stade", null),
-    BOISMINT(7, false, "Boismint", "http://www.skaping.com/valthorens/boismint", null),
-    LA_TYROLIENNE(8, true, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg"),
-    PLAN_BOUCHET(9, true, "Plan Bouchet", "http://www.valthorens.com/en/webcam/livecam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg"),
+    CHOOSE_FROM_MAP(0, true, null, null),
+    LIVECAM_360(1, false, "Livecam 360\u00B0", "http://www.skaping.com/valthorens/station"),
+    DE_LA_MAISON(2, false, "De La Maison", "http://www.skaping.com/valthorens/lamaison"),
+    LES_2_LACS(3, false, "Les 2 Lacs", "http://www.skaping.com/valthorens/2lacs"),
+    FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://www.skaping.com/valthorens/funitelthorens"),
+    FUNITEL_3_VALLEES(5, false, "Funitel 3 Vallées", "http://www.skaping.com/valthorens/3vallees"),
+    STADE(6, false, "Stade", "http://www.skaping.com/valthorens/stade"),
+    BOISMINT(7, false, "Boismint", "http://www.skaping.com/valthorens/boismint"),
+    LA_TYROLIENNE(8, true, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_tyrolienne.jpg"),
+    PLAN_BOUCHET(9, true, "Plan Bouchet", "http://www.valthorens.com/en/webcam/webcam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg", "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg"),
     PLEIN_SUD(10, true, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
-    CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
+    CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_cime-caron.jpg");
 
     public final int i;
-    public final String name, url, previewUrl;
+    public final String name, url, previewUrl, staticImageUrl;
     public final boolean isStatic;
 
+    Webcam(int i, boolean isStatic, String name, String url) {
+        this(i, isStatic, name, url, null, null);
+    }
+
     Webcam(int i, boolean isStatic, String name, String url, String previewUrl) {
+        this(i, isStatic, name, url, previewUrl, null);
+    }
+
+    Webcam(int i, boolean isStatic, String name, String url, String previewUrl, String staticImageUrl) {
         this.i = i;
         this.isStatic = isStatic;
         this.name = name;
         this.url = url;
         this.previewUrl = previewUrl;
+        this.staticImageUrl = staticImageUrl;
     }
 
     public static final int NR_OF_WEBCAMS = 11;

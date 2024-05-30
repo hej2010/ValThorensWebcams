@@ -30,7 +30,8 @@ class ImageDownloader {
 
     void startDownload(Webcam webcam, AppCompatActivity context, IOnImageDownloaded iOnImageDownloaded) {
         currentURL = webcam.url;
-        downloadTask = new DownloadPhoto(ImageDownloader.this, iOnImageDownloaded).execute();
+        downloadTask = new DownloadPhoto(ImageDownloader.this, iOnImageDownloaded)
+                .execute();
         this.context = context;
         this.webcam = webcam;
     }
@@ -57,7 +58,11 @@ class ImageDownloader {
                 doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e(TAG, "doInBackground: got error " + e.getMessage());
                 errorMessage = e.getMessage();
+                if (imageDownloader.webcam.isStatic && imageDownloader.webcam.staticImageUrl != null) {
+                    imageDownloader.currentURL = imageDownloader.webcam.staticImageUrl;
+                }
                 return null;
             }
 
@@ -117,22 +122,9 @@ class ImageDownloader {
                     }
 
                 } else {
-                    switch (imageDownloader.webcam) {
-                        case LA_TYROLIENNE:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
-                            break;
-                        case PLAN_BOUCHET:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
-                            break;
-                        case LIVECAM_360:
-                            imageDownloader.currentURL = "http://backend.roundshot.com/cams/232/default";
-                            break;
-                        case PLEIN_SUD:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
-                            break;
-                        case CIME_CARON:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
-                            break;
+                    imageDownloader.currentURL = imageDownloader.webcam.staticImageUrl;
+                    if (imageDownloader.currentURL == null) {
+                        imageDownloader.currentURL = imageDownloader.webcam.url;
                     }
 
                     boolean found = false;

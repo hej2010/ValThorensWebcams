@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
     <string name="app_name">Val Thorens Webcams</string>
-    <string name="about_version">Version 3.4</string>
+    <string name="about_version">Version 3.5</string>
 
     <string name="main_title">Webcams in Val Thorens</string>
     <string name="main_desc">Click on an image to view the webcam at that location</string>

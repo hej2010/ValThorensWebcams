@@ -44,7 +44,7 @@ public class AboutActivity extends AppCompatActivity {
 
         ImageView imgHelpMessages = findViewById(R.id.imgHelpMessages);
         imgHelpMessages.setOnClickListener(view -> {
-            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert);
             b.setTitle(getString(R.string.about_help_messages_title))
                     .setMessage(getString(R.string.about_help_messages_message))
                     .setPositiveButton(R.string.ok, null)
@@ -52,7 +52,7 @@ public class AboutActivity extends AppCompatActivity {
         });
         ImageView imgHelpPreviews = findViewById(R.id.imgHelpPreviews);
         imgHelpPreviews.setOnClickListener(view -> {
-            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert);
             b.setTitle(getString(R.string.about_help_previews_title))
                     .setMessage(getString(R.string.about_help_previews_message))
                     .setPositiveButton(R.string.ok, null)
@@ -60,7 +60,7 @@ public class AboutActivity extends AppCompatActivity {
         });
         ImageView imgHelpDownloads = findViewById(R.id.imgHelpDownloads);
         imgHelpDownloads.setOnClickListener(view -> {
-            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+            AlertDialog.Builder b = new AlertDialog.Builder(AboutActivity.this, androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert);
             b.setTitle(getString(R.string.about_help_downloads_title))
                     .setMessage(getString(R.string.about_help_downloads_message))
                     .setPositiveButton(R.string.ok, null)

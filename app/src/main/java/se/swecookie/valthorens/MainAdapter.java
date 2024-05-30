@@ -50,32 +50,11 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
         return new MyViewHolder(relativeLayout);
     }
 
-    /*
-     * FUNITEL_3_VALLEES(1),  <meta property="og:image" content="http://storage.gra3.cloud.ovh.net/v1/AUTH_0e308f8996f940d38153db4d0e7d7e81/static/ValThorensBouquetin/2019/04/27/large/05-04.jpg"> // thumb
-    DE_LA_MAISON(2), <meta property="og:image" content="http://data.skaping.com/ValThorensLaMaison/2019/09/17/large/11-02.jpg"> // thumb
-    LES_2_LACS(3), <meta property="og:image" content="http://storage.gra3.cloud.ovh.net/v1/AUTH_0e308f8996f940d38153db4d0e7d7e81/static/vt2lacs-360/2019/07/31/large/09-22.jpg"> // thumb
-    FUNITEL_DE_THORENS(4), <meta property="og:image" content="http://storage.gra3.cloud.ovh.net/v1/AUTH_0e308f8996f940d38153db4d0e7d7e81/static/funitelthorens-360/2019/09/04/large/13-22.jpg"> // thumb
-    STADE(5), <meta property="og:image" content="http://storage.gra3.cloud.ovh.net/v1/AUTH_0e308f8996f940d38153db4d0e7d7e81/static/setam/stade-val-thorens/2019/06/10/large/16-22.jpg"> // thumb
-    BOISMINT(6), <meta property="og:image" content="http://storage.gra3.cloud.ovh.net/v1/AUTH_0e308f8996f940d38153db4d0e7d7e81/static/val-thorens/boismint/2019/08/29/large/00-04.jpg"> // thumb
-    LA_TYROLIENNE(7), http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg
-    PLAN_BOUCHET(8), http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg
-    LIVECAM_360(9),
-    PLEIN_SUD(10), http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg
-    CIME_CARON(11) http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg
-     *
-     */
-
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final MainActivity context = weakReference.get();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (context.isFinishing() || context.isDestroyed()) {
-                return;
-            }
-        } else {
-            if (context.isFinishing()) {
-                return;
-            }
+        if (context.isFinishing() || context.isDestroyed()) {
+            return;
         }
         holder.cardView.setOnClickListener(view -> {
             final int id = holder.getBindingAdapterPosition();
