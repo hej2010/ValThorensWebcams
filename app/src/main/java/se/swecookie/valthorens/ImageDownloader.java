@@ -5,6 +5,9 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -85,7 +88,7 @@ class ImageDownloader {
                             }
                             checkDate(i, imageLinks);
                             break;
-                        } else if (s.startsWith(" \"//data.skaping.com/") || s.startsWith(" \"//storage.gra.cloud.ovh.net/")) {
+                        } else if (s.startsWith(" \"//data2.skaping.com/") || s.startsWith(" \"//data.skaping.com/") || s.startsWith(" \"//storage.gra.cloud.ovh.net/")) {
                             imageDownloader.currentURL = "http:" + s.replace("\"", "").trim();
                             checkDate(i, imageLinks);
                             break;
@@ -97,14 +100,18 @@ class ImageDownloader {
                     String[] m = script.split("\"messages\":");
                     Log.e(TAG, "doInBackground: m is " + m.length);
                     if (m.length > 1) {
-                        String[] m2 = m[1].split("\\}\\]");
-                        if (m2.length > 1) {
-                            // now we should have: [{"title":"Webcam Hors Service","body":"Cette webcam est d\u00e9sactiv\u00e9e en raison du risque de foudre.\r\nRetour en novembre !","link":null,"delay":null
-                            String[] m3 = m2[0].split("\"");
-                            Log.e(TAG, "doInBackground: " + m2[0]);
-                            if (m3.length > 7) {
-                                title = fixDateString(m3[3]);
-                                body = fixDateString(m3[7]);
+                        String s = m[1].split("\\}\\]")[0] + "}]";
+                        JSONArray arr = new JSONArray(s);
+                        for (int i = 0; i < arr.length(); i++) {
+                            try {
+                                JSONObject o = arr.getJSONObject(i);
+                                if (o.has("title")) {
+                                    title = fixDateString(o.getString("title"));
+                                }
+                                if (o.has("body")) {
+                                    body = fixDateString(o.getString("body"));
+                                }
+                            } catch (JSONException ignored) {
                             }
                         }
                     }

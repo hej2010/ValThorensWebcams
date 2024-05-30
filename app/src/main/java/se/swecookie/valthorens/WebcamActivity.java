@@ -281,7 +281,7 @@ public class WebcamActivity extends AppCompatActivity implements IOnImageDownloa
 
             if (showMessages) {
                 boolean showTitle = false, showBody = false;
-                if (!title.isEmpty()) {
+                if (!title.isEmpty() && !title.equals("null")) {
                     txtTitle.setText(title);
                     showTitle = true;
                 }
