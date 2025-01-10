@@ -5,6 +5,9 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,7 +32,8 @@ class ImageDownloader {
 
     void startDownload(Webcam webcam, AppCompatActivity context, IOnImageDownloaded iOnImageDownloaded) {
         currentURL = webcam.url;
-        downloadTask = new DownloadPhoto(ImageDownloader.this, iOnImageDownloaded).execute();
+        downloadTask = new DownloadPhoto(ImageDownloader.this, iOnImageDownloaded)
+                .execute();
         this.context = context;
         this.webcam = webcam;
     }
@@ -62,6 +66,15 @@ class ImageDownloader {
                 e.printStackTrace();
                 errorMessage = e.getMessage();
                 Log.e(TAG, "doInBackground: error, return");
+                if (imageDownloader.webcam.isStatic && imageDownloader.webcam.staticImageUrl != null) {
+                    imageDownloader.currentURL = imageDownloader.webcam.staticImageUrl;
+                }
+                return null;
+            }
+
+            if (doc == null) {
+                errorMessage = imageDownloader.context.getString(R.string.webcam_load_error_empty);
+                cancel(true);
                 return null;
             }
 
@@ -101,14 +114,18 @@ class ImageDownloader {
                     String[] m = script.split("\"messages\":");
                     Log.e(TAG, "doInBackground: m is " + m.length);
                     if (m.length > 1) {
-                        String[] m2 = m[1].split("\\}\\]");
-                        if (m2.length > 1) {
-                            // now we should have: [{"title":"Webcam Hors Service","body":"Cette webcam est d\u00e9sactiv\u00e9e en raison du risque de foudre.\r\nRetour en novembre !","link":null,"delay":null
-                            String[] m3 = m2[0].split("\"");
-                            Log.e(TAG, "doInBackground: " + m2[0]);
-                            if (m3.length > 7) {
-                                title = fixDateString(m3[3]);
-                                body = fixDateString(m3[7]);
+                        String s = m[1].split("\\}\\]")[0] + "}]";
+                        JSONArray arr = new JSONArray(s);
+                        for (int i = 0; i < arr.length(); i++) {
+                            try {
+                                JSONObject o = arr.getJSONObject(i);
+                                if (o.has("title")) {
+                                    title = fixDateString(o.getString("title"));
+                                }
+                                if (o.has("body")) {
+                                    body = fixDateString(o.getString("body"));
+                                }
+                            } catch (JSONException ignored) {
                             }
                         }
                     }
@@ -127,6 +144,9 @@ class ImageDownloader {
                         case CIME_CARON:
                             imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                             break;
+                    imageDownloader.currentURL = imageDownloader.webcam.staticImageUrl;
+                    if (imageDownloader.currentURL == null) {
+                        imageDownloader.currentURL = imageDownloader.webcam.url;
                     }
 
                     boolean found = false;

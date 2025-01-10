@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ValThorens.iml" filepath="$PROJECT_DIR$/.idea/modules/ValThorens.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorens.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorens.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorens.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorens.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorens.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorens.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorens.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorens.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ValThorensWebcams.iml" filepath="$PROJECT_DIR$/.idea/modules/ValThorensWebcams.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ValThorensWebcams.app.unitTest.iml" />
     </modules>
   </component>
 </project>

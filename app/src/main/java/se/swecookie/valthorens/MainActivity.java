@@ -67,20 +67,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static void showConnectionError(final Context context) {
         AlertDialog.Builder builder;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(context, R.style.Theme_AppCompat_Light_Dialog_Alert);
-        } else {
-            builder = new AlertDialog.Builder(context);
-        }
+        builder = new AlertDialog.Builder(context, androidx.appcompat.R.style.Theme_AppCompat_Light_Dialog_Alert);
         if (context instanceof AppCompatActivity) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                if (((AppCompatActivity) context).isFinishing() || ((AppCompatActivity) context).isDestroyed()) {
-                    return;
-                }
-            } else {
-                if (((AppCompatActivity) context).isFinishing()) {
-                    return;
-                }
+            if (((AppCompatActivity) context).isFinishing() || ((AppCompatActivity) context).isDestroyed()) {
+                return;
             }
         }
         builder.setTitle(context.getString(R.string.connection_title))
