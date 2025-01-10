@@ -131,19 +131,6 @@ class ImageDownloader {
                     }
 
                 } else {
-                    switch (imageDownloader.webcam) {
-                        case LA_TYROLIENNE:
-                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
-                            break;
-                        case PLAN_BOUCHET:
-                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
-                            break;
-                        case PLEIN_SUD:
-                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
-                            break;
-                        case CIME_CARON:
-                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
-                            break;
                     imageDownloader.currentURL = imageDownloader.webcam.staticImageUrl;
                     if (imageDownloader.currentURL == null) {
                         imageDownloader.currentURL = imageDownloader.webcam.url;

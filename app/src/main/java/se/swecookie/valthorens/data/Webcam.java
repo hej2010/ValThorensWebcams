@@ -2,17 +2,17 @@ package se.swecookie.valthorens.data;
 
 public enum Webcam {
     CHOOSE_FROM_MAP(0, true, null, null),
-    LIVECAM_360(1, false, "Livecam 360\u00B0", "http://www.skaping.com/valthorens/station"),
+    LIVECAM_360(1, false, "Livecam 360°", "http://www.skaping.com/valthorens/station"),
     DE_LA_MAISON(2, false, "De La Maison", "http://www.skaping.com/valthorens/lamaison"),
     LES_2_LACS(3, false, "Les 2 Lacs", "http://www.skaping.com/valthorens/2lacs"),
     FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://www.skaping.com/valthorens/funitelthorens"),
     FUNITEL_3_VALLEES(5, false, "Funitel 3 Vallées", "http://www.skaping.com/valthorens/3vallees"),
     STADE(6, false, "Stade", "http://www.skaping.com/valthorens/stade"),
     BOISMINT(7, false, "Boismint", "http://www.skaping.com/valthorens/boismint"),
-    LA_TYROLIENNE(8, true, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_tyrolienne.jpg"),
-    PLAN_BOUCHET(9, true, "Plan Bouchet", "http://www.valthorens.com/en/webcam/webcam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg", "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg"),
-    PLEIN_SUD(10, true, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
-    CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_cime-caron.jpg");
+    LA_TYROLIENNE(8, true, "La Tyrolienne", "https://www.valthorens.com/en/webcam/webcam-pointe-du-bouchet-tyrolienne/", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_tyrolienne.jpg"),
+    PLAN_BOUCHET(9, true, "Plan Bouchet", "https://www.valthorens.com/en/webcam/webcam-plan-bouchet/", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg", "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg"),
+    PLEIN_SUD(10, true, "Plein Sud", "https://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
+    CIME_CARON(11, true, "Cime Caron", "https://www.valthorens.com/en/webcam/webcam-cime-caron/", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg", "http://www.trinum.com/ibox/ftpcam/original_val_thorens_cime-caron.jpg");
 
     public final int i;
     public final String name, url, previewUrl, staticImageUrl;
