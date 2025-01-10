@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import se.swecookie.valthorens.data.Webcam;
 
@@ -38,6 +40,7 @@ class ImageDownloader {
         private String imageDate = "";
         private String title = "";
         private String body = "";
+        private static final Pattern datePattern = Pattern.compile("\\/(\\d\\d\\d\\d)\\/(\\d\\d)\\/(\\d\\d)\\/(\\d\\d)-(\\d\\d)"); // \/(\d\d\d\d)\/(\d\d)\/(\d\d)\/(\d\d)-(\d\d)
 
         DownloadPhoto(ImageDownloader imageDownloader, IOnImageDownloaded iOnImageDownloaded) {
             this.imageDownloader = imageDownloader;
@@ -58,15 +61,12 @@ class ImageDownloader {
                 return null;
             }
 
-            if (doc == null) {
-                errorMessage = imageDownloader.context.getString(R.string.webcam_load_error_empty);
-                cancel(true);
-                return null;
-            }
             try {
                 if (!imageDownloader.webcam.isStatic) {
                     Log.e(TAG, "doInBackground: not static");
                     Elements scripts = doc.getElementsByTag("script");
+                    Elements metaTags = doc.getElementsByTag("meta");
+
                     String script = "";
                     for (Element d : scripts) {
                         if (d.toString().contains("new ImageMedia(")) {
@@ -75,20 +75,20 @@ class ImageDownloader {
                         }
                     }
 
-                    String[] imageLinks = script.split(",");
-                    for (int i = imageLinks.length - 1; i >= 0; i--) {
-                        String s = imageLinks[i];
-                        if (s.contains("new ImageMedia(\"//data.skaping.com") || s.contains("new ImageMedia(\"//storage.gra")) {
-                            String[] tArr = s.split("\"");
-                            if (tArr.length > 1) {
-                                imageDownloader.currentURL = "http:" + tArr[1];
+                    for (Element metaTag : metaTags) {
+                        String property = metaTag.attr("property");
+                        if (property.equals("og:image")) {
+                            String content = metaTag.attr("content");
+                            imageDownloader.currentURL = content.replaceFirst("http://", "https://").replace("/large/", "/");
+
+                            Matcher matcher = datePattern.matcher(imageDownloader.currentURL);
+                            if (matcher.find()) {
+                                Log.e(TAG, "doInBackground: matches " + matcher.groupCount());
+                                if (matcher.groupCount() == 5) {
+                                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + matcher.group(1) + "-" + matcher.group(2) + "-" + matcher.group(3)
+                                            + " " + matcher.group(4) + ":" + matcher.group(5) + ", CET";
+                                }
                             }
-                            checkDate(i, imageLinks);
-                            break;
-                        } else if (s.startsWith(" \"//data.skaping.com/") || s.startsWith(" \"//storage.gra.cloud.ovh.net/")) {
-                            imageDownloader.currentURL = "http:" + s.replace("\"", "").trim();
-                            checkDate(i, imageLinks);
-                            break;
                         }
                     }
 
@@ -206,24 +206,6 @@ class ImageDownloader {
                     .replace("\\u00e9", "é")
                     .replace("\\r\\n", "\n")
                     .trim();
-        }
-
-        private void checkDate(int i, String[] imageLinks) {
-            boolean found = false;
-            if (i + 1 < imageLinks.length && imageLinks[i + 1].contains("Date(\"")) {
-                String[] d = imageLinks[i + 1].split("\"");
-                if (d.length > 1) {
-                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + d[1];
-                    found = true;
-                }
-            }
-            if (!found) {
-                final String[] arr = imageDownloader.currentURL.split("/");
-                if (arr.length > 4) {
-                    imageDate = imageDownloader.context.getString(R.string.webcam_taken_at) + " " + arr[arr.length - 4] + "-" + arr[arr.length - 3] + "-" + arr[arr.length - 2]
-                            + " " + arr[arr.length - 1].substring(0, 2) + ":" + arr[arr.length - 1].substring(3, 5) + ", CET";
-                }
-            }
         }
 
         @Override

@@ -68,14 +68,8 @@ class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final MainActivity context = weakReference.get();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            if (context.isFinishing() || context.isDestroyed()) {
-                return;
-            }
-        } else {
-            if (context.isFinishing()) {
-                return;
-            }
+        if (context.isFinishing() || context.isDestroyed()) {
+            return;
         }
         holder.cardView.setOnClickListener(view -> {
             final int id = holder.getBindingAdapterPosition();

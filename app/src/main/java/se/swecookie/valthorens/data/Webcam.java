@@ -2,7 +2,7 @@ package se.swecookie.valthorens.data;
 
 public enum Webcam {
     CHOOSE_FROM_MAP(0, true, null, null, null),
-    LIVECAM_360(1, false, "Livecam 360\u00B0", "http://www.skaping.com/valthorens/station", null),
+    LIVECAM_360(1, false, "Livecam 360°", "http://www.skaping.com/valthorens/station", null),
     DE_LA_MAISON(2, false, "De La Maison", "http://www.skaping.com/valthorens/lamaison", null),
     LES_2_LACS(3, false, "Les 2 Lacs", "http://www.skaping.com/valthorens/2lacs", null),
     FUNITEL_DE_THORENS(4, false, "Funitel De Thorens", "http://www.skaping.com/valthorens/funitelthorens", null),
@@ -29,33 +29,20 @@ public enum Webcam {
     public static final int NR_OF_WEBCAMS = 11;
 
     public static Webcam fromInt(int i) {
-        switch (i) {
-            case 1:
-                return LIVECAM_360;
-            case 2:
-                return DE_LA_MAISON;
-            case 3:
-                return LES_2_LACS;
-            case 4:
-                return FUNITEL_DE_THORENS;
-            case 5:
-                return FUNITEL_3_VALLEES;
-            case 6:
-                return STADE;
-            case 7:
-                return BOISMINT;
-            case 8:
-                return LA_TYROLIENNE;
-            case 9:
-                return PLAN_BOUCHET;
-            case 10:
-                return PLEIN_SUD;
-            case 11:
-                return CIME_CARON;
-            case 0:
-            default:
-                return CHOOSE_FROM_MAP;
-        }
+        return switch (i) {
+            case 1 -> LIVECAM_360;
+            case 2 -> DE_LA_MAISON;
+            case 3 -> LES_2_LACS;
+            case 4 -> FUNITEL_DE_THORENS;
+            case 5 -> FUNITEL_3_VALLEES;
+            case 6 -> STADE;
+            case 7 -> BOISMINT;
+            case 8 -> LA_TYROLIENNE;
+            case 9 -> PLAN_BOUCHET;
+            case 10 -> PLEIN_SUD;
+            case 11 -> CIME_CARON;
+            default -> CHOOSE_FROM_MAP;
+        };
     }
 /*
 0 choose from map
