@@ -54,10 +54,14 @@ class ImageDownloader {
             try {
                 Log.e(TAG, "doInBackground: " + imageDownloader.currentURL);
                 Log.e(TAG, "doInBackground: " + imageDownloader.webcam.url + "; " + imageDownloader.webcam.previewUrl);
-                doc = Jsoup.connect(imageDownloader.currentURL).ignoreContentType(true).get();
+                doc = Jsoup.connect(imageDownloader.currentURL)
+                        .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0")
+                        .ignoreContentType(true)
+                        .get();
             } catch (Exception e) {
                 e.printStackTrace();
                 errorMessage = e.getMessage();
+                Log.e(TAG, "doInBackground: error, return");
                 return null;
             }
 
@@ -112,19 +116,16 @@ class ImageDownloader {
                 } else {
                     switch (imageDownloader.webcam) {
                         case LA_TYROLIENNE:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
+                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_tyrolienne.jpg";
                             break;
                         case PLAN_BOUCHET:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
-                            break;
-                        case LIVECAM_360:
-                            imageDownloader.currentURL = "http://backend.roundshot.com/cams/232/default";
+                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/original_orelle_sommet-tc-orelle.jpg";
                             break;
                         case PLEIN_SUD:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
+                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_funitel-bouquetin.jpg";
                             break;
                         case CIME_CARON:
-                            imageDownloader.currentURL = "http://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
+                            imageDownloader.currentURL = "https://www.trinum.com/ibox/ftpcam/mega_val_thorens_cime-caron.jpg";
                             break;
                     }
 

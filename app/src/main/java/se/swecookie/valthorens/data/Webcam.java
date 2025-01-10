@@ -9,10 +9,11 @@ public enum Webcam {
     FUNITEL_3_VALLEES(5, false, "Funitel 3 Vallées", "http://www.skaping.com/valthorens/3vallees", null),
     STADE(6, false, "Stade", "http://www.skaping.com/valthorens/stade", null),
     BOISMINT(7, false, "Boismint", "http://www.skaping.com/valthorens/boismint", null),
-    LA_TYROLIENNE(8, true, "La Tyrolienne", "http://www.valthorens.com/en/webcam/livecam-tyrolienne", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg"),
-    PLAN_BOUCHET(9, true, "Plan Bouchet", "http://www.valthorens.com/en/webcam/livecam-plan-bouchet", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg"),
+    LA_TYROLIENNE(8, true, "La Tyrolienne", "https://www.valthorens.com/en/webcam/webcam-pointe-du-bouchet-tyrolienne/", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_tyrolienne.jpg"),
+    PLAN_BOUCHET(9, true, "Plan Bouchet", "https://www.valthorens.com/en/webcam/webcam-plan-bouchet/", "http://www.trinum.com/ibox/ftpcam/small_orelle_sommet-tc-orelle.jpg"),
+    //PROSNEIGE_SKI_SCHOOL(10, false, "Prosneige Ski School", "https://www.valthorens.com/en/webcam/webcam-ecole-de-ski-prosneige/", null),
     PLEIN_SUD(10, true, "Plein Sud", "http://www.valthorens.com/en/webcam/livecam-la-folie-douce-plein-sud", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_funitel-bouquetin.jpg"),
-    CIME_CARON(11, true, "Cime Caron", "http://www.valthorens.com/en/webcam/livecam-cime-caron", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
+    CIME_CARON(11, true, "Cime Caron", "https://www.valthorens.com/en/webcam/webcam-cime-caron/", "http://www.trinum.com/ibox/ftpcam/small_val_thorens_cime-caron.jpg");
 
     public final int i;
     public final String name, url, previewUrl;
